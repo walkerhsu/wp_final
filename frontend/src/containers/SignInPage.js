@@ -6,7 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { useNavigate } from "react-router-dom";
 
 
-const LoginPage=()=>{
+const SigninPage=()=>{
     const paperStyle={padding :20,height:'70vh',width:360, margin:"20px auto"}
     const avatarStyle={backgroundColor:'#1bbd7e'}
     const btnstyle={margin:'8px 0'}
@@ -67,7 +67,7 @@ const LoginPage=()=>{
     )
 }
 
-export default LoginPage
+export default SigninPage
 
 
 
