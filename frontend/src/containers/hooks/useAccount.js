@@ -2,17 +2,20 @@ import { createContext, useContext, useState} from "react"
 import React from "react";
 const AccountContext = createContext({
     me: {},
-    accountData: {},
+    incomeData: {},
+    expenseData: {},
 
     setMe: () =>{},
-    setAccountData: () => {},
+    setIncomeData: () =>{},
+    setExpenseData: () =>{},
 });
 const AccountProvider = (props) => {
     const [me, setMe] = useState('');
-    const [accountData, setAccountData] = useState([]);
+    const [incomeData, setIncomeData] = useState([]);
+    const [expenseData, setExpenseData] = useState([]);
     return (
         <AccountContext.Provider value={
-            {me, accountData, setMe, setAccountData}
+            {me, incomeData, expenseData, setMe, setIncomeData, setExpenseData}
         } {...props} />
     );
 }

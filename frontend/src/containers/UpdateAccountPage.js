@@ -9,11 +9,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useAccount } from "./hooks/useAccount";
+
 const paperStyle={padding :20,height:'70vh',width:360, margin:"20px auto"}
 const btnstyle={margin:'8px 0'}
 const avatarStyle = {backgroundColor:'#1bbd7e'}
+
 const UpdateAccountPage = () => {
-    const {accountData, setAccountData} = useAccount();
+    const {incomeData, expenseData, setIncomeData, setExpenseData} = useAccount();
     const [time, setTime] = useState('');
     const [isIncome, setIsIncome] = useState(true);
     const [money, setMoney] = useState('');
@@ -46,8 +48,7 @@ const UpdateAccountPage = () => {
     const handleMoneyChange = (event) => {
         const newMoney = event.target.value;
         if(newMoney > 0 && newMoney.search(/[1-9]/) >= 0 && newMoney.search(/[.]/) < 0) {
-            const money= isIncome? newMoney: (-1)* newMoney
-            setMoney(money);
+            setMoney(newMoney);
             setMoneyMessage('');
         }
         else if(newMoney.length===0) {
@@ -84,10 +85,18 @@ const UpdateAccountPage = () => {
                 description: description
             }
             console.log(data);
-            setAccountData([...accountData, data]);
+            if(isIncome){
+                console.log("income");
+                setIncomeData([...incomeData, data]);
+            }
+            else{
+                console.log("expense");
+                setExpenseData([...expenseData, data]);
+            }
             navigateToAccountMainPage();
         }
         else{
+            console.log(moneyMessage, money)
             console.log("Invalid input");
             alert("Invalid input");
         }
