@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import {Button, } from "@material-ui/core"; 
+import '../css/MainPage.css'
 // import LoginIcon from '@mui/icons-material/Login';
 
 const MainPage = () => {
@@ -12,12 +13,16 @@ const MainPage = () => {
         navigate("/signup");
     };
     return (
-        <div>
-            <h1>Main Page</h1>
-            <Button variant="contained" color="primary" onClick={navigateToSignUp}>Signup</Button>
-            <br></br>
-            <br></br>
-            <Button variant="contained" color="primary" onClick={navigateToSignIn}>Signin</Button>
+        <div className = 'MainPageWrapper'>
+            <div className = "bg-image"/>
+            <div className = "MainPage">
+                <h1>Main Page</h1>
+                <Button variant="contained" color="primary" onClick={navigateToSignUp}>Signup</Button>
+                <br></br>
+                <br></br>
+                <Button variant="contained" color="primary" onClick={navigateToSignIn}>Signin</Button>   
+            </div>
+            
         </div>
     )
 }
