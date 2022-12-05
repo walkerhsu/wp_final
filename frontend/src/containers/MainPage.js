@@ -18,8 +18,6 @@ const MainPage = () => {
             <div className = "MainPage">
                 <h1>Main Page</h1>
                 <Button variant="contained" color="primary" onClick={navigateToSignUp}>Signup</Button>
-                <br></br>
-                <br></br>
                 <Button variant="contained" color="primary" onClick={navigateToSignIn}>Signin</Button>   
             </div>
             

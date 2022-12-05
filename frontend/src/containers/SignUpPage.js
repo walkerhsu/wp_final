@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import {TextField, Box, Paper, Grid, Avatar, Button} from '@material-ui/core';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-import ValidTextField from '../components/ValidTextField';
-import InvalidTextField from '../components/InvalidTextField';
+// import ValidTextField from '../components/ValidTextField';
+// import InvalidTextField from '../components/InvalidTextField';
 
 export default function ValidationTextFields() {
 
