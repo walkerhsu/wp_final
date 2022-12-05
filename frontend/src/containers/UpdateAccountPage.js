@@ -8,11 +8,12 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-
+import { useAccount } from "./hooks/useAccount";
 const paperStyle={padding :20,height:'70vh',width:360, margin:"20px auto"}
 const btnstyle={margin:'8px 0'}
 const avatarStyle = {backgroundColor:'#1bbd7e'}
 const UpdateAccountPage = () => {
+    const {accountData, setAccountData} = useAccount();
     const [time, setTime] = useState('');
     const [isIncome, setIsIncome] = useState(true);
     const [money, setMoney] = useState('');
@@ -22,11 +23,24 @@ const UpdateAccountPage = () => {
 
     const navigate = useNavigate();
     const navigateToAccountMainPage = () => {
-        navigate("/account");
+        navigate("/account")
     };
 
-    const handleTimeChange = (newTime) => {
-        setTime(newTime);
+    const handleTimeChange = (Time) => {
+        const newTime = Time.$d;
+        const year = newTime.getFullYear();
+        const month = newTime.getMonth() + 1;
+        const date = newTime.getDate();
+        const hour = newTime.getHours();
+        const minute = newTime.getMinutes();
+        const second = newTime.getSeconds();
+        const newTimeStr = (year<10?'0':'') + year + "/"
+                        + (month<10?'0':'') + month + "/"
+                        + (date<10?'0':'') + date + " "
+                        + (hour<10?'0':'') + hour + ":"
+                        + (minute<10?'0':'') + minute + ":"
+                        + (second<10?'0':'')+ second;
+        setTime(newTimeStr);
     };
 
     const handleMoneyChange = (event) => {
@@ -63,14 +77,14 @@ const UpdateAccountPage = () => {
     const handleSubmit = (event) =>{
         event.preventDefault();
         if(!moneyMessage && money){
-
             const data = {
-                date: time,
+                time: time,
                 money: money,
                 category: category,
                 description: description
             }
             console.log(data);
+            setAccountData([...accountData, data]);
             navigateToAccountMainPage();
         }
         else{
