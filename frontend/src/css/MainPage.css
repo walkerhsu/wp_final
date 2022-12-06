@@ -30,10 +30,6 @@
     border-radius: 40%;
     opacity: 0.4;
     position: absolute;
-    top: 25.5%;
-    left: 16.5%;
-    /* margin-left: -250px;
-    margin-top: -250px; */
     transform-origin: center;
     animation: drift 7s infinite linear;
     z-index: -1;
