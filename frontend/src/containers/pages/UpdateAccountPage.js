@@ -7,8 +7,8 @@ import {FormControl, RadioGroup, FormControlLabel, Radio} from '@material-ui/cor
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { useAccount } from "./hooks/useAccount";
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { useAccount } from "../hooks/useAccount";
 
 const paperStyle={padding :20,height:'70vh',width:360, margin:"20px auto"}
 const btnstyle={margin:'8px 0'}
@@ -29,19 +29,16 @@ const UpdateAccountPage = () => {
     };
 
     const handleTimeChange = (Time) => {
+        const dayStr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         const newTime = Time.$d;
         const year = newTime.getFullYear();
         const month = newTime.getMonth() + 1;
         const date = newTime.getDate();
-        const hour = newTime.getHours();
-        const minute = newTime.getMinutes();
-        const second = newTime.getSeconds();
-        const newTimeStr = (year<10?'0':'') + year + "/"
-                        + (month<10?'0':'') + month + "/"
-                        + (date<10?'0':'') + date + " "
-                        + (hour<10?'0':'') + hour + ":"
-                        + (minute<10?'0':'') + minute + ":"
-                        + (second<10?'0':'')+ second;
+        const day = dayStr[newTime.getDay()];
+        const newTimeStr = (year<10?'0':'') + year + " / "
+                        + (month<10?'0':'') + month + " / "
+                        + (date<10?'0':'') + date + " ( "
+                        + day + " )";
         setTime(newTimeStr);
     };
 
@@ -81,28 +78,25 @@ const UpdateAccountPage = () => {
             const data = {
                 time: time,
                 money: money,
+                isIncome: isIncome,
                 category: category,
                 description: description
             }
             console.log(data);
             if(isIncome){
-                console.log("income");
                 setIncomeData([...incomeData, data]);
             }
             else{
-                console.log("expense");
                 setExpenseData([...expenseData, data]);
             }
             navigateToAccountMainPage();
         }
         else{
-            console.log(moneyMessage, money)
             console.log("Invalid input");
             alert("Invalid input");
         }
     }
-
-    
+  
     return (
         <Box component="form" 
             sx={{
@@ -118,7 +112,7 @@ const UpdateAccountPage = () => {
                 </Grid>
                 <div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateTimePicker
+                        <DesktopDatePicker
                             label="Time"
                             value={time}
                             onChange={handleTimeChange}

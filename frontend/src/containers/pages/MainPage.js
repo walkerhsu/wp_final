@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import {Button, } from "@material-ui/core"; 
-import '../css/MainPage.css'
+import '../../css/MainPage.css'
 // import LoginIcon from '@mui/icons-material/Login';
 
 const MainPage = () => {

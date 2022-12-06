@@ -1,8 +1,6 @@
 import { useState } from "react";
 import {
   format,
-//   subMonths,
-//   addMonths,
   startOfWeek,
   addDays,
   isSameDay,
@@ -15,23 +13,12 @@ const WeekCalendar = ({ showDetailsHandle }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-//   const changeMonthHandle = (btnType) => {
-//     if (btnType === "prev") {
-//       setCurrentMonth(subMonths(currentMonth, 1));
-//     }
-//     if (btnType === "next") {
-//       setCurrentMonth(addMonths(currentMonth, 1));
-//     }
-//   };
 
   const changeWeekHandle = (btnType) => {
-    //console.log("current week", currentWeek);
     if (btnType === "prev") {
-      //console.log(subWeeks(currentMonth, 1));
       setCurrentMonth(subWeeks(currentMonth, 1));
     }
     if (btnType === "next") {
-      //console.log(addWeeks(currentMonth, 1));
       setCurrentMonth(addWeeks(currentMonth, 1));
     }
   };
@@ -46,16 +33,8 @@ const WeekCalendar = ({ showDetailsHandle }) => {
     // console.log("selected day", selectedDate);
     return (
       <div className="header row flex-middle">
-        <div className="col col-start">
-          {/* <div className="icon" onClick={() => changeMonthHandle("prev")}>
-            prev month
-          </div> */}
-        </div>
         <div className="col col-center">
           <span>{format(currentMonth, dateFormat)}</span>
-        </div>
-        <div className="col col-end">
-          {/* <div className="icon" onClick={() => changeMonthHandle("next")}>next month</div> */}
         </div>
       </div>
     );
@@ -96,7 +75,7 @@ const WeekCalendar = ({ showDetailsHandle }) => {
             }`}
             key={day}
             onClick={() => {
-              const dayStr = format(cloneDay, "ccc dd MMM yy");
+              const dayStr = format(cloneDay, "yyyy / MM / dd ( ccc )");
               onDateClickHandle(cloneDay, dayStr);
             }}
           >

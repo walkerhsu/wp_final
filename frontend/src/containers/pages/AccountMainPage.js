@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {Button} from '@material-ui/core';
-import { useAccount } from "./hooks/useAccount";
+import { useAccount } from "../hooks/useAccount";
 import {Box, Tab} from "@mui/material";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+
 // import MonthCalendar from "../components/MonthCalendar";
-import WeekCalendar from "../components/WeekCalendar";
-import "../css/AccountMainPage.css"
+import WeekCalendar from "../../components/WeekCalendar";
+import DataTable from "../../components/DataTable";
+import DateDetail from "../DateDetail";
+// import DataTable from "./DataTable";
+import "../../css/AccountMainPage.css"
+
 
 const AccountMainPage = () => {
     const {incomeData, expenseData, setIncomeData, setExpenseData} = useAccount();
     const [value, setValue] = useState("income");
 
-    const [showDetails, setShowDetails] = useState(false);
-    const [data, setData] = useState(null);
+    const [showDateDetail, setShowDateDetail] = useState(false);
+    const [date, setDate] = useState(null);
     const navigate = useNavigate();
 
     const handleTabChange = (event, newValue) => {
@@ -30,20 +35,20 @@ const AccountMainPage = () => {
         navigate("/account/update");
     };
 
-    const showDetailsHandle = (dayStr) => {
-        setData(dayStr);
-        setShowDetails(true);
-      };
+    const showDetailsHandle = (dateStr) => {
+        setDate(dateStr);
+        setShowDateDetail(true);
+    };
     
     return (
         <div>
             <div className="WeekCalendar">
-                <h1>Week View Calendar with react</h1>
-                <br />
-                <h2>Example</h2>
+                <h1>Week Calendar</h1>
                 <WeekCalendar showDetailsHandle={showDetailsHandle} />
                 <br />
-                {showDetails ? <div>{data.data}</div> : null}
+                <div>{date}</div>
+                <br />
+                {showDateDetail ? <DateDetail currentDate={date}/> : null}
             </div>
             <br></br>
             <Button variant="contained" color="primary" onClick={navigateToUpdateAccount}>Update account data</Button>
@@ -58,29 +63,17 @@ const AccountMainPage = () => {
                         </TabList>
                     </Box>
                     <TabPanel value="income">
-                    {
-                        incomeData.length!==0?
-                        (incomeData.map((item, idx) => (
-                            <div id={"income"+idx} key={"income"+idx}>
-                                <p>time: {item.time}</p>
-                                <p>money: {item.money}</p>
-                                <p>category: {item.category}</p>
-                                <p>description: {item.description}</p>
-                            </div> 
-                        ))):(<div>no income data</div>)
-                    }</TabPanel>
+                        {incomeData.length !== 0 ?
+                            <DataTable data={incomeData}/>
+                            :<div>No income data...</div>
+                        }
+                    </TabPanel>
                     <TabPanel value="expense">
-                    {
-                        expenseData.length!==0?
-                        (expenseData.map((item, idx) => (
-                            <div id={"expense"+idx} key={"expense"+idx}>
-                                <p>time: {item.time}</p>
-                                <p>money: {item.money}</p>
-                                <p>category: {item.category}</p>
-                                <p>description: {item.description}</p>
-                            </div> 
-                        ))) : (<div>no expense data</div>)
-                    }</TabPanel>
+                        {expenseData.length !== 0 ?
+                            <DataTable data={expenseData}/>
+                            :<div>No expense data...</div>
+                        }
+                    </TabPanel>
                 </TabContext>
             </Box>
             

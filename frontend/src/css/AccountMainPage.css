@@ -4,7 +4,7 @@
 .WeekCalendar {
     font-family: sans-serif;
     text-align: center;
-    min-height: 700px;
+    min-height: 50vh;
     background-color: rgb(218, 243, 215);
     margin: 0;
     padding: 20px;
