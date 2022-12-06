@@ -1,37 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
 .MainPageWrapper {
-    height: 100%;
+    height: 100vh;
     width: 100%;
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-.bg-image {
-    background-image: url("../images/background.jpg");
-    width: 100%;
+.LogoWrapper {
     height: 100%;
-
-    /* 讓圖片可以跑到最下面 */
-    position: absolute;
-
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    /* 變模糊 */
-    filter: blur(3px);
-
-    opacity: 60%;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.MainPage {
-    height: 30%;
-    width: 30%;
+/* waveforms */
+.wave {
+    background: #ffd231;
+    width: 380px;
+    height: 380px;
+    border-radius: 40%;
+    opacity: 0.4;
+    position: absolute;
+    top: 25.5%;
+    left: 16.5%;
+    /* margin-left: -250px;
+    margin-top: -250px; */
+    transform-origin: center;
+    animation: drift 7s infinite linear;
+    z-index: -1;
+}
+.wave.two {
+    animation: drift 9s infinite linear;
+}
+.wave.three {
+    animation: drift 11s infinite linear;
+    opacity: 0.1;
+}
+@keyframes drift {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/* end of waveforms */
+
+.ButtonWrapper {
+    height: 100%;
+    width: 40%;
     /* background-color: aqua; */
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
 }

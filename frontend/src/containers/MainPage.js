@@ -14,13 +14,20 @@ const MainPage = () => {
     };
     return (
         <div className = 'MainPageWrapper'>
-            <div className = "bg-image"/>
-            <div className = "MainPage">
+            <div className = "LogoWrapper">
                 <h1>Main Page</h1>
+                <div class="wave one"></div>
+                <div class="wave two"></div>
+                <div class="wave three"></div>
+            </div>
+            <div className = "ButtonWrapper">
+                <h1>Login to Your Account</h1>
+                <br/>
+                <br/>
                 <Button variant="contained" color="primary" onClick={navigateToSignUp}>Signup</Button>
+                <br/>
                 <Button variant="contained" color="primary" onClick={navigateToSignIn}>Signin</Button>   
             </div>
-            
         </div>
     )
 }
