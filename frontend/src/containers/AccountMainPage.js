@@ -6,9 +6,18 @@ import {Box, Tab} from "@mui/material";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+// import MonthCalendar from "../components/MonthCalendar";
+import WeekCalendar from "../components/WeekCalendar";
+import "../css/AccountMainPage.css"
+
 const AccountMainPage = () => {
     const {incomeData, expenseData, setIncomeData, setExpenseData} = useAccount();
     const [value, setValue] = useState("income");
+
+    const [showDetails, setShowDetails] = useState(false);
+    const [data, setData] = useState(null);
+    const navigate = useNavigate();
+
     const handleTabChange = (event, newValue) => {
         console.log(newValue);
         setValue(newValue);
@@ -17,16 +26,29 @@ const AccountMainPage = () => {
         setIncomeData([]);
         setExpenseData([]);
     }
-    const navigate = useNavigate();
     const navigateToUpdateAccount = () => {
         navigate("/account/update");
     };
+
+    const showDetailsHandle = (dayStr) => {
+        setData(dayStr);
+        setShowDetails(true);
+      };
     
     return (
         <div>
-            <h1>AccountMainPage</h1>
+            <div className="WeekCalendar">
+                <h1>Week View Calendar with react</h1>
+                <br />
+                <h2>Example</h2>
+                <WeekCalendar showDetailsHandle={showDetailsHandle} />
+                <br />
+                {showDetails ? <div>{data.data}</div> : null}
+            </div>
+            <br></br>
             <Button variant="contained" color="primary" onClick={navigateToUpdateAccount}>Update account data</Button>
             <Button variant="contained" color="primary" onClick={resetData}>Reset account data</Button>
+            <br /><br />
             <Box sx={{ width: '100%', typography: 'body1' }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -61,6 +83,7 @@ const AccountMainPage = () => {
                     }</TabPanel>
                 </TabContext>
             </Box>
+            
         </div>
     );
 }
