@@ -14,6 +14,7 @@ const MainPage = () => {
     };
     return (
         <div className = 'MainPageWrapper'>
+            <div class="bg-image"/>
             <div className = "LogoWrapper">
                 <h1>Main Page</h1>
                 <div class="wave one"></div>
