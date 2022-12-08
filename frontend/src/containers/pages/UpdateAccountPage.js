@@ -136,7 +136,7 @@ const UpdateAccountPage = () => {
                     <TextField label='Category(optional)' placeholder='category' variant="outlined" onChange={handleCategoryChange} fullWidth ></TextField>
                     <TextField label='Description(optional)' placeholder='description' variant="outlined" onChange={handleDescriptionChange} fullWidth ></TextField>
                 </div>
-                <Button type='submit' color='primary' variant="contained" style={btnstyle} onClick={handleSubmit} fullWidth>Sign in</Button>
+                <Button type='submit' color='primary' variant="contained" style={btnstyle} onClick={handleSubmit} fullWidth>Update</Button>
             </Paper>
         </Box>
     );

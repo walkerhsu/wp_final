@@ -5,31 +5,37 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useNavigate } from "react-router-dom";
 
+import { useAccount } from "../hooks/useAccount";
+
 
 const SigninPage=()=>{
+    const {username, usernameMessage, password, passwordMessage,
+        setMe, resetSignInData, checkUsername, checkPassword} = useAccount();
     const paperStyle={padding :20,height:'70vh',width:360, margin:"20px auto"}
     const avatarStyle={backgroundColor:'#1bbd7e'}
     const btnstyle={margin:'8px 0'}
+
+
     // const [username, setUsername] = useState('');
-    // const [usernameValid, setUsernameValid] = useState(true);
     // const [usernameMessage, setUsernameMessage] = useState('');
 
     // const [password, setPassword] = useState('');
-    // const [passwordValid , setPasswordValid] = useState(true);
     // const [passwordMessage , setPasswordMessage] = useState('');
 
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // const data = new FormData(event.currentTarget);
-        // console.log(data)
-        // eslint-disable-next-line no-console
-        // console.log({
-        //     name: data.get('name'),
-        //     password: data.get('password'),
-        // });
-        navigate("/account")
+        if (!usernameMessage && !passwordMessage && username && password) {
+            alert("Sign in successfully")
+            navigate("/account")
+            setMe(username)
+            resetSignInData()
+        }
+        else {
+            alert("Sign in failed")
+        }
+        
     };
 
     return(
@@ -37,10 +43,14 @@ const SigninPage=()=>{
             <Paper elevation={10} style={paperStyle}>
                 <Grid align='center'>
                     <Avatar style={avatarStyle}><LockOutlinedIcon/></Avatar>
+                    <br />
                     <h2>Sign In</h2>
+                    <br />
                 </Grid>
-                <TextField label='Username' placeholder='Enter username' variant="outlined" fullWidth required/>
-                <TextField label='Password' placeholder='Enter password' type='password' variant="outlined" fullWidth required/>
+                <TextField label='Username' placeholder='Enter username' variant="outlined"  value={username}
+                        error={usernameMessage !== '' } helperText={usernameMessage} onChange={checkUsername} fullWidth required/>
+                <TextField label='Password' placeholder='Enter password' type='password' variant="outlined" value={password}
+                        error={passwordMessage !== '' } helperText={passwordMessage} onChange={checkPassword} fullWidth required/>
                 {/* view password: https://stackoverflow.com/questions/60391113/how-to-view-password-from-material-ui-textfield */}
                 <FormControlLabel
                     control={

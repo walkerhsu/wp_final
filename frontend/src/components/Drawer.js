@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
@@ -10,8 +11,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import CommentIcon from '@mui/icons-material/Comment';
 import styled from 'styled-components';
-import { fontSize } from '@mui/system';
+// import { fontSize } from '@mui/system';
 
 const BtnWrapper = styled.div`
   display: flex;
@@ -19,8 +21,8 @@ const BtnWrapper = styled.div`
   width: 100%;
 `
 
-export default function TemporaryDrawer() {
-  const [state, setState] = React.useState({
+const AboutUsDrawer = () => {
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
@@ -60,7 +62,8 @@ export default function TemporaryDrawer() {
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <CommentIcon />
+                {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -87,3 +90,5 @@ export default function TemporaryDrawer() {
     </BtnWrapper>
   );
 }
+
+export default AboutUsDrawer;

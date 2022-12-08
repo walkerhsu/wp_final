@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/system";
 import {Button} from '@material-ui/core';
 import { useAccount } from "../hooks/useAccount";
 import {Box, Tab} from "@mui/material";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+// import LogoutIcon from '@mui/icons-material/Logout';
 
 // import MonthCalendar from "../components/MonthCalendar";
 import WeekCalendar from "../../components/WeekCalendar";
@@ -14,9 +16,19 @@ import DateDetail from "../DateDetail";
 // import DataTable from "./DataTable";
 import "../../css/AccountMainPage.css"
 
+const LogOutButton = styled(Button)({
+    position: "absolute",
+    right: "0",
+    transform: "translate(-50%,0%)",
+    backgroundColor: "#1bbd7e",
+    color: "white",
+    "&:hover": {
+        backgroundColor: "#1bbd7e",
+    }
+})
 
 const AccountMainPage = () => {
-    const {incomeData, expenseData, setIncomeData, setExpenseData} = useAccount();
+    const {me, incomeData, expenseData, setMe, setIncomeData, setExpenseData} = useAccount();
     const [value, setValue] = useState("income");
 
     const [showDateDetail, setShowDateDetail] = useState(false);
@@ -35,6 +47,11 @@ const AccountMainPage = () => {
         navigate("/account/update");
     };
 
+    const navigateToMainPage = () => {
+        setMe('');
+        navigate("/");
+    };
+
     const showDetailsHandle = (dateStr) => {
         setDate(dateStr);
         setShowDateDetail(true);
@@ -42,8 +59,12 @@ const AccountMainPage = () => {
     
     return (
         <div>
+            <div className="AccountHeader">
+                <div>{me?me+'\'s':"My"} Account</div>
+                <LogOutButton variant="contained" color="primary" onClick={navigateToMainPage}>log Out</LogOutButton>
+            </div>
             <div className="WeekCalendar">
-                <h1>Week Calendar</h1>
+                <h2>Week Calendar</h2>
                 <WeekCalendar showDetailsHandle={showDetailsHandle} />
                 <br />
                 <div>{date}</div>
