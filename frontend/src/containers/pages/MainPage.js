@@ -6,6 +6,7 @@ import TemporaryDrawer from "../../components/Drawer";
 
 
 const MainPage = () => {
+    const a = "a"
     // const avatarStyle={backgroundColor:'#1bbd7e'}
     const navigate = useNavigate();
     const navigateToSignIn = () => {

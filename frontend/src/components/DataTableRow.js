@@ -10,7 +10,7 @@ const DataTableRow = ({singleData, isIncome, index}) => {
             <TableCell component="th" scope="row">
                 {singleData.time}
             </TableCell>
-            <TableCell align="right" >{singleData.isIncome?"income":"expense"}</TableCell>
+            <TableCell align="right" >{singleData.isIncome?"Income":"Expense"}</TableCell>
             <TableCell align="right" >{singleData.money}</TableCell>
             <TableCell align="right" >{singleData.category || "no category"}</TableCell>
             <TableCell align="right" >{singleData.description || "no description"}</TableCell>
