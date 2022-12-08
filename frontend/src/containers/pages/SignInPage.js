@@ -1,4 +1,5 @@
 import React from 'react'
+import {useRef} from 'react'
 import { Grid,Paper, Avatar, TextField, Button, Typography,Link } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -15,14 +16,21 @@ const SigninPage=()=>{
     const avatarStyle={backgroundColor:'#1bbd7e'}
     const btnstyle={margin:'8px 0'}
 
-
-    // const [username, setUsername] = useState('');
-    // const [usernameMessage, setUsernameMessage] = useState('');
-
-    // const [password, setPassword] = useState('');
-    // const [passwordMessage , setPasswordMessage] = useState('');
+    const usernamePointer = useRef(null);
+    const passwordPointer = useRef(null);
 
     const navigate = useNavigate();
+    
+    const onKeyPress = (field) => (event) => {
+        if (event.key === 'Enter') {
+            if (field === 'username') {
+                passwordPointer.current.focus();
+            }
+            else if (field === 'password') {
+                handleSubmit(event);
+            }
+        }
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -34,8 +42,8 @@ const SigninPage=()=>{
         }
         else {
             alert("Sign in failed")
-        }
-        
+            usernamePointer.current.focus()
+        }  
     };
 
     return(
@@ -47,10 +55,12 @@ const SigninPage=()=>{
                     <h2>Sign In</h2>
                     <br />
                 </Grid>
-                <TextField label='Username' placeholder='Enter username' variant="outlined"  value={username}
-                        error={usernameMessage !== '' } helperText={usernameMessage} onChange={checkUsername} fullWidth required/>
-                <TextField label='Password' placeholder='Enter password' type='password' variant="outlined" value={password}
-                        error={passwordMessage !== '' } helperText={passwordMessage} onChange={checkPassword} fullWidth required/>
+                <TextField inputRef={usernamePointer} label='Username' placeholder='Enter username' variant="outlined" value={username}
+                        error={usernameMessage !== '' } helperText={usernameMessage} onChange={checkUsername} fullWidth required
+                        onKeyPress={onKeyPress('username')}/>
+                <TextField inputRef={passwordPointer} label='Password' placeholder='Enter password' type='password' variant="outlined" value={password}
+                        error={passwordMessage !== '' } helperText={passwordMessage} onChange={checkPassword} fullWidth required
+                        onKeyPress={onKeyPress('password')}/>
                 {/* view password: https://stackoverflow.com/questions/60391113/how-to-view-password-from-material-ui-textfield */}
                 <FormControlLabel
                     control={
@@ -61,7 +71,7 @@ const SigninPage=()=>{
                     }
                     label="Remember me"
                 />
-                <Button type='submit' color='primary' variant="contained" style={btnstyle} onClick={handleSubmit}fullWidth>Sign in</Button>
+                <Button type='submit' color='primary' variant="contained" style={btnstyle} onClick={handleSubmit} fullWidth>Sign in</Button>
                 <Typography >
                      <Link href="#" >
                         Forgot password ?

@@ -7,7 +7,7 @@ import {Box, Tab} from "@mui/material";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-// import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 // import MonthCalendar from "../components/MonthCalendar";
 import WeekCalendar from "../../components/WeekCalendar";
@@ -61,7 +61,10 @@ const AccountMainPage = () => {
         <div>
             <div className="AccountHeader">
                 <div>{me?me+'\'s':"My"} Account</div>
-                <LogOutButton variant="contained" color="primary" onClick={navigateToMainPage}>log Out</LogOutButton>
+                <LogOutButton variant="contained" color="primary" onClick={navigateToMainPage}>
+                    log Out
+                    <LogoutIcon />
+                </LogOutButton>
             </div>
             <div className="WeekCalendar">
                 <h2>Week Calendar</h2>
@@ -72,7 +75,7 @@ const AccountMainPage = () => {
                 {showDateDetail ? <DateDetail currentDate={date}/> : null}
             </div>
             <br></br>
-            <Button variant="contained" color="primary" onClick={navigateToUpdateAccount}>Update account data</Button>
+            <Button margin="10px" variant="contained" color="primary" onClick={navigateToUpdateAccount}>Update account data</Button>
             <Button variant="contained" color="primary" onClick={resetData}>Reset account data</Button>
             <br /><br />
             <Box sx={{ width: '100%', typography: 'body1' }}>

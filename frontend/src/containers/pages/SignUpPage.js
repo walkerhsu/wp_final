@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import {TextField, Box, Paper, Grid, Avatar, Button} from '@material-ui/core';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -12,51 +13,24 @@ const btnstyle={margin:'8px 0'}
 const SignUpPage = () => {
     const {username, usernameMessage, password, passwordMessage, email, emailMessage,
             resetSignInData, checkUsername, checkPassword, checkEmail} = useAccount();
-    // const [username, setUsername] = useState('');
-    // const [usernameMessage, setUsernameMessage] = useState('');
-
-    // const [password, setPassword] = useState('');
-    // const [passwordMessage , setPasswordMessage] = useState('');
-
-    
-
+    const usernamePointer = useRef(null);
+    const passwordPointer = useRef(null);
+    const emailPointer = useRef(null);
     const navigate = useNavigate();
 
-    // const checkUsername = (event) => {
-    //     const username = event.target.value;
-    //     setUsername(username);
-    //     if (username.length < 5) {
-    //         setUsernameMessage('Username must be at least 5 characters long');
-    //     } 
-    //     else if (username.length > 20) {
-    //         setUsernameMessage('Username must be less than 20 characters long');
-    //     }
-    //     else {
-    //         setUsernameMessage('');
-    //     }
-    // }
-
-    // const checkPassword = (event) => {
-    //     const password = event.target.value;
-    //     setPassword(password);
-    //     if(event.target.value.length < 8) {
-    //         setPasswordMessage('Password must be at least 8 characters');
-    //     }
-    //     else if(event.target.value.length > 20) {
-    //         setPasswordMessage('Password must be less than 20 characters');
-    //     }
-    //     else if(event.target.value.search(/[a-z]/i) < 0) {
-    //         setPasswordMessage('Password must contain at least one letter.');
-    //     }
-    //     else if(event.target.value.search(/[0-9]/) < 0) {
-    //         setPasswordMessage('Password must contain at least one digit.');
-    //     }
-    //     else {
-    //         setPasswordMessage('');
-    //     }
-    // }
-
-    
+    const onKeyPress = (field) => (event) => {
+        if (event.key === 'Enter') {
+            if (field === 'username') {
+                passwordPointer.current.focus();
+            }
+            else if (field === 'password') {
+                emailPointer.current.focus();
+            }
+            else if (field === 'email') {
+                handleSubmit(event);
+            }
+        }
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -67,6 +41,7 @@ const SignUpPage = () => {
         }
         else {
             alert('Form not submitted');
+            usernamePointer.current.focus();
         }
     }
     return (
@@ -85,21 +60,21 @@ const SignUpPage = () => {
                 </Grid>
                 <br />
                 <Grid>
-                    <TextField required id="outlined-required-username" label="Username" variant="outlined" value={username}
-                            type="text" error={usernameMessage !== ""} helperText={usernameMessage} 
-                            placeholder="Username" onChange={checkUsername} fullWidth/>
+                    <TextField inputRef={usernamePointer} required id="outlined-required-username" label="Username" variant="outlined" value={username}
+                            type="text" error={usernameMessage !== ""} helperText={usernameMessage} fullWidth
+                            placeholder="Username" onChange={checkUsername} onKeyPress={onKeyPress('username')} />
                     
-                    <TextField required id="outlined-required-password" label="password" variant="outlined" value={password}
-                            type="password" error={passwordMessage !== ""} helperText={passwordMessage}
-                            placeholder="password" autoComplete="current-password" onChange={checkPassword} fullWidth/>
+                    <TextField inputRef={passwordPointer} required id="outlined-required-password" label="password" variant="outlined" value={password}
+                            type="password" error={passwordMessage !== ""} helperText={passwordMessage} fullWidth
+                            placeholder="password" autoComplete="current-password" onChange={checkPassword} onKeyPress={onKeyPress('password')} />
                     
                 
-                    <TextField required id="outlined-required-email" label="email" variant="outlined" value={email}
-                            error={emailMessage !== ""} helperText={emailMessage}
-                            placeholder="email" onChange={checkEmail} fullWidth/>
+                    <TextField inputRef={emailPointer} required id="outlined-required-email" label="email" variant="outlined" value={email}
+                            error={emailMessage !== ""} helperText={emailMessage} fullWidth
+                            placeholder="email" onChange={checkEmail} onKeyPress={onKeyPress('email')} />
                         
                 </Grid>
-                <Button type='submit' color='primary' variant="contained" style={btnstyle} onClick={handleSubmit} fullWidth>Sign in</Button>
+                <Button color='primary' variant="contained" style={btnstyle} onClick={handleSubmit} fullWidth>Sign in</Button>
             </Paper>
         </Box>
     );
