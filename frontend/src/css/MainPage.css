@@ -19,6 +19,14 @@
     align-items: center;
     justify-content: center;
 }
+.LogoWrapper .Logo {
+    height: 12%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 .LogoWrapper h1{
     font-size: 60px;
     font-family: 'Bradley Hand', cursive;
