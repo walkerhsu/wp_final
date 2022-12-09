@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {Avatar, Button, Paper, Box, Grid, TextField} from '@material-ui/core';
 import {FormControl, RadioGroup, FormControlLabel, Radio} from '@material-ui/core';
@@ -22,6 +22,12 @@ const UpdateAccountPage = () => {
     const [moneyMessage, setMoneyMessage] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
+
+    const timePointer = useRef(null);
+    const radioPointer = useRef(null);
+    const moneyPointer = useRef(null);
+    const categoryPointer = useRef(null);
+    const descriptionPointer = useRef(null);
 
     const navigate = useNavigate();
     const navigateToAccountMainPage = () => {
@@ -71,7 +77,30 @@ const UpdateAccountPage = () => {
         const newDescription = event.target.value;
         setDescription(newDescription);
     };
-    
+    const onKeyDown = (input) => (event) => {
+        if(event.key === "Enter"){
+            switch(input){
+                case "time":
+                    radioPointer.current.focus();
+                    break;
+                case "incomeExpense":
+                    moneyPointer.current.focus();
+                    break;
+                case "money":
+                    categoryPointer.current.focus();
+                    break;
+                case "category":
+                    descriptionPointer.current.focus();
+                    break;
+                case "description":
+                    handleSubmit(event);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     const handleSubmit = (event) =>{
         event.preventDefault();
         if(!moneyMessage && money){
@@ -89,11 +118,12 @@ const UpdateAccountPage = () => {
             else{
                 setExpenseData([...expenseData, data]);
             }
+            alert("Update successfully");
             navigateToAccountMainPage();
         }
         else{
-            console.log("Invalid input");
             alert("Invalid input");
+            timePointer.current.focus();
         }
     }
   
@@ -116,27 +146,35 @@ const UpdateAccountPage = () => {
                             label="Time"
                             value={time}
                             onChange={handleTimeChange}
-                            renderInput={(params) => <TextField {...params} required fullWidth/>}
+                            renderInput={(params) => {
+                                return <TextField {...params}  required fullWidth/>
+                            }}
                         />
                     </LocalizationProvider>
                     <FormControl>
                         <RadioGroup
                             row
                             aria-labelledby="radio-buttons-income-or-outcome-label"
-                            defaultValue="income"
+                            // defaultValue="income"
                             name="radio-buttons-group"
                             onChange={(event) => setIsIncome(event.target.value === "income")}
                         >
-                            <FormControlLabel value="income" control={<Radio />} label="Income" />
-                            <FormControlLabel value="Expense" control={<Radio />} label="Expense" />
+                            <FormControlLabel value="income" control={
+                                <Radio inputRef={radioPointer} onKeyDown={onKeyDown("incomeExpense")}/>
+                            } label="Income" />
+                            <FormControlLabel value="Expense" control={
+                                <Radio onKeyDown={onKeyDown("incomeExpense")}/>
+                            } label="Expense" />
                         </RadioGroup>
                     </FormControl>
-                    <TextField label='Money' placeholder='money' variant="outlined" onChange={handleMoneyChange}
-                            error={moneyMessage!==''} helperText={moneyMessage} fullWidth required></TextField>
-                    <TextField label='Category(optional)' placeholder='category' variant="outlined" onChange={handleCategoryChange} fullWidth ></TextField>
-                    <TextField label='Description(optional)' placeholder='description' variant="outlined" onChange={handleDescriptionChange} fullWidth ></TextField>
+                    <TextField inputRef={moneyPointer} label='Money' placeholder='money' variant="outlined" error={moneyMessage!==''} helperText={moneyMessage}
+                        onChange={handleMoneyChange} onKeyDown={onKeyDown("money")} fullWidth required></TextField>
+                    <TextField inputRef={categoryPointer} label='Category(optional)' placeholder='category' variant="outlined" 
+                        onChange={handleCategoryChange} onKeyDown={onKeyDown("category")} fullWidth ></TextField>
+                    <TextField inputRef={descriptionPointer} label='Description(optional)' placeholder='description' variant="outlined"
+                        onChange={handleDescriptionChange} onKeyDown={onKeyDown("description")} fullWidth ></TextField>
                 </div>
-                <Button type='submit' color='primary' variant="contained" style={btnstyle} onClick={handleSubmit} fullWidth>Update</Button>
+                <Button color='primary' variant="contained" style={btnstyle} onClick={handleSubmit} fullWidth>Update</Button>
             </Paper>
         </Box>
     );
