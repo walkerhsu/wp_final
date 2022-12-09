@@ -35,9 +35,13 @@ const AccountProvider = (props) => {
     const checkUsername = (event) => {
         const username = event.target.value;
         setUsername(username);
-        if (username.length < 5) {
-            setUsernameMessage('Username must be at least 5 characters long');
-        } 
+        if (username.length === 0) {
+            setUsernameMessage('Username must not be empty');
+        }
+        // username can't be all spaces
+        else if (username.trim().length === 0) {
+            setUsernameMessage('Username must not be all spaces');
+        }
         else if (username.length > 20) {
             setUsernameMessage('Username must be less than 20 characters long');
         }
@@ -52,8 +56,8 @@ const AccountProvider = (props) => {
         if(event.target.value.length < 8) {
             setPasswordMessage('Password must be at least 8 characters');
         }
-        else if(event.target.value.length > 20) {
-            setPasswordMessage('Password must be less than 20 characters');
+        else if(event.target.value.length > 30) {
+            setPasswordMessage('Password must be less than 30 characters');
         }
         else if(event.target.value.search(/[a-z]/i) < 0) {
             setPasswordMessage('Password must contain at least one letter.');
