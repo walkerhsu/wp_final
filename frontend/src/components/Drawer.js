@@ -9,9 +9,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import PeopleIcon from '@mui/icons-material/People';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
+import HelpIcon from '@mui/icons-material/Help';
 import CommentIcon from '@mui/icons-material/Comment';
+import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
 import styled from 'styled-components';
 // import { fontSize } from '@mui/system';
 
@@ -49,7 +51,7 @@ const AboutUsDrawer = () => {
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index === 0 ? <PeopleIcon /> : index === 1 ? <TipsAndUpdatesIcon /> : <HelpIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -58,12 +60,11 @@ const AboutUsDrawer = () => {
       </List>
       <Divider />
       <List>
-        {["User's Comments"].map((text, index) => (
+        {["User's Comments", "Contact Us"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <CommentIcon />
-                {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+                {index === 0 ? <CommentIcon /> : <PhoneForwardedIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
