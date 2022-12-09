@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import {Button, } from "@material-ui/core"; 
 import '../../css/MainPage.css'
 // import LoginIcon from '@mui/icons-material/Login';
-import AboutUsDrawer from "../../components/Drawer";
+import AboutUsDrawer from "../../components/AboutUsDrawer";
 
 
 const MainPage = () => {
