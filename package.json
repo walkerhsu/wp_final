@@ -5,9 +5,12 @@
   "repository": "https://github.com/walkerhsu/wp_final.git",
   "author": "walkerhsu <yp10731155@gmail.com>",
   "license": "MIT",
-  "scripts":{
+  "scripts": {
     "frontend": "cd frontend && yarn run start",
     "backend": "cd backend && yarn run server",
     "install:all": "cd frontend && yarn install && cd ../backend && yarn install"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.1"
   }
 }

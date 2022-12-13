@@ -6,13 +6,12 @@ import {
   isSameDay,
   lastDayOfWeek,
   addWeeks,
-  subWeeks
+  subWeeks,
 } from "date-fns";
 import "../css/WeekCalendar.css";
 const WeekCalendar = ({ showDetailsHandle }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-
 
   const changeWeekHandle = (btnType) => {
     if (btnType === "prev") {
