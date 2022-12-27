@@ -16,6 +16,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import PhoneForwardedIcon from "@mui/icons-material/PhoneForwarded";
 import styled from "styled-components";
 // import { fontSize } from '@mui/system';
+import { useNavigate } from "react-router-dom";
 
 const BtnWrapper = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ const BtnWrapper = styled.div`
 `;
 
 const AboutUsDrawer = () => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     top: false,
     left: false,
@@ -41,6 +43,30 @@ const AboutUsDrawer = () => {
 
     setState({ ...state, [anchor]: open });
   };
+  const navigateToAuthors = () => {
+    navigate("/authors");
+  };
+  const navigateInspiration = () => {
+    navigate("/inspiration");
+  };
+  const navigateToInstructions = () => {
+    navigate("/instructions");
+  };
+  const navigateToComments = () => {
+    navigate("/comments");
+  };
+  const navigateToContact = () => {
+    navigate("/contact");
+  };
+  const textList1 = [
+    {text: 'Authors', nav: navigateToAuthors},
+    {text: 'Inspiration', nav: navigateInspiration},
+    {text: 'App Instructions', nav: navigateToInstructions}
+  ]
+  const textList2 = [
+    {text: "User's Comments", nav: navigateToComments},
+    {text: 'Contact Us', nav: navigateToContact}
+  ]
 
   const list = (anchor) => (
     <Box
@@ -52,9 +78,9 @@ const AboutUsDrawer = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Authors", "Inspiration", "App Instructions"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+        {textList1.map((data, index) => (
+          <ListItem key={data.text} disablePadding>
+            <ListItemButton onClick={data.nav}>
               <ListItemIcon>
                 {index === 0 ? (
                   <PeopleIcon />
@@ -64,20 +90,20 @@ const AboutUsDrawer = () => {
                   <HelpIcon />
                 )}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={data.text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {["User's Comments", "Contact Us"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+        {textList2.map((data, index) => (
+          <ListItem key={data.text} disablePadding>
+            <ListItemButton onClick={data.nav}>
               <ListItemIcon>
                 {index === 0 ? <CommentIcon /> : <PhoneForwardedIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={data.text} />
             </ListItemButton>
           </ListItem>
         ))}
