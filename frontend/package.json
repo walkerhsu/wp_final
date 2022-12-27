@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.3",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@material-ui/core": "^4.12.4",
@@ -17,6 +18,8 @@
     "@testing-library/user-event": "^13.5.0",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
+    "graphql": "^16.6.0",
+    "graphql-ws": "^5.11.2",
     "react": "^18.2.0",
     "react-big-calendar": "^1.5.2",
     "react-dom": "^18.2.0",

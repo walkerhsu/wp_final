@@ -1,10 +1,12 @@
 import React from "react";
+import { useMutation } from "@apollo/client";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Box, Paper, Grid, Avatar, Button } from "@material-ui/core";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { useAccount } from "../hooks/useAccount";
+import { CREATE_USER_MUTATION } from '../../graphql';
 
 const paperStyle = {
   padding: 20,
@@ -28,9 +30,13 @@ const SignUpPage = () => {
     checkPassword,
     checkEmail,
   } = useAccount();
+
   const usernamePointer = useRef(null);
   const passwordPointer = useRef(null);
   const emailPointer = useRef(null);
+
+  const [createPerson , { data: createMessage}] = useMutation(CREATE_USER_MUTATION);
+
   const navigate = useNavigate();
 
   const onKeyPress = (field) => (event) => {
@@ -47,22 +53,40 @@ const SignUpPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (
-      !usernameMessage &&
-      !passwordMessage &&
-      !emailMessage &&
-      username &&
-      password &&
-      email
-    ) {
-      alert("Form submitted");
-      navigate("../signin");
+    if ( usernameMessage || passwordMessage || emailMessage || !username || !password || !email ) {
+      if (!username || usernameMessage) {
+        alert("Please enter your username correctly")
+        usernamePointer.current.focus();
+      } else if (!password || passwordMessage) {
+        alert("Please enter your password correctly")
+        passwordPointer.current.focus();
+      } else if (!email || emailMessage) {
+        alert("Please enter your email correctly")
+        emailPointer.current.focus();
+      }
+      return
+    } 
+    // 1. Create a new user in the database
+    createPerson({
+      variables: {
+        input: {
+          username: username,
+          password: password,
+          email: email,
+        },
+      },
+    })
+    // 2. If the backend returns a success message, then navigate to the signin page
+    //    If the backend returns a failure message, then display an alert
+    if (createMessage === "User created") {
+      alert(createMessage);
+      navigate("/signin");
       resetSignInData();
     } else {
-      alert("Form not submitted");
-      usernamePointer.current.focus();
+      alert(createMessage);
     }
   };
+
   return (
     <Box
       component="form"

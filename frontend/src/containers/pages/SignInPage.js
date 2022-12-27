@@ -13,8 +13,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 
 import { useAccount } from "../hooks/useAccount";
+import { VALIDATE_USER_MUTATION } from "../../graphql";
 
 const SigninPage = () => {
   const {
@@ -39,6 +41,10 @@ const SigninPage = () => {
   const usernamePointer = useRef(null);
   const passwordPointer = useRef(null);
 
+  const [validatePerson, { data: validateMessage }] = useMutation(
+    VALIDATE_USER_MUTATION
+  );
+
   const navigate = useNavigate();
 
   const onKeyPress = (field) => (event) => {
@@ -53,16 +59,37 @@ const SigninPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!usernameMessage && !passwordMessage && username && password) {
-      alert("Sign in successfully");
+    if (usernameMessage || passwordMessage || !username || !password) {
+      if (!username || usernameMessage) {
+        alert("Please enter your username correctly")
+        usernamePointer.current.focus();
+      } else if (!password || passwordMessage) {
+        alert("Please enter your password correctly")
+        passwordPointer.current.focus();
+      }
+      return
+    }
+    // 1. Send the username and password to the backend
+    validatePerson({
+      variables: {
+        input: {
+          username: username,
+          password: password,
+        },
+      },
+    });
+    // 2. If the backend returns a success message, then navigate to the account page
+    //    If the backend returns a failure message, then display an alert
+    if (validateMessage === "Sign in Success") {
+      alert(validateMessage)
       navigate("/account");
       setMe(username);
       resetSignInData();
-    } else {
-      alert("Sign in failed");
-      usernamePointer.current.focus();
     }
-  };
+    else {
+      alert(validateMessage)
+    }
+  }
 
   return (
     <Grid>
