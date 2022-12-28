@@ -21,8 +21,7 @@ const AccountContext = createContext({
 });
 const AccountProvider = (props) => {
   const [me, setMe] = useState("");
-  const [incomeData, setIncomeData] = useState([]);
-  const [expenseData, setExpenseData] = useState([]);
+
   const [username, setUsername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
 
@@ -31,6 +30,9 @@ const AccountProvider = (props) => {
 
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
+
+  const [incomeData, setIncomeData] = useState([]);
+  const [expenseData, setExpenseData] = useState([]);
 
   const checkUsername = (event) => {
     const username = event.target.value;

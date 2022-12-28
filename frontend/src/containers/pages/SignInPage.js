@@ -82,7 +82,7 @@ const SigninPage = () => {
     //    If the backend returns a failure message, then display an alert
     if (validateMessage === "Sign in Success") {
       alert(validateMessage)
-      navigate("/account");
+      navigate("/account/home");
       setMe(username);
       resetSignInData();
     }

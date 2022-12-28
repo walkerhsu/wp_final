@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/system";
 import { Button } from "@material-ui/core";
 import { useAccount } from "../hooks/useAccount";
 import { Box, Tab } from "@mui/material";
@@ -8,89 +7,45 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
-import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
 // import MonthCalendar from "../components/MonthCalendar";
 import WeekCalendar from "../../components/WeekCalendar";
 import DataTable from "../../components/DataTable";
 import DateDetail from "../DateDetail";
+
 import "../../css/AccountMainPage.css";
 
-const LogOutButton = styled(Button)({
-  position: "absolute",
-  right: "0",
-  transform: "translate(-50%,0%)",
-  backgroundColor: "#1bbd7e",
-  color: "white",
-  "&:hover": {
-    backgroundColor: "#1bbd7e",
-  },
-});
-
-const YourAccount = styled(Button)({
-  position: "absolute",
-  borderRadius: "8px",
-  left: "0",
-  transform: "translate(50%,0%)",
-  backgroundColor: "#1bbd7e",
-  color: "white",
-  "&:hover": {
-    backgroundColor: "#1bbd7e",
-  },
-});
-
 const AccountMainPage = () => {
-  const { me, incomeData, expenseData, setMe, setIncomeData, setExpenseData } =
-    useAccount();
+  const { incomeData, expenseData, setIncomeData, setExpenseData } = useAccount();
+  
   const [value, setValue] = useState("income");
 
   const [showDateDetail, setShowDateDetail] = useState(false);
   const [date, setDate] = useState(null);
+
   const navigate = useNavigate();
 
   const handleTabChange = (event, newValue) => {
     console.log(newValue);
     setValue(newValue);
   };
+
   const resetData = () => {
     setIncomeData([]);
     setExpenseData([]);
   };
+
   const navigateToUpdateAccount = () => {
     navigate("/account/update");
-  };
-
-  const navigateToMainPage = () => {
-    setMe("");
-    navigate("/");
   };
 
   const showDetailsHandle = (dateStr) => {
     setDate(dateStr);
     setShowDateDetail(true);
   };
+  
 
   return (
     <div>
-      <div className="AccountHeader">
-        <YourAccount
-          variant="contained"
-          color="primary"
-          onClick={navigateToMainPage}
-        >
-          <AccountCircleIcon />
-        </YourAccount>
-        <div>{me ? me + "'s" : "My"} Account</div>
-        <LogOutButton
-          variant="contained"
-          color="primary"
-          onClick={navigateToMainPage}
-        >
-          log Out
-          <LogoutIcon />
-        </LogOutButton>
-      </div>
       <div className="WeekCalendar">
         <h2>Week Calendar</h2>
         <WeekCalendar showDetailsHandle={showDetailsHandle} />
