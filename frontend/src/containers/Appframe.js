@@ -15,7 +15,6 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import LogoutIcon from "@mui/icons-material/Logout";
 
 
 import SideBarItems from "../components/SideBarItems";
@@ -23,7 +22,7 @@ import { useAccount } from "./hooks/useAccount";
 
 const drawerWidth = 240;
 
-const LogOutButton = styled(Button)(({ theme }) => ({
+const CreateDataBtn = styled(Button)(({ theme }) => ({
   position: "absolute",
   right: "0",
   transform: "translate(-50%,0%)",
@@ -91,7 +90,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function Appframe() {
-  console.log("Appframe")
   const navigate = useNavigate();
 
   const { me, setMe } = useAccount();
@@ -127,14 +125,7 @@ export default function Appframe() {
           <Typography variant="h6" noWrap component="div">
             {me ? me + "'s" : "My"} Account
           </Typography>
-          <LogOutButton
-            variant="contained"
-            color="primary"
-            onClick={navigateToMainPage}
-          >
-            log Out
-            <LogoutIcon />
-          </LogOutButton>
+          
         </Toolbar>
       </AppBar>
       <Drawer
@@ -144,6 +135,7 @@ export default function Appframe() {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            backgroundColor: "#cad8f8",
           },
         }}
         variant="persistent"
@@ -157,12 +149,12 @@ export default function Appframe() {
         </DrawerHeader>
         <Divider />
         <List>
-          <SideBarItems />
+          <SideBarItems handleDrawerClose={handleDrawerClose} />
         </List>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Outlet />
+          <Outlet />
       </Main>
     </Box>
   );
