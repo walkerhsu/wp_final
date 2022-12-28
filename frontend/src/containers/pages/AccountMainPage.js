@@ -15,7 +15,7 @@ import DateDetail from "../DateDetail";
 import "../../css/AccountMainPage.css";
 
 const AccountMainPage = () => {
-  const { incomeData, expenseData, setIncomeData, setExpenseData } = useAccount();
+  const { accountData, incomeData, expenseData, setAccountData, setIncomeData, setExpenseData } = useAccount();
   
   const [value, setValue] = useState("income");
 
@@ -55,14 +55,7 @@ const AccountMainPage = () => {
         {showDateDetail ? <DateDetail currentDate={date} /> : null}
       </div>
       <br></br>
-      <Button
-        margin="10px"
-        variant="contained"
-        color="primary"
-        onClick={navigateToUpdateAccount}
-      >
-        Update account data
-      </Button>
+      
       <Button variant="contained" color="primary" onClick={resetData}>
         Reset account data
       </Button>

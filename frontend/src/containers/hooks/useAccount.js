@@ -8,16 +8,19 @@ const AccountContext = createContext({
   passwordMessage: {},
   email: {},
   emailMessage: {},
+  accountData: {},
   incomeData: {},
   expenseData: {},
 
   setMe: () => {},
   checkUsername: () => {},
   checkPassword: () => {},
-  checkEmail: () => {},
-  resetSignInData: () => {},
+  checkEmail: () => { },
+  setAccountData: () => {},
   setIncomeData: () => {},
-  setExpenseData: () => {},
+  setExpenseData: () => { },
+  resetSignInData: () => {},
+
 });
 const AccountProvider = (props) => {
   const [me, setMe] = useState("");
@@ -31,6 +34,7 @@ const AccountProvider = (props) => {
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
+  const [accountData, setAccountData] = useState([]);
   const [incomeData, setIncomeData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
 
@@ -102,15 +106,19 @@ const AccountProvider = (props) => {
         passwordMessage,
         email,
         emailMessage,
+        accountData,
         incomeData,
         expenseData,
+
         setMe,
         checkUsername,
         checkPassword,
         checkEmail,
-        resetSignInData,
+        setAccountData,
         setIncomeData,
         setExpenseData,
+        resetSignInData,
+
       }}
       {...props}
     />

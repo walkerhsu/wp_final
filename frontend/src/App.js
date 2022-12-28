@@ -5,7 +5,7 @@ import SignInPage from "./containers/pages/SignInPage";
 import MainPage from "./containers/pages/MainPage";
 import SignUpPage from "./containers/pages/SignUpPage";
 import Appframe from "./containers/Appframe";
-import UpdateAccountPage from "./containers/pages/UpdateAccountPage";
+import UpdateAccountPage from "./components/UpdateAccountForm";
 import AccountMainPage from "./containers/pages/AccountMainPage";
 import CalendarPage from "./containers/pages/CalendarPage";
 import AuthorsPage from "./containers/pages/AuthorsPage";

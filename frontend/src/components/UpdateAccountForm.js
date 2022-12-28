@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/system";
 import { Avatar, Button, Paper, Box, Grid, TextField } from "@material-ui/core";
 import {
   FormControl,
@@ -8,41 +9,80 @@ import {
   FormControlLabel,
   Radio,
 } from "@material-ui/core";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { useAccount } from "../hooks/useAccount";
+import { useAccount } from "../containers/hooks/useAccount";
+
+const categories = [
+  "Category",
+  "Income",
+  "Transport",
+  "Food",
+  "Necessities",
+  "3C",
+  "Health",
+  "Entertainment",
+  "Others",
+];
 
 const paperStyle = {
   padding: 20,
   height: "70vh",
-  width: 360,
+  width: 480,
   margin: "20px auto",
 };
-const btnstyle = { margin: "8px 0" };
+const btnStyle = {
+  margin: "8px 0",
+  color: "white",
+  width: "30%",
+  backgroundColor: "#bf209c",
+  ":hover": {
+    backgroundColor: "#5a104a",
+  },
+};
+
+const InputWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+  height: "70%"
+})
+
+const BtnWrapper = styled("div")({
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "center",
+  width: "100%",
+  color: "white",
+});
+
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
-const UpdateAccountPage = () => {
-  const { incomeData, expenseData, setIncomeData, setExpenseData } =
+const UpdateAccountForm = ({ handleModalClose }) => {
+  const { accountData, incomeData, expenseData, setAccountData, setIncomeData, setExpenseData } =
     useAccount();
   const [time, setTime] = useState("");
   const [isIncome, setIsIncome] = useState(true);
+  const [name, setName] = useState("");
   const [money, setMoney] = useState("");
   const [moneyMessage, setMoneyMessage] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Category");
   const [description, setDescription] = useState("");
 
-  const timePointer = useRef(null);
-  const radioPointer = useRef(null);
+  const namePointer = useRef(null)
   const moneyPointer = useRef(null);
-  const categoryPointer = useRef(null);
   const descriptionPointer = useRef(null);
 
   const navigate = useNavigate();
   const navigateToAccountMainPage = () => {
-    navigate("/account");
+    navigate("/account/home");
   };
 
   const handleTimeChange = (Time) => {
@@ -67,6 +107,17 @@ const UpdateAccountPage = () => {
     setTime(newTimeStr);
   };
 
+  const handleNameChange = (event) => {
+    const newName = event.target.value;
+    setName(newName)
+  }
+
+  const handleCategoryChange = (event) => {
+    const newCategory = event.target.value;
+    // console.log(newCategory);
+    setCategory(newCategory);
+  };
+
   const handleMoneyChange = (event) => {
     const newMoney = event.target.value;
     if (
@@ -87,28 +138,18 @@ const UpdateAccountPage = () => {
     }
   };
 
-  const handleCategoryChange = (event) => {
-    const newCategory = event.target.value;
-    setCategory(newCategory);
-  };
-
   const handleDescriptionChange = (event) => {
     const newDescription = event.target.value;
     setDescription(newDescription);
   };
+
   const onKeyDown = (input) => (event) => {
     if (event.key === "Enter") {
       switch (input) {
         case "time":
-          radioPointer.current.focus();
-          break;
-        case "incomeExpense":
-          moneyPointer.current.focus();
+          namePointer.current.focus();
           break;
         case "money":
-          categoryPointer.current.focus();
-          break;
-        case "category":
           descriptionPointer.current.focus();
           break;
         case "description":
@@ -122,26 +163,42 @@ const UpdateAccountPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!moneyMessage && money) {
-      const data = {
-        time: time,
-        money: money,
-        isIncome: isIncome,
-        category: category,
-        description: description,
-      };
-      console.log(data);
-      if (isIncome) {
-        setIncomeData([...incomeData, data]);
-      } else {
-        setExpenseData([...expenseData, data]);
-      }
-      alert("Update successfully");
-      navigateToAccountMainPage();
-    } else {
-      alert("Invalid input");
-      timePointer.current.focus();
+    if (!time) {
+      alert("Time should be chosen")
+      return
     }
+    if (!name) {
+      alert("Name should not be empty")
+      namePointer.current.focus()
+      return
+    }
+    if (category === "Category") {
+      alert("Category should be chosen")
+      return
+    }
+    if (moneyMessage || !money) {
+
+      alert(moneyMessage?moneyMessage:"Money should not be empty")
+      moneyPointer.current.focus()
+      return
+    }
+    const data = {
+      time: time,
+      name: name,
+      money: money,
+      category: category,
+      description: description,
+    };
+    console.log(data);
+    setAccountData([...accountData, data]);
+    if (category==="Income") {
+      setIncomeData([...incomeData, data]);
+    } else {
+      setExpenseData([...expenseData, data]);
+    }
+    alert("Update successfully");
+    handleModalClose();
+    navigateToAccountMainPage();
   };
 
   return (
@@ -160,7 +217,7 @@ const UpdateAccountPage = () => {
           </Avatar>
           <h2>Update Account</h2>
         </Grid>
-        <div>
+        <InputWrapper>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
               label="Time"
@@ -171,33 +228,36 @@ const UpdateAccountPage = () => {
               }}
             />
           </LocalizationProvider>
-          <FormControl>
-            <RadioGroup
-              row
-              aria-labelledby="radio-buttons-income-or-outcome-label"
-              // defaultValue="income"
-              name="radio-buttons-group"
-              onChange={(event) => setIsIncome(event.target.value === "income")}
+          <TextField
+            inputRef={namePointer}
+            // value={money}
+            label="Name"
+            placeholder="name"
+            variant="outlined"
+            onChange={handleNameChange}
+            onKeyDown={onKeyDown("name")}
+            fullWidth
+            required
+          ></TextField>
+          <FormControl fullWidth >
+            <InputLabel id="demo-simple-select-autowidth-label">
+              Category
+            </InputLabel>
+            <Select
+              labelId="Category"
+              id="category"
+              value={category}
+              label="Category"
+              onChange={handleCategoryChange}
             >
-              <FormControlLabel
-                value="income"
-                control={
-                  <Radio
-                    inputRef={radioPointer}
-                    onKeyDown={onKeyDown("incomeExpense")}
-                  />
-                }
-                label="Income"
-              />
-              <FormControlLabel
-                value="Expense"
-                control={<Radio onKeyDown={onKeyDown("incomeExpense")} />}
-                label="Expense"
-              />
-            </RadioGroup>
+              {categories.map((cat) => (
+                <MenuItem value={cat} key={cat}>{cat}</MenuItem>
+              ))}
+            </Select>
           </FormControl>
           <TextField
             inputRef={moneyPointer}
+            // value={money}
             label="Money"
             placeholder="money"
             variant="outlined"
@@ -208,15 +268,7 @@ const UpdateAccountPage = () => {
             fullWidth
             required
           ></TextField>
-          <TextField
-            inputRef={categoryPointer}
-            label="Category(optional)"
-            placeholder="category"
-            variant="outlined"
-            onChange={handleCategoryChange}
-            onKeyDown={onKeyDown("category")}
-            fullWidth
-          ></TextField>
+
           <TextField
             inputRef={descriptionPointer}
             label="Description(optional)"
@@ -226,18 +278,27 @@ const UpdateAccountPage = () => {
             onKeyDown={onKeyDown("description")}
             fullWidth
           ></TextField>
-        </div>
-        <Button
-          color="primary"
-          variant="contained"
-          style={btnstyle}
-          onClick={handleSubmit}
-          fullWidth
-        >
-          Update
-        </Button>
+        </InputWrapper>
+        <BtnWrapper>
+          <Button
+            color="primary"
+            variant="contained"
+            style={btnStyle}
+            onClick={handleSubmit}
+          >
+            Update
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            style={btnStyle}
+            onClick={handleModalClose}
+          >
+            Close
+          </Button>
+        </BtnWrapper>
       </Paper>
     </Box>
   );
 };
-export default UpdateAccountPage;
+export default UpdateAccountForm;

@@ -18,6 +18,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 
 import SideBarItems from "../components/SideBarItems";
+import UpdateAccountModal from "./UpdateAccountModal";
 import { useAccount } from "./hooks/useAccount";
 
 const drawerWidth = 240;
@@ -125,7 +126,7 @@ export default function Appframe() {
           <Typography variant="h6" noWrap component="div">
             {me ? me + "'s" : "My"} Account
           </Typography>
-          
+          <UpdateAccountModal />
         </Toolbar>
       </AppBar>
       <Drawer
