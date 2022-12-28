@@ -3,12 +3,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
 import { Avatar, Button, Paper, Box, Grid, TextField } from "@material-ui/core";
-import {
-  FormControl,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from "@material-ui/core";
+import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -69,7 +64,6 @@ const UpdateAccountForm = ({ handleModalClose }) => {
   const { accountData, incomeData, expenseData, setAccountData, setIncomeData, setExpenseData } =
     useAccount();
   const [time, setTime] = useState("");
-  const [isIncome, setIsIncome] = useState(true);
   const [name, setName] = useState("");
   const [money, setMoney] = useState("");
   const [moneyMessage, setMoneyMessage] = useState("");
