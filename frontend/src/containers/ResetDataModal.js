@@ -1,14 +1,7 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
+import React from "react";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-// web.cjs is required for IE11 support
 import { useSpring, animated } from "react-spring";
-
-import UpdateAccountForm from "../components/UpdateAccountForm";
+import ResetDataForm from "../components/ResetDataForm";
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
@@ -34,15 +27,7 @@ const Fade = React.forwardRef(function Fade(props, ref) {
   );
 });
 
-Fade.propTypes = {
-  children: PropTypes.element,
-  in: PropTypes.bool.isRequired,
-  onEnter: PropTypes.func,
-  onExited: PropTypes.func,
-};
-
-
-export default function UpdateAccountModal({open, handleModalClose, data}) {
+const resetDataModal = ({ open, handleModalClose, data }) => {
   return (
     <Modal
       aria-labelledby="spring-modal-title"
@@ -52,8 +37,10 @@ export default function UpdateAccountModal({open, handleModalClose, data}) {
       closeAfterTransition
     >
       <Fade in={open}>
-        <UpdateAccountForm handleModalClose={handleModalClose} data={data} />
+        <ResetDataForm handleModalClose={handleModalClose} data={data} />
       </Fade>
     </Modal>
   );
-}
+};
+
+export default resetDataModal;

@@ -15,13 +15,34 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useAccount } from "../containers/hooks/useAccount";
 
+const TimeFormatting = (Time) => {
+  const dayStr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const year = Time.getFullYear();
+  const month = Time.getMonth() + 1;
+  const date = Time.getDate();
+  const day = dayStr[Time.getDay()];
+  const TimeStr =
+    (year < 10 ? "0" : "") +
+    year +
+    " / " +
+    (month < 10 ? "0" : "") +
+    month +
+    " / " +
+    (date < 10 ? "0" : "") +
+    date +
+    " ( " +
+    day +
+    " )";
+  return TimeStr;
+}
+
 const categories = [
   "Category",
   "Income",
   "Transport",
   "Food",
   "Necessities",
-  "3C",
+  "Electronics",
   "Health",
   "Entertainment",
   "Others",
@@ -60,15 +81,22 @@ const BtnWrapper = styled("div")({
 
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
-const UpdateAccountForm = ({ handleModalClose }) => {
+const UpdateAccountForm = ({ handleModalClose, data }) => {
+  const defaultFormData = {
+    date: data.date ? data.date : TimeFormatting(new Date()),
+    name: data.name ? data.name : "name",
+    category: data.category ? data.category : "Income",
+    money: data.money ? data.money : "100",
+    description: data.description ? data.description : "None",
+  };
   const { accountData, incomeData, expenseData, setAccountData, setIncomeData, setExpenseData } =
     useAccount();
-  const [time, setTime] = useState("");
-  const [name, setName] = useState("");
-  const [money, setMoney] = useState("");
+  const [time, setTime] = useState(defaultFormData.date);
+  const [name, setName] = useState(defaultFormData.name);
+  const [money, setMoney] = useState(defaultFormData.money);
   const [moneyMessage, setMoneyMessage] = useState("");
-  const [category, setCategory] = useState("Category");
-  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState(defaultFormData.category);
+  const [description, setDescription] = useState(defaultFormData.description);
 
   const namePointer = useRef(null)
   const moneyPointer = useRef(null);
@@ -79,26 +107,10 @@ const UpdateAccountForm = ({ handleModalClose }) => {
     navigate("/account/home");
   };
 
+  
+
   const handleTimeChange = (Time) => {
-    const dayStr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const newTime = Time.$d;
-    const year = newTime.getFullYear();
-    const month = newTime.getMonth() + 1;
-    const date = newTime.getDate();
-    const day = dayStr[newTime.getDay()];
-    const newTimeStr =
-      (year < 10 ? "0" : "") +
-      year +
-      " / " +
-      (month < 10 ? "0" : "") +
-      month +
-      " / " +
-      (date < 10 ? "0" : "") +
-      date +
-      " ( " +
-      day +
-      " )";
-    setTime(newTimeStr);
+    setTime(TimeFormatting(Time.$d));
   };
 
   const handleNameChange = (event) => {
@@ -114,6 +126,7 @@ const UpdateAccountForm = ({ handleModalClose }) => {
 
   const handleMoneyChange = (event) => {
     const newMoney = event.target.value;
+    setMoney(newMoney);
     if (
       newMoney > 0 &&
       newMoney.search(/[1-9]/) >= 0 &&
@@ -224,7 +237,7 @@ const UpdateAccountForm = ({ handleModalClose }) => {
           </LocalizationProvider>
           <TextField
             inputRef={namePointer}
-            // value={money}
+            value={name}
             label="Name"
             placeholder="name"
             variant="outlined"
@@ -251,7 +264,7 @@ const UpdateAccountForm = ({ handleModalClose }) => {
           </FormControl>
           <TextField
             inputRef={moneyPointer}
-            // value={money}
+            value={money}
             label="Money"
             placeholder="money"
             variant="outlined"
@@ -265,6 +278,7 @@ const UpdateAccountForm = ({ handleModalClose }) => {
 
           <TextField
             inputRef={descriptionPointer}
+            value={description}
             label="Description(optional)"
             placeholder="description"
             variant="outlined"

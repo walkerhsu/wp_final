@@ -29,7 +29,7 @@ const OtherItems = [
   }
 ]
 
-export default function SideBarItems({handleDrawerClose}) {
+export default function SideBarItems({ handleDrawerClose }) {
   const location = useLocation();
   const currentPath = location.pathname;
   return (

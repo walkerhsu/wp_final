@@ -16,23 +16,22 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-
 import SideBarItems from "../components/SideBarItems";
 import UpdateAccountModal from "./UpdateAccountModal";
 import { useAccount } from "./hooks/useAccount";
 
 const drawerWidth = 240;
 
-const CreateDataBtn = styled(Button)(({ theme }) => ({
-  position: "absolute",
-  right: "0",
-  transform: "translate(-50%,0%)",
-  backgroundColor: "#32b5b2",
-  color: "white",
-  "&:hover": {
-    backgroundColor: "#2ba2a0",
-  },
-}));
+// const CreateDataBtn = styled(Button)(({ theme }) => ({
+//   position: "absolute",
+//   right: "0",
+//   transform: "translate(-50%,0%)",
+//   backgroundColor: "#32b5b2",
+//   color: "white",
+//   "&:hover": {
+//     backgroundColor: "#2ba2a0",
+//   },
+// }));
 
 // const LogOutButton = styled(Button)({
 //   position: "absolute",
@@ -44,6 +43,20 @@ const CreateDataBtn = styled(Button)(({ theme }) => ({
 //     backgroundColor: "#2ba2a0",
 //   },
 // });
+
+
+
+const btnStyle = {
+  position: "absolute",
+  borderRadius: "8px",
+  right: "0",
+  transform: "translate(-25%,-50%)",
+  backgroundColor: "#32b5b2",
+  color: "white",
+  "&:hover": {
+    backgroundColor: "#2ba2a0",
+  },
+};
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -95,6 +108,15 @@ export default function Appframe() {
 
   const { me, setMe } = useAccount();
   const [open, setOpen] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  }
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -113,7 +135,7 @@ export default function Appframe() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar >
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -126,7 +148,16 @@ export default function Appframe() {
           <Typography variant="h6" noWrap component="div">
             {me ? me + "'s" : "My"} Account
           </Typography>
-          <UpdateAccountModal />
+          <div>
+            <Button onClick={handleModalOpen} style={btnStyle}>
+              Create New item
+            </Button>
+            <UpdateAccountModal
+              open={modalOpen}
+              handleModalClose={handleModalClose}
+              data={{}}
+            />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -155,7 +186,7 @@ export default function Appframe() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-          <Outlet />
+        <Outlet />
       </Main>
     </Box>
   );

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { useAccount } from "../hooks/useAccount";
 import { Box, Tab } from "@mui/material";
@@ -7,46 +6,24 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
-// import MonthCalendar from "../components/MonthCalendar";
-import WeekCalendar from "../../components/WeekCalendar";
 import DataTable from "../../components/DataTable";
-import DateDetail from "../DateDetail";
+import ResetDataModal from "../ResetDataModal";
 
 import "../../css/AccountMainPage.css";
 
 const AccountMainPage = () => {
-  const { accountData, incomeData, expenseData, setAccountData, setIncomeData, setExpenseData } = useAccount();
-  
+  const { accountData, incomeData, expenseData } = useAccount();
   const [value, setValue] = useState("income");
-
-  const [showDateDetail, setShowDateDetail] = useState(false);
-  const [date, setDate] = useState(null);
-
-  const navigate = useNavigate();
+  const [reset, setReset] = useState(false);
 
   const handleTabChange = (event, newValue) => {
     console.log(newValue);
     setValue(newValue);
   };
 
-  const resetData = () => {
-    setIncomeData([]);
-    setExpenseData([]);
-  };
-
-  const navigateToUpdateAccount = () => {
-    navigate("/account/update");
-  };
-
-  const showDetailsHandle = (dateStr) => {
-    setDate(dateStr);
-    setShowDateDetail(true);
-  };
-  
-
   return (
     <div>
-      <div className="WeekCalendar">
+      {/* <div className="WeekCalendar">
         <h2>Week Calendar</h2>
         <WeekCalendar showDetailsHandle={showDetailsHandle} />
         <br />
@@ -54,11 +31,22 @@ const AccountMainPage = () => {
         <br />
         {showDateDetail ? <DateDetail currentDate={date} /> : null}
       </div>
-      <br></br>
-      
-      <Button variant="contained" color="primary" onClick={resetData}>
-        Reset account data
-      </Button>
+      <br></br> */}
+      <DataTable data={accountData} />
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setReset(true)}
+        >
+          Reset account data
+        </Button>
+        <ResetDataModal
+          open={reset}
+          handleModalClose={() => setReset(false)}
+          data={accountData}
+        />
+      </div>
       <br />
       <br />
       <Box sx={{ width: "100%", typography: "body1" }}>
