@@ -47,11 +47,11 @@ const drawerWidth = 240;
 const BtnWrapper = styled("div")({
   position: "absolute",
   right: "0",
-  transform: "translate(-10%,0%)",
+  transform: "translate(-5%,0%)",
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-around",
-  width: "25vw",
+  width: "360px",
 });
 
 const btnStyle = {

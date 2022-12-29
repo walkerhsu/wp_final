@@ -33,20 +33,18 @@ const TimeFormatting = (Time) => {
     day +
     " )";
   return TimeStr;
-}
-
-
+};
 
 const paperStyle = {
   padding: 20,
-  height: "70vh",
-  width: 480,
+  height: 700,
+  width: 520,
   margin: "20px auto",
 };
 const btnStyle = {
   margin: "8px 0",
   color: "white",
-  width: "30%",
+  width: "35%",
   backgroundColor: "#bf209c",
   ":hover": {
     backgroundColor: "#5a104a",
@@ -57,8 +55,8 @@ const InputWrapper = styled("div")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
-  height: "70%"
-})
+  height: "75%",
+});
 
 const BtnWrapper = styled("div")({
   display: "flex",
@@ -75,19 +73,23 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
     date: data.date ? data.date : TimeFormatting(new Date()),
     name: data.name ? data.name : "name",
     category: data.category ? data.category : "Income",
+    subCategory: data.subCategory ? data.subCategory : "Salary",
     money: data.money ? data.money : "100",
     description: data.description ? data.description : "None",
   };
-  const { accountData, categories, setAccountData, } =
-    useAccount();
+  const { accountData, categories, setAccountData } = useAccount();
   const [time, setTime] = useState(defaultFormData.date);
   const [name, setName] = useState(defaultFormData.name);
   const [money, setMoney] = useState(defaultFormData.money);
   const [moneyMessage, setMoneyMessage] = useState("");
   const [category, setCategory] = useState(defaultFormData.category);
+  const [subCategory, setSubCategory] = useState(defaultFormData.subCategory);
+  const [subCategories, setSubCategories] = useState(
+    categories.filter((one_category) => one_category.cat === category)[0].subcat
+  );
   const [description, setDescription] = useState(defaultFormData.description);
 
-  const namePointer = useRef(null)
+  const namePointer = useRef(null);
   const moneyPointer = useRef(null);
   const descriptionPointer = useRef(null);
 
@@ -97,13 +99,22 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
 
   const handleNameChange = (event) => {
     const newName = event.target.value;
-    setName(newName)
-  }
+    setName(newName);
+  };
 
   const handleCategoryChange = (event) => {
     const newCategory = event.target.value;
-    // console.log(newCategory);
+    const newSubCategories = categories.filter(
+      (category) => category.cat === newCategory
+    )[0].subcat;
     setCategory(newCategory);
+    setSubCategories(newSubCategories);
+    setSubCategory(newSubCategories[0]);
+  };
+
+  const handleSubCategoryChange = (event) => {
+    const newSubCategory = event.target.value;
+    setSubCategory(newSubCategory);
   };
 
   const handleMoneyChange = (event) => {
@@ -153,29 +164,25 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!time) {
-      alert("Time should be chosen")
-      return
+      alert("Time should be chosen");
+      return;
     }
     if (!name) {
-      alert("Name should not be empty")
-      namePointer.current.focus()
-      return
-    }
-    if (category === "Category") {
-      alert("Category should be chosen")
-      return
+      alert("Name should not be empty");
+      namePointer.current.focus();
+      return;
     }
     if (moneyMessage || !money) {
-
-      alert(moneyMessage?moneyMessage:"Money should not be empty")
-      moneyPointer.current.focus()
-      return
+      alert(moneyMessage ? moneyMessage : "Money should not be empty");
+      moneyPointer.current.focus();
+      return;
     }
     const data = {
       time: time,
       name: name,
       money: money,
       category: category,
+      subCategory: subCategory,
       description: description,
     };
     console.log(data);
@@ -222,10 +229,8 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
             fullWidth
             required
           ></TextField>
-          <FormControl fullWidth >
-            <InputLabel id="demo-simple-select-autowidth-label">
-              Category
-            </InputLabel>
+          <FormControl fullWidth>
+            <InputLabel id="category-label">Category</InputLabel>
             <Select
               labelId="Category"
               id="category"
@@ -233,8 +238,26 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
               label="Category"
               onChange={handleCategoryChange}
             >
-              {categories.map((cat) => (
-                <MenuItem value={cat} key={cat}>{cat}</MenuItem>
+              {categories.map((category) => (
+                <MenuItem value={category.cat} key={category.cat}>
+                  {category.cat}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth disabled>
+            <InputLabel id="subCategory-label">SubCategory</InputLabel>
+            <Select
+              labelId="SubCategory"
+              id="subCategory"
+              value={subCategory}
+              label="SubCategory"
+              onChange={handleSubCategoryChange}
+            >
+              {subCategories?.map((sub_category) => (
+                <MenuItem value={sub_category} key={sub_category}>
+                  {sub_category}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>

@@ -49,21 +49,17 @@ const BtnWrapper = styled("div")({
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
 const ResetDataForm = ({ handleModalClose, data }) => {
-    console.log(data)
-  const { accountData, setAccountData, setIncomeData, setExpenseData } =
-    useAccount();
+  const { accountData, setAccountData } = useAccount();
 
   const handleResetData = () => {
     if (data.length === accountData.length) {
       alert("Reset all data");
       setAccountData([]);
-      setIncomeData([]);
-      setExpenseData([]);
       handleModalClose();
       return;
     }
     alert("Reset one data");
-    const resetData = accountData.filter((item) => !_.isEqual(item, data));
+    const resetData = accountData.filter((item) => !_.isEqual(item, data[0]));
     setAccountData(resetData);
     handleModalClose();
   };
@@ -84,7 +80,8 @@ const ResetDataForm = ({ handleModalClose, data }) => {
         </Grid>
         <InputWrapper>
           <Typography>
-            You are going to clear {data.length === 1 ? "one" : "all"} data. Are
+            You are going to remove
+            {data.length === accountData.length ? " all " : ` one ${data[0].category} `}data. Are
             you sure ?
           </Typography>
           <BtnWrapper>

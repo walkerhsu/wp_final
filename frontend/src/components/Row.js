@@ -51,31 +51,28 @@ function Row({ item }) {
           onClick={onCollapse}
           sx={{ cursor: "pointer" }}
         >
-          <Typography>{item.category?.toLowerCase()}</Typography>
+          <Typography>{item.subCategory?.toLowerCase()}</Typography>
         </TableCell>
         <TableCell align="right" data-cy="item-edit">
           <IconButton onClick={onEdit} data-cy="update-item">
             <EditIcon />
           </IconButton>
-          <div>
             <IconButton onClick={onDelete} data-cy="delete-item">
               <DeleteIcon />
             </IconButton>
             <ResetDataModal
               open={deleteOpen}
               handleModalClose={() => setDeleteOpen(false)}
-              data={item}
+              data={[item]}
             />
-          </div>
         </TableCell>
       </TableRow>
       <TableRow key={`${item.id}-descriptions`}>
         <TableCell colSpan={5} style={{ paddingTop: 0, paddingBottom: 0 }}>
           <Collapse in={descriptionOpen} timeout="auto" unmountOnExit>
             <div className="p-4">
-              <Typography gutterBottom>Descriptions</Typography>
-              <Typography variant="subtitle2" sx={{ textIndent: "1rem" }}>
-                {item.description || "No description..."}
+              <Typography align="center" paragraph variant="subtitle2" sx={{ textIndent: "2rem" }}>
+                {item.description}
               </Typography>
             </div>
           </Collapse>

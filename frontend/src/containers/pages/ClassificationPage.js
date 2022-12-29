@@ -11,6 +11,7 @@ import DataTable from "../../components/DataTable";
 import { useAccount } from "../hooks/useAccount";
 
 const paperStyle = {
+  width: "100%",
   padding: 20,
 }
 
@@ -36,19 +37,19 @@ const ClassificationPage = () => {
               aria-label="show income-expense tabs"
             >
               {categories.map((category) => (
-                <Tab label={category} value={category} />
+                <Tab label={category.cat} value={category.cat} />
               ))}
             </TabList>
           </Box>
           {categories.map((category) => (
-            <TabPanel value={category}>
-              {filterData(category).length !== 0 ? (
+            <TabPanel value={category.cat}>
+              {filterData(category.cat).length !== 0 ? (
                 <DataTable
-                  title={`Your ${category} Data`}
-                  data={filterData(category)}
+                  title={`Your ${category.cat} Data`}
+                  data={filterData(category.cat)}
                 />
               ) : (
-                <div>No {category} data...</div>
+                <h1 align="center">No {category.cat} data...</h1>
               )}
             </TabPanel>
           ))}

@@ -1,17 +1,17 @@
 import { createContext, useContext, useState } from "react";
 import React from "react";
 const defaultCategories = [
-  "Income",
-  "Food",
-  "Clothing",
-  "Housing",
-  "Transport",
-  "Entertainment",
-  "Education",
-  "Necessities",
-  "Electronics",
-  "Health",
-  "Others",
+  { cat: "Income", subcat: ["Salary", "Bonus", "Others"] },
+  { cat: "Food", subcat: ["Breakfast", "Lunch", "Dinner"] },
+  { cat: "Clothing", subcat: ["Shirt", "Pants", "Shoes"] },
+  { cat: "Housing", subcat: ["Rent", "Mortgage", "Utilities"] },
+  { cat: "Transport", subcat: ["Public Transportation", "Gas", "Parking", "Maintenance"] },
+  { cat: "Entertainment", subcat: ["Movies", "Games", "Sports", "Music"] },
+  { cat: "Education", subcat: ["Books", "Tuition", "Cram School", "Supplies"] },
+  { cat: "Necessities", subcat: ["Groceries", "Toiletries", "Cleaning Supplies", "Others"] },
+  { cat: "Electronics", subcat: ["Phone", "Computer", "Tablet", "Others"] },
+  { cat: "Health", subcat: ["Doctor", "Medicine", "Dental", "Gym"] },
+  { cat:"Others", subcat: ["Others"] },
 ];
 const AccountContext = createContext({
   me: {},
@@ -31,6 +31,7 @@ const AccountContext = createContext({
   setAccountData: () => {},
   setIncomeData: () => {},
   setExpenseData: () => { },
+  setCategories: () => {},
   resetSignInData: () => {},
 });
 
@@ -85,7 +86,6 @@ const AccountProvider = (props) => {
   const checkEmail = (event) => {
     const email = event.target.value;
     setEmail(email);
-
     if (email.length < 5) {
       setEmailMessage("Email must be at least 5 characters long");
       return 
@@ -122,6 +122,7 @@ const AccountProvider = (props) => {
         checkPassword,
         checkEmail,
         setAccountData,
+        setCategories,
         resetSignInData,
 
       }}
