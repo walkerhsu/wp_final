@@ -5,7 +5,7 @@ import SignInPage from "./containers/pages/SignInPage";
 import MainPage from "./containers/pages/MainPage";
 import SignUpPage from "./containers/pages/SignUpPage";
 import Appframe from "./containers/Appframe";
-import UpdateAccountPage from "./components/UpdateAccountForm";
+import ClassificationPage from "./containers/pages/ClassificationPage"; 
 import AccountMainPage from "./containers/pages/AccountMainPage";
 import CalendarPage from "./containers/pages/CalendarPage";
 import AuthorsPage from "./containers/pages/AuthorsPage";
@@ -28,10 +28,9 @@ function App() {
           <Route path="comments" element={<CommentsPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="account" element={<Appframe />}>
-            <Route path="update" element={<UpdateAccountPage />} />
             <Route path="home" element={<AccountMainPage />} />
-            {/* <Route path="home" element={<h1>home</h1>} /> */}
             <Route path="calendar" element={<CalendarPage />} />
+            <Route path="classification" element={<ClassificationPage />} />
             <Route path="*" element={<h1>Sorry! Page not found</h1>} />
           </Route>
 

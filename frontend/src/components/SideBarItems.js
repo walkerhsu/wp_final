@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 
 import HomeIcon from '@mui/icons-material/Home';
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import SortIcon from '@mui/icons-material/Sort';
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const AccountItems = [
@@ -20,6 +21,11 @@ const AccountItems = [
     icon: <CalendarMonthIcon />,
     link: "calendar",
   },
+  {
+    name: "Classfication",
+    icon: <SortIcon />,
+    link: "classification",
+  }
 ];
 const OtherItems = [
   {

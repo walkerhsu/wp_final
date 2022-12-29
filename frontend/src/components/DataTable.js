@@ -12,7 +12,7 @@ import TablePagination from "@mui/material/TablePagination";
 
 import Row from "./Row";
 
-function DataTable({ data }) {
+function DataTable({ title, data }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -29,8 +29,8 @@ function DataTable({ data }) {
 
   return (
     <Paper className="p-4">
-      <Typography component="h2" variant="h5" color="primary" gutterBottom>
-        Recent Data
+      <Typography align="center" component="h2" variant="h5" color="primary" gutterBottom>
+        {title}
       </Typography>
       <Table size="small">
         <TableHead>

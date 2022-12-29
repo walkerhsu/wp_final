@@ -1,5 +1,18 @@
 import { createContext, useContext, useState } from "react";
 import React from "react";
+const defaultCategories = [
+  "Income",
+  "Food",
+  "Clothing",
+  "Housing",
+  "Transport",
+  "Entertainment",
+  "Education",
+  "Necessities",
+  "Electronics",
+  "Health",
+  "Others",
+];
 const AccountContext = createContext({
   me: {},
   username: {},
@@ -9,8 +22,7 @@ const AccountContext = createContext({
   email: {},
   emailMessage: {},
   accountData: {},
-  incomeData: {},
-  expenseData: {},
+  categories: {},
 
   setMe: () => {},
   checkUsername: () => {},
@@ -20,8 +32,8 @@ const AccountContext = createContext({
   setIncomeData: () => {},
   setExpenseData: () => { },
   resetSignInData: () => {},
-
 });
+
 const AccountProvider = (props) => {
   const [me, setMe] = useState("");
 
@@ -35,8 +47,8 @@ const AccountProvider = (props) => {
   const [emailMessage, setEmailMessage] = useState("");
 
   const [accountData, setAccountData] = useState([]);
-  const [incomeData, setIncomeData] = useState([]);
-  const [expenseData, setExpenseData] = useState([]);
+
+  const [categories, setCategories] = useState(defaultCategories);
 
   const checkUsername = (event) => {
     const username = event.target.value;
@@ -73,17 +85,13 @@ const AccountProvider = (props) => {
   const checkEmail = (event) => {
     const email = event.target.value;
     setEmail(email);
+
     if (email.length < 5) {
       setEmailMessage("Email must be at least 5 characters long");
-    } else if (email.search(/@/) < 0) {
-      setEmailMessage("Email must contain @");
-    } else if (email.search(/\.com/) < 0) {
-      setEmailMessage("Email must contain .com");
-    }
-    // the last '.com' appears before '@'
-    else if (email.search(/\.com/) < email.search(/@/)) {
-      setEmailMessage("Email must contain .com after @");
-    } else {
+      return 
+    } else if(email.search(/\.com/) < 0 || email.search(/@/) < 0 || email.search(/\.com/) < email.search(/@/)) {
+      setEmailMessage("Email format incorrect");
+    }else {
       setEmailMessage("");
     }
   };
@@ -107,16 +115,13 @@ const AccountProvider = (props) => {
         email,
         emailMessage,
         accountData,
-        incomeData,
-        expenseData,
+        categories,
 
         setMe,
         checkUsername,
         checkPassword,
         checkEmail,
         setAccountData,
-        setIncomeData,
-        setExpenseData,
         resetSignInData,
 
       }}

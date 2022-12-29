@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
 import { Avatar, Button, Paper, Box, Grid, TextField } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
@@ -36,17 +35,7 @@ const TimeFormatting = (Time) => {
   return TimeStr;
 }
 
-const categories = [
-  "Category",
-  "Income",
-  "Transport",
-  "Food",
-  "Necessities",
-  "Electronics",
-  "Health",
-  "Entertainment",
-  "Others",
-];
+
 
 const paperStyle = {
   padding: 20,
@@ -89,7 +78,7 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
     money: data.money ? data.money : "100",
     description: data.description ? data.description : "None",
   };
-  const { accountData, incomeData, expenseData, setAccountData, setIncomeData, setExpenseData } =
+  const { accountData, categories, setAccountData, } =
     useAccount();
   const [time, setTime] = useState(defaultFormData.date);
   const [name, setName] = useState(defaultFormData.name);
@@ -101,13 +90,6 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
   const namePointer = useRef(null)
   const moneyPointer = useRef(null);
   const descriptionPointer = useRef(null);
-
-  const navigate = useNavigate();
-  const navigateToAccountMainPage = () => {
-    navigate("/account/home");
-  };
-
-  
 
   const handleTimeChange = (Time) => {
     setTime(TimeFormatting(Time.$d));
@@ -198,14 +180,8 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
     };
     console.log(data);
     setAccountData([...accountData, data]);
-    if (category==="Income") {
-      setIncomeData([...incomeData, data]);
-    } else {
-      setExpenseData([...expenseData, data]);
-    }
     alert("Update successfully");
     handleModalClose();
-    navigateToAccountMainPage();
   };
 
   return (

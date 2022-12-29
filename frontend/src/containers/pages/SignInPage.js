@@ -12,11 +12,20 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 import { useAccount } from "../hooks/useAccount";
 import { VALIDATE_USER_MUTATION } from "../../graphql";
+
+const TextFieldWrapper = styled("div")({
+  margin: "8px 0",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+  height: "30%",
+});
 
 const SigninPage = () => {
   const {
@@ -31,7 +40,7 @@ const SigninPage = () => {
   } = useAccount();
   const paperStyle = {
     padding: 20,
-    height: "70vh",
+    height: 510,
     width: 360,
     margin: "20px auto",
   };
@@ -102,6 +111,7 @@ const SigninPage = () => {
           <h2>Sign In</h2>
           <br />
         </Grid>
+        <TextFieldWrapper>
         <TextField
           inputRef={usernamePointer}
           label="Username"
@@ -128,7 +138,8 @@ const SigninPage = () => {
           fullWidth
           required
           onKeyPress={onKeyPress("password")}
-        />
+          />
+          </TextFieldWrapper>
         {/* view password: https://stackoverflow.com/questions/60391113/how-to-view-password-from-material-ui-textfield */}
         <FormControlLabel
           control={<Checkbox name="checkedB" color="primary" />}

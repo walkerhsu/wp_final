@@ -7,10 +7,19 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { useAccount } from "../hooks/useAccount";
 import { CREATE_USER_MUTATION } from '../../graphql';
+import { styled } from "@mui/system";
+
+const TextFieldWrapper = styled("div")({
+  margin: "8px 0",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+  height: "50%",
+})
 
 const paperStyle = {
   padding: 20,
-  height: "70vh",
+  height: 510,
   width: 360,
   margin: "20px auto",
 };
@@ -105,7 +114,7 @@ const SignUpPage = () => {
           <h2>Sign Up</h2>
         </Grid>
         <br />
-        <Grid>
+        <TextFieldWrapper>
           <TextField
             inputRef={usernamePointer}
             required
@@ -153,7 +162,7 @@ const SignUpPage = () => {
             onChange={checkEmail}
             onKeyPress={onKeyPress("email")}
           />
-        </Grid>
+        </TextFieldWrapper>
         <Button
           color="primary"
           variant="contained"

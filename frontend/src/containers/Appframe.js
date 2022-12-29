@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
@@ -17,6 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 import SideBarItems from "../components/SideBarItems";
+import ResetDataModal from "./ResetDataModal";
 import UpdateAccountModal from "./UpdateAccountModal";
 import { useAccount } from "./hooks/useAccount";
 
@@ -44,13 +44,18 @@ const drawerWidth = 240;
 //   },
 // });
 
-
+const BtnWrapper = styled("div")({
+  position: "absolute",
+  right: "0",
+  transform: "translate(-10%,0%)",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-around",
+  width: "25vw",
+});
 
 const btnStyle = {
-  position: "absolute",
   borderRadius: "8px",
-  right: "0",
-  transform: "translate(-25%,-50%)",
   backgroundColor: "#32b5b2",
   color: "white",
   "&:hover": {
@@ -104,19 +109,19 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function Appframe() {
-  const navigate = useNavigate();
-
-  const { me, setMe } = useAccount();
+  const { me, accountData } = useAccount();
   const [open, setOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [reset, setReset] = React.useState(false);
 
   const handleModalOpen = () => {
     setModalOpen(true);
-  }
+  };
 
   const handleModalClose = () => {
+    console.log("in handleModalClose")
     setModalOpen(false);
-  }
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -126,14 +131,8 @@ export default function Appframe() {
     setOpen(false);
   };
 
-  const navigateToMainPage = () => {
-    setMe("");
-    navigate("/");
-  };
-
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -148,16 +147,29 @@ export default function Appframe() {
           <Typography variant="h6" noWrap component="div">
             {me ? me + "'s" : "My"} Account
           </Typography>
-          <div>
+          <BtnWrapper>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setReset(true)}
+              style={btnStyle}
+            >
+              Reset all data
+            </Button>
+            <ResetDataModal
+              open={reset}
+              handleModalClose={() => setReset(false)}
+              data={accountData}
+            />
             <Button onClick={handleModalOpen} style={btnStyle}>
-              Create New item
+              Create New data
             </Button>
             <UpdateAccountModal
               open={modalOpen}
               handleModalClose={handleModalClose}
               data={{}}
             />
-          </div>
+          </BtnWrapper>
         </Toolbar>
       </AppBar>
       <Drawer
