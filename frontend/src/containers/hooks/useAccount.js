@@ -21,6 +21,7 @@ const AccountContext = createContext({
   passwordMessage: {},
   email: {},
   emailMessage: {},
+  signin: {},
   accountData: {},
   categories: {},
 
@@ -28,9 +29,8 @@ const AccountContext = createContext({
   checkUsername: () => {},
   checkPassword: () => {},
   checkEmail: () => { },
+  setSignin: () => {},
   setAccountData: () => {},
-  setIncomeData: () => {},
-  setExpenseData: () => { },
   setCategories: () => {},
   resetSignInData: () => {},
 });
@@ -46,6 +46,8 @@ const AccountProvider = (props) => {
 
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
+
+  const [signin, setSignin] = useState(true);
 
   const [accountData, setAccountData] = useState([]);
 
@@ -114,6 +116,7 @@ const AccountProvider = (props) => {
         passwordMessage,
         email,
         emailMessage,
+        signin,
         accountData,
         categories,
 
@@ -121,6 +124,7 @@ const AccountProvider = (props) => {
         checkUsername,
         checkPassword,
         checkEmail,
+        setSignin,
         setAccountData,
         setCategories,
         resetSignInData,

@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import HomeIcon from '@mui/icons-material/Home';
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SortIcon from '@mui/icons-material/Sort';
+import InsertChartIcon from '@mui/icons-material/InsertChart';
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const AccountItems = [
@@ -25,6 +26,11 @@ const AccountItems = [
     name: "Classfication",
     icon: <SortIcon />,
     link: "classification",
+  },
+  {
+    name: "Analysis",
+    icon: <InsertChartIcon />,
+    link: "analysis",
   }
 ];
 const OtherItems = [

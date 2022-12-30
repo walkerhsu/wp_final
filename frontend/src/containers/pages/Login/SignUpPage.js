@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Box, Paper, Grid, Avatar, Button } from "@material-ui/core";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-import { useAccount } from "../hooks/useAccount";
-import { CREATE_USER_MUTATION } from '../../graphql';
+import { useAccount } from "../../hooks/useAccount";
+import { CREATE_USER_MUTATION } from "../../../graphql";
 import { styled } from "@mui/system";
 
 const TextFieldWrapper = styled("div")({
@@ -15,7 +15,7 @@ const TextFieldWrapper = styled("div")({
   flexDirection: "column",
   justifyContent: "space-around",
   height: "50%",
-})
+});
 
 const paperStyle = {
   padding: 20,
@@ -44,7 +44,8 @@ const SignUpPage = () => {
   const passwordPointer = useRef(null);
   const emailPointer = useRef(null);
 
-  const [createPerson , { data: createMessage}] = useMutation(CREATE_USER_MUTATION);
+  const [createPerson, { data: createMessage }] =
+    useMutation(CREATE_USER_MUTATION);
 
   const navigate = useNavigate();
 
@@ -62,19 +63,26 @@ const SignUpPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if ( usernameMessage || passwordMessage || emailMessage || !username || !password || !email ) {
+    if (
+      usernameMessage ||
+      passwordMessage ||
+      emailMessage ||
+      !username ||
+      !password ||
+      !email
+    ) {
       if (!username || usernameMessage) {
-        alert("Please enter your username correctly")
+        alert("Please enter your username correctly");
         usernamePointer.current.focus();
       } else if (!password || passwordMessage) {
-        alert("Please enter your password correctly")
+        alert("Please enter your password correctly");
         passwordPointer.current.focus();
       } else if (!email || emailMessage) {
-        alert("Please enter your email correctly")
+        alert("Please enter your email correctly");
         emailPointer.current.focus();
       }
-      return
-    } 
+      return;
+    }
     // 1. Create a new user in the database
     createPerson({
       variables: {
@@ -84,7 +92,7 @@ const SignUpPage = () => {
           email: email,
         },
       },
-    })
+    });
     // 2. If the backend returns a success message, then navigate to the signin page
     //    If the backend returns a failure message, then display an alert
     if (createMessage === "User created") {
@@ -170,7 +178,7 @@ const SignUpPage = () => {
           onClick={handleSubmit}
           fullWidth
         >
-          Sign in
+          Sign Up
         </Button>
       </Paper>
     </Box>

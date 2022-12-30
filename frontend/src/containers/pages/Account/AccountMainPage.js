@@ -1,9 +1,9 @@
 import React from "react";
-import { useAccount } from "../hooks/useAccount";
+import { useAccount } from "../../hooks/useAccount";
 
-import DataTable from "../../components/DataTable";
+import DataTable from "../../../components/DataTable";
 
-import "../../css/AccountMainPage.css";
+import "../../../css/AccountMainPage.css";
 
 const AccountMainPage = () => {
   const { accountData } = useAccount();

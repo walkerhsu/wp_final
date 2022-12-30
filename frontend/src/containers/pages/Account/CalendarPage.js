@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
-import WeekCalendar from "../../components/WeekCalendar";
-import DateDetail from "../DateDetail";
+import WeekCalendar from "../../../components/WeekCalendar";
+import DateDetail from "../../DateDetail";
 
 const CalendarPage = () => {
   const [showDateDetail, setShowDateDetail] = useState(false);

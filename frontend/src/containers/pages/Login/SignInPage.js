@@ -16,8 +16,8 @@ import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
-import { useAccount } from "../hooks/useAccount";
-import { VALIDATE_USER_MUTATION } from "../../graphql";
+import { useAccount } from "../../hooks/useAccount";
+import { VALIDATE_USER_MUTATION } from "../../../graphql";
 
 const TextFieldWrapper = styled("div")({
   margin: "8px 0",
@@ -37,6 +37,7 @@ const SigninPage = () => {
     resetSignInData,
     checkUsername,
     checkPassword,
+    setSignin,
   } = useAccount();
   const paperStyle = {
     padding: 20,
@@ -70,13 +71,13 @@ const SigninPage = () => {
     event.preventDefault();
     if (usernameMessage || passwordMessage || !username || !password) {
       if (!username || usernameMessage) {
-        alert("Please enter your username correctly")
+        alert("Please enter your username correctly");
         usernamePointer.current.focus();
       } else if (!password || passwordMessage) {
-        alert("Please enter your password correctly")
+        alert("Please enter your password correctly");
         passwordPointer.current.focus();
       }
-      return
+      return;
     }
     // 1. Send the username and password to the backend
     validatePerson({
@@ -90,15 +91,15 @@ const SigninPage = () => {
     // 2. If the backend returns a success message, then navigate to the account page
     //    If the backend returns a failure message, then display an alert
     if (validateMessage === "Sign in Success") {
-      alert(validateMessage)
+      alert(validateMessage);
       navigate("/account/home");
       setMe(username);
+      setSignin(true);
       resetSignInData();
+    } else {
+      alert(validateMessage);
     }
-    else {
-      alert(validateMessage)
-    }
-  }
+  };
 
   return (
     <Grid>
@@ -112,34 +113,34 @@ const SigninPage = () => {
           <br />
         </Grid>
         <TextFieldWrapper>
-        <TextField
-          inputRef={usernamePointer}
-          label="Username"
-          placeholder="Enter username"
-          variant="outlined"
-          value={username}
-          error={usernameMessage !== ""}
-          helperText={usernameMessage}
-          onChange={checkUsername}
-          fullWidth
-          required
-          onKeyPress={onKeyPress("username")}
-        />
-        <TextField
-          inputRef={passwordPointer}
-          label="Password"
-          placeholder="Enter password"
-          type="password"
-          variant="outlined"
-          value={password}
-          error={passwordMessage !== ""}
-          helperText={passwordMessage}
-          onChange={checkPassword}
-          fullWidth
-          required
-          onKeyPress={onKeyPress("password")}
+          <TextField
+            inputRef={usernamePointer}
+            label="Username"
+            placeholder="Enter username"
+            variant="outlined"
+            value={username}
+            error={usernameMessage !== ""}
+            helperText={usernameMessage}
+            onChange={checkUsername}
+            fullWidth
+            required
+            onKeyPress={onKeyPress("username")}
           />
-          </TextFieldWrapper>
+          <TextField
+            inputRef={passwordPointer}
+            label="Password"
+            placeholder="Enter password"
+            type="password"
+            variant="outlined"
+            value={password}
+            error={passwordMessage !== ""}
+            helperText={passwordMessage}
+            onChange={checkPassword}
+            fullWidth
+            required
+            onKeyPress={onKeyPress("password")}
+          />
+        </TextFieldWrapper>
         {/* view password: https://stackoverflow.com/questions/60391113/how-to-view-password-from-material-ui-textfield */}
         <FormControlLabel
           control={<Checkbox name="checkedB" color="primary" />}
