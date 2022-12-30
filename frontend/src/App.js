@@ -1,18 +1,22 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import SignInPage from "./containers/pages/SignInPage";
 import MainPage from "./containers/pages/MainPage";
-import SignUpPage from "./containers/pages/SignUpPage";
+import SignInPage from "./containers/pages/Login/SignInPage";
+import SignUpPage from "./containers/pages/Login/SignUpPage";
+
 import Appframe from "./containers/Appframe";
-import ClassificationPage from "./containers/pages/ClassificationPage"; 
-import AccountMainPage from "./containers/pages/AccountMainPage";
-import CalendarPage from "./containers/pages/CalendarPage";
-import AuthorsPage from "./containers/pages/AuthorsPage";
-import InspirationPage from "./containers/pages/InspirationPage";
-import InstructionsPage from "./containers/pages/InstrctionsPage";
-import CommentsPage from "./containers/pages/CommentsPage";
-import ContactPage from "./containers/pages/ContactPage";
+import AccountMainPage from "./containers/pages/Account/AccountMainPage";
+import CalendarPage from "./containers/pages/Account/CalendarPage";
+import ClassificationPage from "./containers/pages/Account/ClassificationPage";
+import AnalysisPage from "./containers/pages/Account/AnalysisPage";
+
+import AuthorsPage from "./containers/pages/AboutUs/AuthorsPage";
+import InspirationPage from "./containers/pages/AboutUs/InspirationPage";
+import InstructionsPage from "./containers/pages/AboutUs/InstrctionsPage";
+import CommentsPage from "./containers/pages/AboutUs/CommentsPage";
+import ContactPage from "./containers/pages/AboutUs/ContactPage";
+
 function App() {
   return (
     <>
@@ -31,6 +35,7 @@ function App() {
             <Route path="home" element={<AccountMainPage />} />
             <Route path="calendar" element={<CalendarPage />} />
             <Route path="classification" element={<ClassificationPage />} />
+            <Route path="analysis" element={<AnalysisPage />} />
             <Route path="*" element={<h1>Sorry! Page not found</h1>} />
           </Route>
 

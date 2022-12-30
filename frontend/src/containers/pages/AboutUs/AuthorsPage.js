@@ -1,4 +1,4 @@
-import "../../css/AuthorsPage.css"
+import "../../../css/AuthorsPage.css"
 const AuthorsPage = () => {
     return <div className="Wrapper">
         <div className="about-section">

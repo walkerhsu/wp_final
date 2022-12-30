@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -22,28 +22,6 @@ import { useAccount } from "./hooks/useAccount";
 
 const drawerWidth = 240;
 
-// const CreateDataBtn = styled(Button)(({ theme }) => ({
-//   position: "absolute",
-//   right: "0",
-//   transform: "translate(-50%,0%)",
-//   backgroundColor: "#32b5b2",
-//   color: "white",
-//   "&:hover": {
-//     backgroundColor: "#2ba2a0",
-//   },
-// }));
-
-// const LogOutButton = styled(Button)({
-//   position: "absolute",
-//   right: "0",
-//   transform: "translate(-50%,0%)",
-//   backgroundColor: "#32b5b2",
-//   color: "white",
-//   "&:hover": {
-//     backgroundColor: "#2ba2a0",
-//   },
-// });
-
 const BtnWrapper = styled("div")({
   position: "absolute",
   right: "0",
@@ -61,6 +39,14 @@ const btnStyle = {
   "&:hover": {
     backgroundColor: "#2ba2a0",
   },
+};
+
+const transformStyle = {
+  borderRadius: "8px",
+  position: "absolute",
+  left: "50%",
+  top: "10%",
+  transform: "translate(-50%,-50%)",
 };
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -109,17 +95,18 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function Appframe() {
-  const { me, accountData } = useAccount();
+  const { signin, me, accountData } = useAccount();
   const [open, setOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [reset, setReset] = React.useState(false);
+  const navigate = useNavigate()
 
   const handleModalOpen = () => {
     setModalOpen(true);
   };
 
   const handleModalClose = () => {
-    console.log("in handleModalClose")
+    console.log("in handleModalClose");
     setModalOpen(false);
   };
 
@@ -131,7 +118,7 @@ export default function Appframe() {
     setOpen(false);
   };
 
-  return (
+  const appFrame = (
     <Box sx={{ display: "flex" }}>
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -202,4 +189,20 @@ export default function Appframe() {
       </Main>
     </Box>
   );
+
+  const loginFrame = (
+    <>
+        <h1 align="center">Please sign in first! </h1>
+        <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate('/signin')}
+        style={btnStyle && transformStyle}
+        >
+          direct to sign in page
+        </Button>
+    </>
+  );
+
+  return signin ? appFrame : loginFrame;
 }
