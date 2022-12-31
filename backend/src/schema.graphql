@@ -48,18 +48,26 @@ input UpdateItemInput {
     description: String
 }
 
-input UserInput {
-    id: ID!
+input CreateUserInput {
+    # id: ID!
     username: String!
+    salt: String!
     password: String!
     email: String!
+}
+
+input ValidateUserInput {
+    # id: ID!
+    username: String!
+    password: String!
 }
 
 type Mutation {
     createItem(input: CreateItemInput!): Item
     updateItem(input: UpdateItemInput!): Item
     deleteItem(input: ID!): ID!
-    createUser(input: UserInput!): String
+    createUser(input: CreateUserInput!): String!
+    validateUser(input: ValidateUserInput!): String!
 }
 
 type Subscription {

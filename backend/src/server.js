@@ -12,6 +12,7 @@ import DateResolver from "./resolvers/Date.js";
 import CategoryResolver from "./resolvers/Category.js";
 // db
 import itemModel from "./models/item.js";
+import userModel from "./models/user.js";
 
 const pubSub = createPubSub();
 
@@ -31,7 +32,8 @@ const yoga = createYoga({
   }),
   context: {
     pubSub,
-    itemModel
+    itemModel,
+    userModel,
   },
   graphiql: {
     subscriptionsProtocol: 'WS'

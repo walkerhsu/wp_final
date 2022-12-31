@@ -1,3 +1,5 @@
+import hash from "../utils/hash.js"
+
 const Mutation = {
   createItem: async (parent, { input }, { itemModel, pubSub}) => {
     const newItem = new itemModel(input);
@@ -41,15 +43,46 @@ const Mutation = {
     });
     return input;
   },
-  createUser: async (parent, { input }, { userModel, pubSub}) => {
-    const newUser = new userModel(input);
-    await newUser.save();
+  createUser: async (parent, { input }, { userModel }) => {
+    console.log(input)
+    input.password = hash(input.password, input.salt?input.salt:'')
+    console.log(input.password)
+    let newUser = await userModel.findOne({ username: input.username });
+    if (!newUser) {
+      console.log("create new user")
+      newUser = new userModel(input);
+      await newUser.save();
+    }
+    else {
+      console.log("user already exists")
+      return "User already exists";
+    }
     /*
     pubSub.publish("USER_CREATED", {
       userCreated: newUser,
     });
     */
+    console.log("User created")
     return "User created";
+  },
+  validateUser: async (parent, { input }, { userModel }) => {
+    console.log(input)
+    let User = await userModel.findOne({ username: input.username });
+    if (!User) {
+      console.log("user not found")
+      return "User not found";
+    }
+    else {
+      console.log("user found")
+      if (User.password === hash(input.password, User.salt)) {
+        console.log("password correct")
+        return "Welcome!";
+      }
+      else {
+        console.log("password incorrect")
+        return "Password incorrect";
+      }
+    }
   },
 };
 
