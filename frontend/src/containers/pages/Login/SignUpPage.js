@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { styled } from "@mui/system";
 import { useMutation } from "@apollo/client";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +9,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { useAccount } from "../../hooks/useAccount";
 import { CREATE_USER_MUTATION } from "../../../graphql";
-import { styled } from "@mui/system";
+import generateSalt from "../../../utils/generateSalt";
+
 
 const TextFieldWrapper = styled("div")({
   margin: "8px 0",
@@ -44,7 +47,7 @@ const SignUpPage = () => {
   const passwordPointer = useRef(null);
   const emailPointer = useRef(null);
 
-  const [createPerson, { data: createMessage }] =
+  const [createUser, { data: createMessage }] =
     useMutation(CREATE_USER_MUTATION);
 
   const navigate = useNavigate();
@@ -83,10 +86,13 @@ const SignUpPage = () => {
       }
       return;
     }
+    console.log("Creating a new user...")
+    console.log(username, password, email)
     // 1. Create a new user in the database
-    createPerson({
+    createUser({
       variables: {
         input: {
+          salt: generateSalt(4),
           username: username,
           password: password,
           email: email,
@@ -95,15 +101,19 @@ const SignUpPage = () => {
     });
     // 2. If the backend returns a success message, then navigate to the signin page
     //    If the backend returns a failure message, then display an alert
-    if (createMessage === "User created") {
-      alert(createMessage);
+    
+  };
+  useEffect(() => {
+    if(!createMessage) return;
+    alert(createMessage.createUser);
+    if (createMessage.createUser === "User created") {
       navigate("/signin");
       resetSignInData();
-    } else {
-      alert(createMessage);
-    }
-  };
-
+    } else if(createMessage.createUser === "User already exists"){
+      navigate("/signin");
+    } 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createMessage]);
   return (
     <Box
       component="form"

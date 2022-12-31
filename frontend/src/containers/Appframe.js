@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import {  Outlet, useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRef } from "react";
 import {
   Grid,
@@ -88,18 +88,25 @@ const SigninPage = () => {
         },
       },
     });
+  };
+
+  useEffect(() => {
+    if (!validateMessage) return
     // 2. If the backend returns a success message, then navigate to the account page
     //    If the backend returns a failure message, then display an alert
-    if (validateMessage === "Sign in Success") {
-      alert(validateMessage);
+    alert(validateMessage.validateUser);
+    if (validateMessage.validateUser === "Welcome!") {
       navigate("/account/home");
       setMe(username);
       setSignin(true);
       resetSignInData();
-    } else {
-      alert(validateMessage);
+    } else if (validateMessage.validateUser === "User not found") {
+      usernamePointer.current.focus();
+    } else if (validateMessage.validateUser === "Password incorrect") {
+      passwordPointer.current.focus();
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [validateMessage]);
 
   return (
     <Grid>
