@@ -1,5 +1,5 @@
 const Mutation = {
-  createItem: async (parent, { input }, {itemModel, pubSub}) => {
+  createItem: async (parent, { input }, { itemModel, pubSub}) => {
     const newItem = new itemModel(input);
     await newItem.save();
     pubSub.publish("ITEM_CREATED", {
@@ -8,7 +8,7 @@ const Mutation = {
     return newItem;
   },
 
-  updateItem: async (parent, { input }, {itemModel, pubSub}) => {
+  updateItem: async (parent, { input }, { itemModel, pubSub}) => {
     const item = await itemModel.findOneAndUpdate(
       { id: input.id },
       {
@@ -40,7 +40,17 @@ const Mutation = {
       itemDeleted: input,
     });
     return input;
-  }
+  },
+  createUser: async (parent, { input }, { userModel, pubSub}) => {
+    const newUser = new userModel(input);
+    await newUser.save();
+    /*
+    pubSub.publish("USER_CREATED", {
+      userCreated: newUser,
+    });
+    */
+    return "User created";
+  },
 };
 
 export default Mutation;
