@@ -15,6 +15,7 @@ const Mutation = {
       { id: input.id },
       {
         $set: {
+          username: input.username,
           name: input.name,
           amount: input.amount,
           category: input.category,

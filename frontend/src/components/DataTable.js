@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useMutation } from "@apollo/client";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -10,11 +10,16 @@ import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 
+import { UPDATE_ITEM_MUTATION, DELETE_ITEM_MUTATION } from '../graphql/mutations';
+
 import Row from "./Row";
 
 function DataTable({ title, data }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [updateItem] = useMutation(UPDATE_ITEM_MUTATION);
+  const [deleteItem] = useMutation(DELETE_ITEM_MUTATION);
 
   const sortedData = data.slice().sort((a, b) => b.date - a.date);
 
@@ -51,8 +56,8 @@ function DataTable({ title, data }) {
               <Row
                 key={item.id}
                 item={item}
-                // updateItem={updateItem}
-                // deleteItem={deleteItem}
+                updateItem={updateItem}
+                deleteItem={deleteItem}
               />
             ))}
         </TableBody>

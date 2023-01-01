@@ -4,6 +4,7 @@ import userModel from "./models/user.js";
 const example = [
   {
     id: "1",
+    username:"R",
     name: "brunch",
     amount: 1000,
     date: new Date("2022-12-05T07:00:00.360Z").getTime(),
@@ -12,6 +13,7 @@ const example = [
   },
   {
     id: "2",
+    username:"R",
     name: "MRT",
     amount: 30,
     date: new Date("2022-12-05T08:30:00.360Z").getTime(),
@@ -20,6 +22,7 @@ const example = [
   },
   {
     id: "3",
+    username:"R",
     name: "protection money",
     amount: 1000,
     date: new Date("2022-12-05T12:00:00.360Z").getTime(),
@@ -28,6 +31,7 @@ const example = [
   },
   {
     id: "4",
+    username:"R",
     name: "ointment",
     amount: 100,
     date: new Date("2022-12-05T15:00:00.360Z").getTime(),
@@ -36,6 +40,7 @@ const example = [
   },
   {
     id: "5",
+    username: "R",
     name: "salary",
     amount: 2000,
     date: new Date("2022-12-06T19:00:00.360Z").getTime(),
@@ -47,7 +52,7 @@ const example = [
 const dataInit = async () => {
   await itemModel.deleteMany({});
   await userModel.deleteMany({});
-  // await itemModel.insertMany(example);
+  await itemModel.insertMany(example);
   console.log("Database initialized!");
 };
 
