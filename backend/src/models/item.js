@@ -5,9 +5,10 @@ const itemSchema = new mongoose.Schema(
     id: { type: String, required: true, unique: true },
     username: { type: String, required: true},
     name: { type: String, required: true },
-    amount: { type: Number, required: true },
+    money: { type: Number, required: true },
     category: { type: String, required: true },
-    date: { type: Date, required: true },
+    subCategory: { type: String, required: true,  },
+    time: { type: Date, required: true},
     description: String,
   },
   {

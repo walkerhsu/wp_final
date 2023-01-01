@@ -9,6 +9,7 @@ const CalendarPage = () => {
   const [date, setDate] = useState(null);
 
   const showDetailsHandle = (dateStr) => {
+    console.log("in showDetailsHandle", dateStr)
     setDate(dateStr);
     setShowDateDetail(true);
   };

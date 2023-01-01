@@ -1,16 +1,17 @@
 scalar Date
 
 enum Category {
-    FOOD
-    TRANSPORT
-    HOUSING
-    UTILITIES
-    HEALTH
-    ENTERTAINMENT
-    CLOTHING
-    EDUCATION
-    OTHER
-    INCOME
+    Income
+    Food
+    Clothing
+    Housing
+    Transport
+    Entertainment
+    Education
+    Necessities
+    Electronics
+    Health
+    Others
 }
 
 type Message{
@@ -21,9 +22,10 @@ type Item {
     id: ID!
     username: String!
     name: String!
-    amount: Int!
+    money: Int!
     category: String!
-    date: Date!
+    subCategory: String!
+    time: Date!
     description: String
 }
 
@@ -31,28 +33,30 @@ type Query {
     items: [Item!]!
 }
 
+
 input CreateItemInput {
     id: ID!
     username: String!
     name: String!
-    amount: Int!
+    money: Int!
     category: String!
-    date: Date!
+    subCategory: String!
+    time: Date!
     description: String
 }
 
 input UpdateItemInput {
     id: ID!
     username: String!
-    name: String
-    amount: Int
-    category: String
-    date: Date
+    name: String!
+    money: Int!
+    category: String!
+    subCategory: String!
+    time: Date!
     description: String
 }
 
 input CreateUserInput {
-    # id: ID!
     username: String!
     salt: String!
     password: String!
@@ -60,7 +64,6 @@ input CreateUserInput {
 }
 
 input ValidateUserInput {
-    # id: ID!
     username: String!
     password: String!
 }

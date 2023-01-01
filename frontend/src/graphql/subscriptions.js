@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const ITEM_CREATED_SUBSCRIPTION = gql`
   subscription ItemCreated {
@@ -6,9 +6,10 @@ export const ITEM_CREATED_SUBSCRIPTION = gql`
       id
       username
       name
-      amount
+      money
       category
-      date
+      subCategory
+      time
       description
     }
   }
@@ -20,9 +21,10 @@ export const ITEM_UPDATED_SUBSCRIPTION = gql`
       id
       username
       name
-      amount
+      money
       category
-      date
+      subCategory
+      time
       description
     }
   }

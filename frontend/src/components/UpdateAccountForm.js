@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useRef } from "react";
+
 import { styled } from "@mui/system";
 import { Avatar, Button, Paper, Box, Grid, TextField } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
@@ -14,26 +15,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useAccount } from "../containers/hooks/useAccount";
 
-const TimeFormatting = (Time) => {
-  const dayStr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const year = Time.getFullYear();
-  const month = Time.getMonth() + 1;
-  const date = Time.getDate();
-  const day = dayStr[Time.getDay()];
-  const TimeStr =
-    (year < 10 ? "0" : "") +
-    year +
-    " / " +
-    (month < 10 ? "0" : "") +
-    month +
-    " / " +
-    (date < 10 ? "0" : "") +
-    date +
-    " ( " +
-    day +
-    " )";
-  return TimeStr;
-};
+
 
 const paperStyle = {
   padding: 20,
@@ -68,16 +50,16 @@ const BtnWrapper = styled("div")({
 
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
-const UpdateAccountForm = ({ handleModalClose, data }) => {
+const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title}) => {
   const defaultFormData = {
-    date: data.date ? data.date : TimeFormatting(new Date()),
+    date: data.date ? data.date : new Date(),
     name: data.name ? data.name : "name",
     category: data.category ? data.category : "Income",
     subCategory: data.subCategory ? data.subCategory : "Salary",
     money: data.money ? data.money : "100",
     description: data.description ? data.description : "None",
   };
-  const { accountData, categories, setAccountData } = useAccount();
+  const { categories } = useAccount();
   const [time, setTime] = useState(defaultFormData.date);
   const [name, setName] = useState(defaultFormData.name);
   const [money, setMoney] = useState(defaultFormData.money);
@@ -94,7 +76,7 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
   const descriptionPointer = useRef(null);
 
   const handleTimeChange = (Time) => {
-    setTime(TimeFormatting(Time.$d));
+    setTime(Time.$d);
   };
 
   const handleNameChange = (event) => {
@@ -161,33 +143,41 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const checkItemFormat = () => {
     if (!time) {
       alert("Time should be chosen");
-      return;
+      return false;
     }
     if (!name) {
       alert("Name should not be empty");
       namePointer.current.focus();
-      return;
+      return false;
     }
     if (moneyMessage || !money) {
       alert(moneyMessage ? moneyMessage : "Money should not be empty");
       moneyPointer.current.focus();
-      return;
+      return false;
     }
+    return true
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if(!checkItemFormat()) return
     const data = {
+      username: "Walker",
       time: time,
       name: name,
-      money: money,
+      money: parseInt(money),
       category: category,
       subCategory: subCategory,
       description: description,
     };
+    
     console.log(data);
-    setAccountData([...accountData, data]);
-    alert("Update successfully");
+    onSubmitEdit(data);
+    // setAccountData([...accountData, data]);
+    // alert("Update successfully");
     handleModalClose();
   };
 
@@ -205,7 +195,7 @@ const UpdateAccountForm = ({ handleModalClose, data }) => {
           <Avatar style={avatarStyle}>
             <AttachMoneyIcon />
           </Avatar>
-          <h2>Update Account</h2>
+          <h2>{title}</h2>
         </Grid>
         <InputWrapper>
           <LocalizationProvider dateAdapter={AdapterDayjs}>

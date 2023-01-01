@@ -13,7 +13,6 @@ import "lodash";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 
 import { useAccount } from "../containers/hooks/useAccount";
-import _ from "lodash";
 
 const paperStyle = {
   padding: 20,
@@ -48,19 +47,23 @@ const BtnWrapper = styled("div")({
 
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
-const ResetDataForm = ({ handleModalClose, data }) => {
-  const { accountData, setAccountData } = useAccount();
+const ResetDataForm = ({ handleModalClose, onSubmitEdit, data }) => {
+  const { accountData } = useAccount();
 
   const handleResetData = () => {
     if (data.length === accountData.length) {
-      alert("Reset all data");
-      setAccountData([]);
+      //   alert("Reset all data");
+      //   setAccountData([]);
+      onSubmitEdit();
+
       handleModalClose();
       return;
     }
     alert("Reset one data");
-    const resetData = accountData.filter((item) => !_.isEqual(item, data[0]));
-    setAccountData(resetData);
+    onSubmitEdit();
+
+    // const resetData = accountData.filter((item) => !_.isEqual(item, data[0]));
+    // setAccountData(resetData);
     handleModalClose();
   };
   return (
@@ -81,8 +84,10 @@ const ResetDataForm = ({ handleModalClose, data }) => {
         <InputWrapper>
           <Typography>
             You are going to remove
-            {data.length === accountData.length ? " all " : ` one ${data[0].category} `}data. Are
-            you sure ?
+            {data.length === accountData.length
+              ? " all "
+              : ` one ${data[0].category} `}
+            data. Are you sure ?
           </Typography>
           <BtnWrapper>
             <Button

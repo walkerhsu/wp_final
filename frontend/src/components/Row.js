@@ -11,9 +11,10 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import UpdateAccountModal from "../containers/UpdateAccountModal";
 import ResetDataModal from "../containers/ResetDataModal";
+import dayjs from "../utils/day.js";
 
-function Row({ item }) {
-  console.log(item);
+  
+function Row({ item, updateItem, deleteItem }) {
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -30,11 +31,22 @@ function Row({ item }) {
     setDeleteOpen(true);
   };
 
+  const onNewItemUpdated = (data) => {
+    updateItem({
+      variables: {
+        input: {
+          id: item.id,
+          ...data,
+        },
+      },
+    });
+  };
+
   return (
     <>
       <TableRow data-cy="item" key={item.id} hover>
         <TableCell onClick={onCollapse} sx={{ cursor: "pointer" }}>
-          <Typography>{item.time}</Typography>
+          <Typography>{item.time && dayjs(item.time).format('YYYY / MM / DD ( ddd )')}</Typography>
         </TableCell>
         <TableCell
           data-cy="item-name"
@@ -57,21 +69,27 @@ function Row({ item }) {
           <IconButton onClick={onEdit} data-cy="update-item">
             <EditIcon />
           </IconButton>
-            <IconButton onClick={onDelete} data-cy="delete-item">
-              <DeleteIcon />
-            </IconButton>
-            <ResetDataModal
-              open={deleteOpen}
-              handleModalClose={() => setDeleteOpen(false)}
-              data={[item]}
-            />
+          <IconButton onClick={onDelete} data-cy="delete-item">
+            <DeleteIcon />
+          </IconButton>
+          <ResetDataModal
+            open={deleteOpen}
+            handleModalClose={() => setDeleteOpen(false)}
+            onSubmitEdit={() => deleteItem({ variables: { id: item.id } })}
+            data={[item]}
+          />
         </TableCell>
       </TableRow>
       <TableRow key={`${item.id}-descriptions`}>
         <TableCell colSpan={5} style={{ paddingTop: 0, paddingBottom: 0 }}>
           <Collapse in={descriptionOpen} timeout="auto" unmountOnExit>
             <div className="p-4">
-              <Typography align="center" paragraph variant="subtitle2" sx={{ textIndent: "2rem" }}>
+              <Typography
+                align="center"
+                paragraph
+                variant="subtitle2"
+                sx={{ textIndent: "2rem" }}
+              >
                 {item.description}
               </Typography>
             </div>
@@ -79,10 +97,11 @@ function Row({ item }) {
         </TableCell>
       </TableRow>
       <UpdateAccountModal
-        // title="Edit Item"
         open={editOpen}
         handleModalClose={() => setEditOpen(false)}
+        onSubmitEdit={onNewItemUpdated}
         data={item}
+        title="Edit Item"
         // onSubmit={handleSubmitEdit}
         // defaultFormData={item}
       />

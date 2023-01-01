@@ -27,7 +27,7 @@ const Fade = React.forwardRef(function Fade(props, ref) {
   );
 });
 
-const resetDataModal = ({ open, handleModalClose, data }) => {
+const resetDataModal = ({ open, handleModalClose, onSubmitEdit, data }) => {
   return (
     <Modal
       aria-labelledby="spring-modal-title"
@@ -37,7 +37,11 @@ const resetDataModal = ({ open, handleModalClose, data }) => {
       closeAfterTransition
     >
       <Fade in={open}>
-        <ResetDataForm handleModalClose={handleModalClose} data={data} />
+        <ResetDataForm
+          handleModalClose={handleModalClose}
+          onSubmitEdit={onSubmitEdit}
+          data={data}
+        />
       </Fade>
     </Modal>
   );

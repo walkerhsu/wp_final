@@ -1,5 +1,9 @@
 import * as React from "react";
-import {  Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+
+import {v4 as uuidv4} from 'uuid';
+
 
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -18,7 +22,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import SideBarItems from "../components/SideBarItems";
 import ResetDataModal from "./ResetDataModal";
 import UpdateAccountModal from "./UpdateAccountModal";
+
 import { useAccount } from "./hooks/useAccount";
+import { CREATE_ITEM_MUTATION, DELETE_ITEM_MUTATION } from "../graphql";
 
 const drawerWidth = 240;
 
@@ -101,6 +107,9 @@ export default function Appframe() {
   const [reset, setReset] = React.useState(false);
   const navigate = useNavigate()
 
+  const [createItem] = useMutation(CREATE_ITEM_MUTATION);
+  const [deleteItem] = useMutation(DELETE_ITEM_MUTATION);
+
   const handleModalOpen = () => {
     setModalOpen(true);
   };
@@ -117,6 +126,32 @@ export default function Appframe() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleNewDataCreated = (data) => {
+    console.log("in handleNewDataCreated");
+    createItem({
+      variables: {
+        input: {
+          id: uuidv4(),
+          ...data,
+        }
+      },
+    });
+  }
+
+  const handleResetAllData = () => {
+    console.log("in handleResetAllData");
+    accountData.items.forEach(item => {
+      deleteItem({
+        variables: {
+          input: {
+            id: item.id,
+          }
+        },
+      });
+    })
+  }
+
 
   const appFrame = (
     <Box sx={{ display: "flex" }}>
@@ -146,6 +181,7 @@ export default function Appframe() {
             <ResetDataModal
               open={reset}
               handleModalClose={() => setReset(false)}
+              onSubmitEdit={handleResetAllData}
               data={accountData}
             />
             <Button onClick={handleModalOpen} style={btnStyle}>
@@ -154,7 +190,9 @@ export default function Appframe() {
             <UpdateAccountModal
               open={modalOpen}
               handleModalClose={handleModalClose}
+              onSubmitEdit={handleNewDataCreated}
               data={{}}
+              title="Create New Data"
             />
           </BtnWrapper>
         </Toolbar>

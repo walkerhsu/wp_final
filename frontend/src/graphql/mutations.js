@@ -13,7 +13,7 @@ export const VALIDATE_USER_MUTATION = gql`
 `;
 
 export const CREATE_ITEM_MUTATION = gql`
-  mutation CreateItem($input: CreateItemInput!) {
+  mutation createItem($input: CreateItemInput!) {
     createItem(input: $input) {
       id
     }
@@ -30,6 +30,6 @@ export const UPDATE_ITEM_MUTATION = gql`
 
 export const DELETE_ITEM_MUTATION = gql`
   mutation DeleteItem($id: ID!) {
-    deleteItem(input: $id)
+    deleteItem(input: $id) 
   }
 `;

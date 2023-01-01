@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { useAccount } from "../../hooks/useAccount";
 import { useQuery } from "@apollo/client";
 
-import { GET_ITEMS_QUERY } from '../../../graphql/query';
+import { GET_ITEMS_QUERY } from '../../../graphql';
 import {
   ITEM_CREATED_SUBSCRIPTION,
   ITEM_UPDATED_SUBSCRIPTION,
   ITEM_DELETED_SUBSCRIPTION,
-} from '../../../graphql/subscriptions';
+} from '../../../graphql';
 
 import DataTable from "../../../components/DataTable";
 
@@ -58,8 +58,10 @@ const AccountMainPage = () => {
         document: ITEM_DELETED_SUBSCRIPTION,
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev;
+          console.log(prev.items)
+          console.log(subscriptionData.data.itemDeleted)
           return {
-            items: prev.items.map((item) => (item.id === subscriptionData.data.itemDeleted ? {} : item))
+            items: prev.items.filter((item) => (item.id !== subscriptionData.data.itemDeleted))
           };
         },
       });
@@ -68,14 +70,16 @@ const AccountMainPage = () => {
   );
 
   useEffect(() => {
-    if(itemsData !== undefined) setAccountData(itemsData.items)
+    console.log(itemsData?.items)
+    if (itemsData !== undefined) setAccountData(itemsData.items)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[itemsData])
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <h1>Loading...</h1>;
   if (error) {
     // eslint-disable-next-line no-console
     console.error(error);
-    return (<p>Error :(</p>);
+    return (<h1>Error :(</h1>);
   }
 
   return (

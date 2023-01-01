@@ -37,8 +37,13 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 };
 
-
-export default function UpdateAccountModal({open, handleModalClose, data}) {
+export default function UpdateAccountModal({
+  open,
+  handleModalClose,
+  onSubmitEdit,
+  data,
+  title,
+}) {
   return (
     <Modal
       aria-labelledby="spring-modal-title"
@@ -48,7 +53,12 @@ export default function UpdateAccountModal({open, handleModalClose, data}) {
       closeAfterTransition
     >
       <Fade in={open}>
-        <UpdateAccountForm handleModalClose={handleModalClose} data={data} />
+        <UpdateAccountForm
+          handleModalClose={handleModalClose}
+          onSubmitEdit={onSubmitEdit}
+          data={data}
+          title={title}
+        />
       </Fade>
     </Modal>
   );

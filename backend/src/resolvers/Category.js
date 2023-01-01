@@ -1,14 +1,15 @@
 const CategoryResolver = {
-  FOOD: "FOOD",
-  TRANSPORT: "TRANSPORT",
-  HOUSING: "HOUSING",
-  UTILITIES: "UTILITIES",
-  HEALTH: "HEALTH",
-  ENTERTAINMENT: "ENTERTAINMENT",
-  CLOTHING: "CLOTHING",
-  EDUCATION: "EDUCATION",
-  OTHER: "OTHER",
-  INCOME: "INCOME",
+  Income: "Income",
+  Food: "Food",
+  Clothing: "Clothing",
+  Housing: "Housing",
+  Transport: "Transport",
+  Entertainment: "Entertainment",
+  Education: "Education",
+  Necessities: "Necessities",
+  Electronics: "Electronics",
+  Health: "Health",
+  Others: "Others",
 };
 
 export default CategoryResolver;

@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import React from "react";
+
 const defaultCategories = [
   { cat: "Income", subcat: ["Salary", "Bonus", "Others"] },
   { cat: "Food", subcat: ["Breakfast", "Lunch", "Dinner"] },
