@@ -1,6 +1,11 @@
 const InstructionsPage = () => {
-    return <>
-        <h1>Instructions page</h1>
-    </>
+    return <div className="Wrapper">
+        
+        <div className="about-section" style={{fontSize: 60+'px'}}>
+            App Instructions
+        </div>
+        <br></br>
+        <h1 style={{textAlign: "center", fontSize: 50+'px',fontFamily: "Bradley Hand"}}>~  ~</h1>
+    </div>
 }
 export default InstructionsPage;

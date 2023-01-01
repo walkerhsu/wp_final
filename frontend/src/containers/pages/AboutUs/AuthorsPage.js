@@ -4,17 +4,15 @@ import person2 from "../../../images/person2.png"
 import person3 from "../../../images/person3.png"
 const AuthorsPage = () => {
     return <div className="Wrapper">
-        <div className="about-section">
-        <h1>About Us Page</h1>
-        <p>Some text about who we are and what we do.</p>
-        <p>Resize the browser window to see that this page is responsive by the way.</p>
+        <div className="about-section" style={{fontSize: 60+'px'}}>
+            About Us Page
         </div>
-
-        <h2 style={{textAlign: "center"}}>Our Team</h2>
+        <br></br>
+        <h1 style={{textAlign: "center", fontSize: 50+'px',fontFamily: "Bradley Hand"}}>~ Our Team ~</h1>
         <div className="row">
             <div className="column">
                 <div className="card">
-                <img src={person1} alt="Ryan" style={{width:70 + '%'}} />
+                <img src={person1} alt="Ryan" style={{width:60 + '%'}} />
                     <div className="container">
                         <h1>Ryan Chu</h1>
                         <h2 className="title">Backend Developer</h2>
@@ -29,7 +27,7 @@ const AuthorsPage = () => {
 
             <div className="column">
                 <div className="card">
-                <img src={person2} alt="Walker" style={{width:70 + '%'}} />
+                <img src={person2} alt="Walker" style={{width:60 + '%'}} />
                     <div className="container">
                         <h1>Walker Hsu</h1>
                         <h2 className="title">Frontend Developer</h2>
@@ -44,7 +42,7 @@ const AuthorsPage = () => {
 
             <div className="column">
                 <div className="card">
-                <img src={person3} alt="David" style={{width:70 + '%'}} />
+                <img src={person3} alt="David" style={{width:60 + '%'}} />
                     <div className="container">
                         <h1>David Liu</h1>
                         <h2 className="title">HomePage Designer</h2>

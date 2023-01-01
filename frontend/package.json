@@ -26,6 +26,8 @@
     "react-big-calendar": "^1.5.2",
     "react-chartjs-2": "^5.1.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
+    "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
     "react-spring": "^9.6.1",
