@@ -11,3 +11,25 @@ export const VALIDATE_USER_MUTATION = gql`
     validateUser(input: $input) 
   }
 `;
+
+export const CREATE_ITEM_MUTATION = gql`
+  mutation CreateItem($input: CreateItemInput!) {
+    createItem(input: $input) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_ITEM_MUTATION = gql`
+  mutation UpdateItem($input: UpdateItemInput!) {
+    updateItem(input: $input) {
+      id
+    }
+  }
+`;
+
+export const DELETE_ITEM_MUTATION = gql`
+  mutation DeleteItem($id: ID!) {
+    deleteItem(input: $id)
+  }
+`;

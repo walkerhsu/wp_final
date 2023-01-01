@@ -19,6 +19,7 @@ type Message{
 
 type Item {
     id: ID!
+    username: String!
     name: String!
     amount: Int!
     category: String!
@@ -32,6 +33,7 @@ type Query {
 
 input CreateItemInput {
     id: ID!
+    username: String!
     name: String!
     amount: Int!
     category: String!
@@ -41,6 +43,7 @@ input CreateItemInput {
 
 input UpdateItemInput {
     id: ID!
+    username: String!
     name: String
     amount: Int
     category: String
