@@ -14,3 +14,14 @@ export const GET_ITEMS_QUERY = gql`
     }
   }
 `;
+
+export const GET_CATEGORY_QUERY = gql`
+  query category($username: String!) {
+    category(username: $username) {
+      categories {
+        cat
+        subcat
+      }
+    }
+  }
+`;

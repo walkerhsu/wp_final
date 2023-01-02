@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 
 import { styled } from "@mui/system";
 import { Avatar, Button, Paper, Box, Grid, TextField } from "@material-ui/core";
@@ -15,7 +17,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { useAccount } from "../containers/hooks/useAccount";
 
-
+import { ADD_CATEGORY_MUTATION } from "../graphql";
 
 const paperStyle = {
   padding: 20,
@@ -32,7 +34,11 @@ const btnStyle = {
     backgroundColor: "#5a104a",
   },
 };
-
+const CategoryWrapper = styled("div")({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+});
 const InputWrapper = styled("div")({
   display: "flex",
   flexDirection: "column",
@@ -50,7 +56,10 @@ const BtnWrapper = styled("div")({
 
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
-const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title}) => {
+const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, categories }) => {
+  const { me } = useAccount();
+  // console.log("me", me);
+  // console.log("categories", categories);
   const defaultFormData = {
     date: data.date ? data.date : new Date(),
     name: data.name ? data.name : "name",
@@ -59,21 +68,30 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title}) => {
     money: data.money ? data.money : "100",
     description: data.description ? data.description : "None",
   };
-  const { categories } = useAccount();
   const [time, setTime] = useState(defaultFormData.date);
   const [name, setName] = useState(defaultFormData.name);
   const [money, setMoney] = useState(defaultFormData.money);
   const [moneyMessage, setMoneyMessage] = useState("");
   const [category, setCategory] = useState(defaultFormData.category);
   const [subCategory, setSubCategory] = useState(defaultFormData.subCategory);
+  const [newCategory, setNewCategory] = useState("");
+  const [newCategoryMessage, setNewCategoryMessage] = useState("");
+  const [newSubCategory, setNewSubCategory] = useState("");
+  const [newSubCategoryMessage, setNewSubCategoryMessage] = useState("");
   const [subCategories, setSubCategories] = useState(
     categories.filter((one_category) => one_category.cat === category)[0].subcat
   );
   const [description, setDescription] = useState(defaultFormData.description);
 
   const namePointer = useRef(null);
+  const categoryPointer = useRef(null);
+  const subCategoryPointer = useRef(null);
   const moneyPointer = useRef(null);
   const descriptionPointer = useRef(null);
+
+  const navigate = useNavigate();
+
+  const [addCategory] = useMutation(ADD_CATEGORY_MUTATION)
 
   const handleTimeChange = (Time) => {
     setTime(Time.$d);
@@ -97,6 +115,34 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title}) => {
   const handleSubCategoryChange = (event) => {
     const newSubCategory = event.target.value;
     setSubCategory(newSubCategory);
+  };
+
+  const handleNewCategoryChange = (event) => {
+    const newCategory = event.target.value;
+    setNewCategory(newCategory);
+    if (newCategory.length === 0) {
+      setNewCategoryMessage("Category cannot be empty");
+      return;
+    }
+    for (let i = 0; i < categories.length; i++) {
+      // console.log(categories[i].cat.toLowerCase(), newCategory.toLowerCase())
+      if (categories[i].cat.toLowerCase() === newCategory.toLowerCase()) {
+        setNewCategoryMessage("Category already exists");
+        return;
+      }
+    }
+    setNewCategory(newCategory);
+    setNewCategoryMessage("");
+  };
+
+  const handleNewSubCategoryChange = (event) => {
+    const newSubCategory = event.target.value;
+    setNewSubCategory(newSubCategory);
+    if (newSubCategory.length === 0) {
+      setNewSubCategoryMessage("Subcategory cannot be empty");
+      return;
+    }
+    setNewSubCategoryMessage("");
   };
 
   const handleMoneyChange = (event) => {
@@ -134,6 +180,12 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title}) => {
         case "money":
           descriptionPointer.current.focus();
           break;
+        case "category":
+          subCategoryPointer.current.focus();
+          break;
+        case "subCategory":
+          moneyPointer.current.focus();
+          break;
         case "description":
           handleSubmit(event);
           break;
@@ -153,32 +205,59 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title}) => {
       namePointer.current.focus();
       return false;
     }
+    if (
+      category === "Others" &&
+      (newCategoryMessage || !newCategory || !newSubCategory)
+    ) {
+      alert(
+        "New category and new subcategory should not be empty and should be valid"
+      );
+      categoryPointer.current.focus();
+      return false;
+    }
     if (moneyMessage || !money) {
       alert(moneyMessage ? moneyMessage : "Money should not be empty");
       moneyPointer.current.focus();
       return false;
     }
-    return true
-  }
+    return true;
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(!checkItemFormat()) return
+    if (!checkItemFormat()) return;
+    if (category === "Others") {
+      addCategory({
+        variables: {
+          input: {
+            username: me,
+            category: newCategory,
+            subCategory: newSubCategory,
+          }
+        },
+      });
+      // const newCategories = categories;
+      // newCategories.splice(categories.length - 1, 0, {
+      //   cat: newCategory,
+      //   subcat: [newSubCategory, "Others"],
+      // });
+      // console.log(newCategories);
+      // setCategories(newCategories);
+    }
     const data = {
-      username: "Walker",
+      username: me ? me : "username",
       time: time,
       name: name,
       money: parseInt(money),
-      category: category,
-      subCategory: subCategory,
+      category: category === "Others" ? newCategory : category,
+      subCategory: category === "Others" ? newSubCategory : subCategory,
       description: description,
     };
-    
     console.log(data);
     onSubmitEdit(data);
-    // setAccountData([...accountData, data]);
-    // alert("Update successfully");
     handleModalClose();
+    navigate("/account/home");
+    // window.location.reload();
   };
 
   return (
@@ -235,22 +314,52 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title}) => {
               ))}
             </Select>
           </FormControl>
-          <FormControl fullWidth disabled>
-            <InputLabel id="subCategory-label">SubCategory</InputLabel>
-            <Select
-              labelId="SubCategory"
-              id="subCategory"
-              value={subCategory}
-              label="SubCategory"
-              onChange={handleSubCategoryChange}
-            >
-              {subCategories?.map((sub_category) => (
-                <MenuItem value={sub_category} key={sub_category}>
-                  {sub_category}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          {category === "Others" ? (
+            <CategoryWrapper>
+              <TextField
+                inputRef={categoryPointer}
+                value={newCategory}
+                label="Add new Category"
+                placeholder="Add new Category"
+                variant="outlined"
+                onChange={handleNewCategoryChange}
+                onKeyDown={onKeyDown("category")}
+                error={newCategoryMessage.length > 0}
+                helperText={newCategoryMessage}
+                required
+              ></TextField>
+              <TextField
+                inputRef={subCategoryPointer}
+                value={newSubCategory}
+                label="SubCategory"
+                placeholder="subCategory"
+                variant="outlined"
+                onChange={handleNewSubCategoryChange}
+                onKeyDown={onKeyDown("subCategory")}
+                error={newSubCategoryMessage.length > 0}
+                helperText={newSubCategoryMessage}
+                required
+              ></TextField>
+            </CategoryWrapper>
+          ) : (
+            <FormControl fullWidth disabled>
+              <InputLabel id="subCategory-label">SubCategory</InputLabel>
+              <Select
+                labelId="SubCategory"
+                id="subCategory"
+                value={subCategory}
+                label="SubCategory"
+                onChange={handleSubCategoryChange}
+              >
+                {subCategories?.map((sub_category) => (
+                  <MenuItem value={sub_category} key={sub_category}>
+                    {sub_category}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+
           <TextField
             inputRef={moneyPointer}
             value={money}

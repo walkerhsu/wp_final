@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 import { useAccount } from "../../hooks/useAccount";
-import { VALIDATE_USER_MUTATION } from "../../../graphql";
+import { VALIDATE_USER_MUTATION, CREATE_CATEGORY_MUTATION } from "../../../graphql";
 
 const TextFieldWrapper = styled("div")({
   margin: "8px 0",
@@ -54,6 +54,7 @@ const SigninPage = () => {
   const [validatePerson, { data: validateMessage }] = useMutation(
     VALIDATE_USER_MUTATION
   );
+  const [createCategory] = useMutation(CREATE_CATEGORY_MUTATION);
 
   const navigate = useNavigate();
 
@@ -96,6 +97,13 @@ const SigninPage = () => {
     //    If the backend returns a failure message, then display an alert
     alert(validateMessage.validateUser);
     if (validateMessage.validateUser === "Welcome!") {
+      createCategory({
+        variables: {
+          input: {
+            username: username,
+          }
+        }
+      });
       navigate("/account/home");
       setMe(username);
       setSignin(true);

@@ -21,7 +21,7 @@ function DataTable({ title, data }) {
   const [updateItem] = useMutation(UPDATE_ITEM_MUTATION);
   const [deleteItem] = useMutation(DELETE_ITEM_MUTATION);
 
-  const sortedData = data.slice().sort((a, b) => b.date - a.date);
+  const sortedData = data.slice().sort((a, b) => b.time - a.time);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);

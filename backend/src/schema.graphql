@@ -1,19 +1,5 @@
 scalar Date
 
-enum Category {
-    Income
-    Food
-    Clothing
-    Housing
-    Transport
-    Entertainment
-    Education
-    Necessities
-    Electronics
-    Health
-    Others
-}
-
 type Message{
     message: String!
 }
@@ -29,8 +15,19 @@ type Item {
     description: String
 }
 
+type Category {
+    username: String!
+    categories: [Categories!]!
+}
+
+type Categories {
+    cat: String!
+    subcat: [String!]!
+}
+
 type Query {
-    items: [Item!]!
+    items: [Item!]
+    category(username: String!): Category!
 }
 
 
@@ -56,6 +53,16 @@ input UpdateItemInput {
     description: String
 }
 
+input CreateCategoryInput {
+    username: String!
+}
+
+input AddNewCategoryInput {
+    username: String!
+    category: String!
+    subCategory: String!
+}
+
 input CreateUserInput {
     username: String!
     salt: String!
@@ -74,10 +81,13 @@ type Mutation {
     deleteItem(input: ID!): ID!
     createUser(input: CreateUserInput!): String!
     validateUser(input: ValidateUserInput!): String!
+    createCategory(input: CreateCategoryInput!): Category
+    addNewCategory(input: AddNewCategoryInput!): Category
 }
 
 type Subscription {
     itemCreated: Item!
     itemUpdated: Item!
     itemDeleted: ID!
+    categoryAdded: Category!
 }

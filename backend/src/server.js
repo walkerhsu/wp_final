@@ -9,8 +9,9 @@ import Query from "./resolvers/Query.js";
 import Mutation from "./resolvers/Mutation.js";
 import Subscription from "./resolvers/Subscription.js";
 import DateResolver from "./resolvers/Date.js";
-import CategoryResolver from "./resolvers/Category.js";
+// import CategoryResolver from "./resolvers/Category.js";
 // db
+import categoryModel from './models/category.js';
 import itemModel from "./models/item.js";
 import userModel from "./models/user.js";
 
@@ -27,11 +28,12 @@ const yoga = createYoga({
       Mutation,
       Subscription,
       Date: DateResolver,
-      Category: CategoryResolver,
+      // Category: CategoryResolver,
     },
   }),
   context: {
     pubSub,
+    categoryModel,
     itemModel,
     userModel,
   },

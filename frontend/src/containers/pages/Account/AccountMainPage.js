@@ -20,6 +20,7 @@ const AccountMainPage = () => {
     loading, error, data: itemsData, subscribeToMore,
   } = useQuery(GET_ITEMS_QUERY);
 
+
   useEffect(
     () => {
       subscribeToMore({
@@ -70,8 +71,11 @@ const AccountMainPage = () => {
   );
 
   useEffect(() => {
-    console.log(itemsData?.items)
-    if (itemsData !== undefined) setAccountData(itemsData.items)
+    if (itemsData === undefined) return;
+    const { items } = itemsData;
+    console.log(items)
+    const sortedItems = items.slice().sort((a, b) => b.time - a.time);
+    if (sortedItems !== undefined) setAccountData(sortedItems)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[itemsData])
 

@@ -1,5 +1,6 @@
 import itemModel from "./models/item.js";
 import userModel from "./models/user.js";
+import categoryModel from "./models/category.js";
 
 const example = [
   {
@@ -57,7 +58,8 @@ const example = [
 const dataInit = async () => {
   await itemModel.deleteMany({});
   await userModel.deleteMany({});
-  await itemModel.insertMany(example);
+  await categoryModel.deleteMany({});
+  // await itemModel.insertMany(example);
   console.log("Database initialized!");
 };
 

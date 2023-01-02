@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
 import {
   Avatar,
@@ -49,6 +50,7 @@ const avatarStyle = { backgroundColor: "#1bbd7e" };
 
 const ResetDataForm = ({ handleModalClose, onSubmitEdit, data }) => {
   const { accountData } = useAccount();
+  const navigate = useNavigate();
 
   const handleResetData = () => {
     if (data.length === accountData.length) {
@@ -65,6 +67,8 @@ const ResetDataForm = ({ handleModalClose, onSubmitEdit, data }) => {
     // const resetData = accountData.filter((item) => !_.isEqual(item, data[0]));
     // setAccountData(resetData);
     handleModalClose();
+    navigate("/account/home")
+    // window.location.reload();
   };
   return (
     <Box
