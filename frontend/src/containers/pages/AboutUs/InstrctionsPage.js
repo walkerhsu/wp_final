@@ -1,5 +1,6 @@
-import homeLink from "../../../images/home.png"
 import { useNavigate } from "react-router-dom";
+import homeLink from "../../../images/home.png";
+import "../../../css/InstructionsPage.css";
 
 const InstructionsPage = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const InstructionsPage = () => {
         </div>
         <br></br>
         <h1 style={{textAlign: "center", fontSize: 50+'px',fontFamily: "Bradley Hand"}}>some text</h1>
-        <img className="homeLink" src={homeLink} style={{width: 50+'px'}} onClick={backToHomePage}/>
+        <img alt="home" className="homeLink" src={homeLink} style={{width: 50+'px'}} onClick={backToHomePage}/>
     </div>
 }
 export default InstructionsPage;

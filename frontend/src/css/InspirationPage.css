@@ -6,31 +6,9 @@
     flex-wrap: wrap;
 }
 
-/* body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-} */
-
-/* html {
-    box-sizing: border-box;
-} */
-
-*,
-*:before,
-*:after {
-    box-sizing: inherit;
-}
-
 .homeLink {
     position: absolute;
     left: 90%;
     top: 92%;
     cursor: pointer;
-}
-
-@media screen and (max-width: 650px) {
-    .column {
-        width: 100%;
-        display: block;
-    }
 }
