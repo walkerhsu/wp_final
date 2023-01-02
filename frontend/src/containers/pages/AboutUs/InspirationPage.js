@@ -1,6 +1,6 @@
-import "../../../css/InspirationPage.css";
 import homeLink from "../../../images/home.png";
 import { useNavigate } from "react-router-dom";
+import "../../../css/InspirationPage.css";
 
 const InspirationPage = () => {
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ const InspirationPage = () => {
         </div>
         <br></br>
         <h1 style={{textAlign: "center", fontSize: 50+'px',fontFamily: "Bradley Hand"}}>~ Why and How accounting matters ~</h1>
-        <img className="homeLink" src={homeLink} style={{width: 50+'px'}} onClick={backToHomePage}/>
+        <img alt="home" className="homeLink" src={homeLink} style={{width: 50+'px'}} onClick={backToHomePage}/>
     </div>
 }
 export default InspirationPage;
