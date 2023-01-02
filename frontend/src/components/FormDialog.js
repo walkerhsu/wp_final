@@ -6,7 +6,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import "../css/FormDialog.css";
 
 const FormDialog = () => {
   const [open, setOpen] = React.useState(false);
@@ -25,7 +24,7 @@ const FormDialog = () => {
 
   return (
     <div>
-      <Button className='contactButton' variant="outlined" onClick={handleClickOpen} >
+      <Button className='contactButton' variant="outlined" onClick={handleClickOpen} style={{fontSize: 20+'px'}}>
         Contact Us
       </Button>
       <Dialog open={open} onClose={handleClose}>
