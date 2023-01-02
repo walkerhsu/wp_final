@@ -5,7 +5,7 @@ const InstructionsPage = () => {
             App Instructions
         </div>
         <br></br>
-        <h1 style={{textAlign: "center", fontSize: 50+'px',fontFamily: "Bradley Hand"}}>~  ~</h1>
+        <h1 style={{textAlign: "center", fontSize: 50+'px',fontFamily: "Bradley Hand"}}>some text</h1>
     </div>
 }
 export default InstructionsPage;

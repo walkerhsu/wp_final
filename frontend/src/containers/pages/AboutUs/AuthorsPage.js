@@ -19,7 +19,7 @@ const AuthorsPage = () => {
                         <h3>Some text.</h3>
                         <h3>ryan@example.com</h3>
                         <br></br>
-                        <p><button className="button">Contact</button></p>
+                        {/* <p><button className="button">Contact</button></p> */}
                         <br></br>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ const AuthorsPage = () => {
                         <h3>Some text.</h3>
                         <h3>walker@example.com</h3>
                         <br></br>
-                        <p><button className="button">Contact</button></p>
+                        {/* <p><button className="button">Contact</button></p> */}
                         <br></br>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ const AuthorsPage = () => {
                         <h3>Some text.</h3>
                         <h3>david@example.com</h3>
                         <br></br>
-                        <p><button className="button">Contact</button></p>
+                        {/* <p><button className="button">Contact</button></p> */}
                         <br></br>
                     </div>
                 </div>
