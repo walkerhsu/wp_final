@@ -14,8 +14,8 @@ import AnalysisPage from "./containers/pages/Account/AnalysisPage";
 import AuthorsPage from "./containers/pages/AboutUs/AuthorsPage";
 import InspirationPage from "./containers/pages/AboutUs/InspirationPage";
 import InstructionsPage from "./containers/pages/AboutUs/InstrctionsPage";
-import CommentsPage from "./containers/pages/AboutUs/CommentsPage";
-import ContactPage from "./containers/pages/AboutUs/ContactPage";
+import CommentsPage from "./containers/pages/Account/CommentsPage";
+import ContactPage from "./containers/pages/Account/ContactPage";
 
 function App() {
   return (
@@ -29,15 +29,16 @@ function App() {
           <Route path="authors" element={<AuthorsPage />} />
           <Route path="inspiration" element={<InspirationPage />} />
           <Route path="instructions" element={<InstructionsPage />} />
-          <Route path="comments" element={<CommentsPage />} />
-          <Route path="contact" element={<ContactPage />} />
           <Route path="account" element={<Appframe />}>
             <Route path="home" element={<AccountMainPage />} />
             <Route path="calendar" element={<CalendarPage />} />
             <Route path="classification" element={<ClassificationPage />} />
             <Route path="analysis" element={<AnalysisPage />} />
             <Route path="*" element={<h1>Sorry! Page not found</h1>} />
+            <Route path="comments" element={<CommentsPage />} />
+            <Route path="contact" element={<ContactPage />} />
           </Route>
+          
 
           {/* <Route path="/restaurant/:id" element={<RestaurantPage />} /> */}
         </Routes>

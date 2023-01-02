@@ -10,6 +10,8 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SortIcon from '@mui/icons-material/Sort';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import LogoutIcon from "@mui/icons-material/Logout";
+import CommentIcon from "@mui/icons-material/Comment";
+import PhoneForwardedIcon from "@mui/icons-material/PhoneForwarded";
 
 const AccountItems = [
   {
@@ -33,6 +35,18 @@ const AccountItems = [
     link: "analysis",
   }
 ];
+const ConverseItems = [
+  {
+    name: "User's Comments",
+    icon: <CommentIcon />,
+    link: "comments",
+  },
+  {
+    name: 'Contact Us',
+    icon: <PhoneForwardedIcon />,
+    link: "contact",
+  }
+]
 const OtherItems = [
   {
     name: "Logout",
@@ -46,18 +60,35 @@ export default function SideBarItems({ handleDrawerClose }) {
   const currentPath = location.pathname;
   return (
     <>
-      {AccountItems.map((item) => (
-        <ListItemButton
-          key={item.name}
-          component={Link}
-          to={item.link}
-          selected={currentPath === item.to}
-          onClick={handleDrawerClose}
-        >
-          <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.name} />
-        </ListItemButton>
-      ))}
+      {
+        AccountItems.map((item) => (
+          <ListItemButton
+            key={item.name}
+            component={Link}
+            to={item.link}
+            selected={currentPath === item.to}
+            onClick={handleDrawerClose}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.name} />
+          </ListItemButton>
+        ))
+      }
+      <Divider />
+      {
+        ConverseItems.map((item) => (
+          <ListItemButton
+            key={item.name}
+            component={Link}
+            to={item.link}
+            selected={currentPath === item.to}
+            onClick={handleDrawerClose}
+          >
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.name} />
+          </ListItemButton>
+        ))
+      }
       <Divider />
       {
         OtherItems.map((item) => (
