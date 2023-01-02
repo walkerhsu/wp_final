@@ -7,9 +7,9 @@ const monthData = (month, year, accountData) => {
     let esum = 0;
     for (let i = 0; i < sameMonthData.length; i++) {
         if(sameMonthData[i].category === 'Income')
-            esum += parseInt(sameMonthData[i].money);
-        else
             rsum += parseInt(sameMonthData[i].money);
+        else
+            esum += parseInt(sameMonthData[i].money);
     }
     return (rsum - esum);
 };
