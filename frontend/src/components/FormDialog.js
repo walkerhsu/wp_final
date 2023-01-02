@@ -28,11 +28,11 @@ const FormDialog = () => {
         Contact Us
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Anything You Want To Say</DialogTitle>
+        <DialogTitle>Your Comments And Suggestions</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please enter your message here. Our team
-            will regularly check every user's response.
+            will regularly check user's response.
           </DialogContentText>
           <TextField
             autoFocus

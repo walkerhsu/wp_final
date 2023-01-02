@@ -63,10 +63,10 @@ const AboutUsDrawer = () => {
     {text: 'Inspiration', nav: navigateInspiration},
     {text: 'App Instructions', nav: navigateToInstructions}
   ]
-  const textList2 = [
-    {text: "User's Comments", nav: navigateToComments},
-    {text: 'Contact Us', nav: navigateToContact}
-  ]
+  // const textList2 = [
+  //   {text: "User's Comments", nav: navigateToComments},
+  //   {text: 'Contact Us', nav: navigateToContact}
+  // ]
 
   const list = (anchor) => (
     <Box
@@ -95,7 +95,7 @@ const AboutUsDrawer = () => {
           </ListItem>
         ))}
       </List>
-      <Divider />
+      {/* <Divider />
       <List>
         {textList2.map((data, index) => (
           <ListItem key={data.text} disablePadding>
@@ -107,7 +107,7 @@ const AboutUsDrawer = () => {
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </Box>
   );
 
