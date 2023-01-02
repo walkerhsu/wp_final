@@ -11,11 +11,11 @@ const monthData = (month, year, accountData) => {
         else
             rsum += parseInt(sameMonthData[i].money);
     }
-    return [ rsum , esum ];
+    return (rsum - esum);
 };
   
-export function getBarChartData(accountData, year) {
-    const barData = {
+export function getLineChartData(accountData, year) {
+    const lineData = {
       labels:  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       datasets: [],
     };
@@ -28,22 +28,15 @@ export function getBarChartData(accountData, year) {
         })
     }
   
-    barData.datasets = [
+    lineData.datasets = [
       {
-        label: "Revenue",
-        data: labels.map((label) => label.data[0]),
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        borderColor: "#2f4b7c",
-        borderWidth: 1,
-      },
-      {
-        label: "Expense",
-        data: labels.map((label) => label.data[1]),
+        label: "Balance",
+        data: labels.map((label) => label.data),
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "#003f5c",
         borderWidth: 1,
-      },
+      }
     ];
-    return barData;
+    return lineData;
 }
   
