@@ -33,3 +33,27 @@ export const DELETE_ITEM_MUTATION = gql`
     deleteItem(input: $id) 
   }
 `;
+
+export const ADD_CATEGORY_MUTATION = gql`
+  mutation addNewCategory($input: AddNewCategoryInput!) {
+    addNewCategory(input: $input) {
+      username
+      categories{
+        cat
+        subcat
+      }
+    }
+  }
+`;
+
+export const CREATE_CATEGORY_MUTATION = gql`
+  mutation createCategory($input: CreateCategoryInput!) {
+    createCategory(input: $input) {
+      username
+      categories{
+        cat
+        subcat
+      }
+    }
+  }
+`;

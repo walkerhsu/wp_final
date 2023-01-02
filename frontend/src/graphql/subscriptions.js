@@ -35,3 +35,14 @@ export const ITEM_DELETED_SUBSCRIPTION = gql`
     itemDeleted
   }
 `;
+
+export const CATEGORY_ADDED_SUBSCRIPTION = gql`
+  subscription CategoryAdded {
+    categoryAdded {
+      categories {
+        cat
+        subcat
+      }
+    }
+  }
+`;
