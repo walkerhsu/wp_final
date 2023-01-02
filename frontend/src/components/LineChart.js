@@ -69,14 +69,12 @@ function LineChart() {
           options={{
             maintainAspectRatio: false,
             scales: {
-              yAxes: [
-                {
+              y: {
                   ticks: {
                     // The y-axis value will start from zero
                     beginAtZero: true,
                   },
                 },
-              ],
             },
             legend: {
               labels: {
