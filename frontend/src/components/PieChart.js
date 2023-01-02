@@ -12,6 +12,9 @@ import {
 import { Pie, Bar } from "react-chartjs-2";
 import { useAccount } from "../containers/hooks/useAccount";
 import { getPieChartData } from "../utils/getPieChartData";
+import { getBarChartData } from "../utils/getBarChartData";
+
+
 
 ChartJS.register(
   ArcElement,
@@ -26,6 +29,7 @@ ChartJS.register(
 function PieChart() {
   const { accountData } = useAccount();
   const chartData = getPieChartData(accountData);
+  const barData = getBarChartData(accountData);
   return (
     <div className="chart-container">
       <h2 style={{ textAlign: "center" }}>Pie Chart</h2>
@@ -42,7 +46,7 @@ function PieChart() {
       <h2 style={{ textAlign: "center" }}>Monthly Analysis</h2>
       <div>
         <Bar
-          data={chartData}
+          data={barData}
           // Height of graph
           height={400}
           options={{
