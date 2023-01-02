@@ -89,3 +89,10 @@
     
     font-size: 18px;
 }
+
+.homeLink {
+    position: absolute;
+    left: 90%;
+    top: 92%;
+    cursor: pointer;
+}

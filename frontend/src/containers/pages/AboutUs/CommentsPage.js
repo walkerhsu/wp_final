@@ -6,8 +6,11 @@ import "../../../css/CommentsPage.css"
 import logo from "../../../images/dinosaur.png"
 import like from "../../../images/like.png"
 import dislike from "../../../images/dislike.png"
+import homeLink from "../../../images/home.png"
+import { useNavigate } from "react-router-dom";
 
 const CommentsPage = () => {
+    const navigate = useNavigate();
     const [rating, setRating] = useState(0)
     const [name, setName] = useState('')
     const [content, setContent] = useState('')
@@ -29,6 +32,10 @@ const CommentsPage = () => {
     const storeComment = () => {
         const newComment = {name: name, rating: rating, content: content, like: false, likeNum: 0}
         setComments((prev) => [...prev, newComment])
+    }
+
+    const backToHomePage = () => {
+        navigate("/");
     }
 
     return (
@@ -90,6 +97,7 @@ const CommentsPage = () => {
                 </div>
                 
             </div>
+            <img className="homeLink" src={homeLink} style={{width: 50+'px'}} onClick={backToHomePage}/>
         </div>
     )
 }

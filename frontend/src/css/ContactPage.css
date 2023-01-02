@@ -50,6 +50,13 @@
     }
 }
 
+.homeLink {
+    position: absolute;
+    left: 90%;
+    top: 92%;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 650px) {
     .messageWrapper {
         position: absolute;
@@ -62,3 +69,4 @@
         font-size: 12px;
     }
 }
+
