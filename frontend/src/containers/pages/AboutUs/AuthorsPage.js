@@ -2,7 +2,14 @@ import "../../../css/AuthorsPage.css"
 import person1 from "../../../images/person1.png"
 import person2 from "../../../images/person2.png"
 import person3 from "../../../images/person3.png"
+import homeLink from "../../../images/home.png"
+import { useNavigate } from "react-router-dom";
 const AuthorsPage = () => {
+    const navigate = useNavigate();
+    const backToHomePage = () => {
+        navigate("/");
+    }
+
     return <div className="Wrapper">
         <div className="about-section" style={{fontSize: 60+'px'}}>
             About Us Page
@@ -55,6 +62,7 @@ const AuthorsPage = () => {
                 </div>
             </div>
         </div>
+        <img className="homeLink" src={homeLink} style={{width: 50+'px'}} onClick={backToHomePage}/>
     </div>
 }
 export default AuthorsPage;
