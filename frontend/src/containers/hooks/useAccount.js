@@ -12,7 +12,7 @@ const defaultCategories = [
   { cat: "Necessities", subcat: ["Groceries", "Toiletries", "Cleaning Supplies", "Others"] },
   { cat: "Electronics", subcat: ["Phone", "Computer", "Tablet", "Others"] },
   { cat: "Health", subcat: ["Doctor", "Medicine", "Dental", "Gym"] },
-  { cat:"Others", subcat: ["Others"] },
+  { cat: "Others", subcat: ["Others"] },
 ];
 const AccountContext = createContext({
   me: {},
