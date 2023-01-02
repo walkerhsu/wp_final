@@ -23,6 +23,14 @@
     transform: translate(-50%, 0);
 }
 
+.logo {
+    position: absolute;
+    top: 58%;
+    left: 62%;
+    transform: translate(-50%, 0);
+    opacity: 0.8;
+}
+
 .name {
     width: 70%;
     font-size: 15px;
@@ -58,9 +66,26 @@
     border: 2px solid rgba(165, 42, 42, 0.35);
     padding: 2%;
     width: 95%;
+    position: relative;
 }
 
 .commentName {
     color: black;
     font-size: 16px;
+}
+
+.likeContainer {
+    position: absolute;
+    height: 35%;
+    width: 10%;
+    top: 5%;
+    left: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.likeNum {
+    
+    font-size: 18px;
 }

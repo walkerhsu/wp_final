@@ -3,6 +3,9 @@ import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import Stars from '../../../components/Stars';
 import "../../../css/CommentsPage.css"
+import logo from "../../../images/dinosaur.png"
+import like from "../../../images/like.png"
+import dislike from "../../../images/dislike.png"
 
 const CommentsPage = () => {
     const [rating, setRating] = useState(0)
@@ -24,7 +27,7 @@ const CommentsPage = () => {
     }
 
     const storeComment = () => {
-        const newComment = {name: name, rating: rating, content: content}
+        const newComment = {name: name, rating: rating, content: content, like: false, likeNum: 0}
         setComments((prev) => [...prev, newComment])
     }
 
@@ -51,7 +54,7 @@ const CommentsPage = () => {
                         <button onClick={handleSubmit}>Submit</button>
                     </div>
                 </div>
-                <div className="logo-image" />
+                <img className='logo' alt='LOGO' src={logo} style={{width:50 + '%'}} />
             </div>
 
             <div className='commentsContainer'>
@@ -68,7 +71,17 @@ const CommentsPage = () => {
                                         </div>
                                     </div>
                                     <p className='content'> {comment.content}</p>
+                                    <div className='likeContainer'>
+                                        {
+                                            comment.like? 
+                                            <img className='like-icon' src={like} style={{width:45 + '%'}} /> : 
+                                            <img className='dislike-icon' src={dislike} style={{width:45 + '%'}} />
+                                        }
+                                        <div className='likeNum'>{comment.likeNum}</div>
+                                    </div>
+                                    
                                 </div>
+                                
                                 <br></br>
                                 </>
                             )
