@@ -236,13 +236,6 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
           }
         },
       });
-      // const newCategories = categories;
-      // newCategories.splice(categories.length - 1, 0, {
-      //   cat: newCategory,
-      //   subcat: [newSubCategory, "Others"],
-      // });
-      // console.log(newCategories);
-      // setCategories(newCategories);
     }
     const data = {
       username: me ? me : "username",
@@ -257,7 +250,7 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
     onSubmitEdit(data);
     handleModalClose();
     navigate("/account/home");
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (

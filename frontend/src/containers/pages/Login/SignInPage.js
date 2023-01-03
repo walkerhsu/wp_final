@@ -17,7 +17,10 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 import { useAccount } from "../../hooks/useAccount";
-import { VALIDATE_USER_MUTATION, CREATE_CATEGORY_MUTATION } from "../../../graphql";
+import {
+  VALIDATE_USER_MUTATION,
+  CREATE_CATEGORY_MUTATION,
+} from "../../../graphql";
 
 const TextFieldWrapper = styled("div")({
   margin: "8px 0",
@@ -33,11 +36,13 @@ const SigninPage = () => {
     usernameMessage,
     password,
     passwordMessage,
+    rememberMe,
     setMe,
     resetSignInData,
     checkUsername,
     checkPassword,
     setSignin,
+    setRememberMe,
   } = useAccount();
   const paperStyle = {
     padding: 20,
@@ -92,7 +97,7 @@ const SigninPage = () => {
   };
 
   useEffect(() => {
-    if (!validateMessage) return
+    if (!validateMessage) return;
     // 2. If the backend returns a success message, then navigate to the account page
     //    If the backend returns a failure message, then display an alert
     alert(validateMessage.validateUser);
@@ -101,8 +106,8 @@ const SigninPage = () => {
         variables: {
           input: {
             username: username,
-          }
-        }
+          },
+        },
       });
       navigate("/account/home");
       setMe(username);
@@ -158,7 +163,17 @@ const SigninPage = () => {
         </TextFieldWrapper>
         {/* view password: https://stackoverflow.com/questions/60391113/how-to-view-password-from-material-ui-textfield */}
         <FormControlLabel
-          control={<Checkbox name="checkedB" color="primary" />}
+          control={
+            <Checkbox
+              name="checkedB"
+              color="primary"
+              value={rememberMe}
+              onClick={() => {
+                // console.log("remember me");
+                setRememberMe(!rememberMe);
+              }}
+            />
+          }
           label="Remember me"
         />
         <Button

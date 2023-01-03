@@ -34,9 +34,9 @@ function App() {
             <Route path="calendar" element={<CalendarPage />} />
             <Route path="classification" element={<ClassificationPage />} />
             <Route path="analysis" element={<AnalysisPage />} />
-            <Route path="*" element={<h1>Sorry! Page not found</h1>} />
             <Route path="comments" element={<CommentsPage />} />
             <Route path="contact" element={<ContactPage />} />
+            <Route path="*" element={<h1>Sorry! Page not found</h1>} />
           </Route>
           
 
