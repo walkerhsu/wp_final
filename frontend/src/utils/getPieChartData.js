@@ -18,18 +18,26 @@ const backgroundColor = [
   "rgba(255, 99, 132, 0.2)",
   "rgba(54, 162, 235, 0.2)",
 ];
-const getCategories = (accountData) => {
+const getCategories = (accountData, mode, time) => {
   const categories = [];
   for (let i = 0; i < accountData.length; i++) {
-    if (!categories.includes(accountData[i].category)) {
-      categories.push(accountData[i].category);
+    const date = new Date(accountData[i].time)
+    if (!categories.includes(accountData[i].category) && 
+      ((mode && date.getFullYear().toString() === time.substring(0,4) && date.getMonth().toString() === time.substring(5)) || 
+      (!mode && date.getFullYear() === time))) {
+        categories.push(accountData[i].category);
     }
   }
   return categories;
 }
-const categoryData = (category, accountData) => {
+const categoryData = (category, accountData, mode, time) => {
   const sameCategoryData = accountData.filter(
-    (item) => item.category === category
+    (item) => {
+      const date = new Date(item.time)
+      return (item.category === category && 
+      ((mode && date.getFullYear().toString() === time.substring(0,4) && date.getMonth().toString() === time.substring(5)) || 
+      (!mode && date.getFullYear() === time)))
+    }
   );
   let sum = 0;
   for (let i = 0; i < sameCategoryData.length; i++) {
@@ -38,16 +46,16 @@ const categoryData = (category, accountData) => {
   return sum;
 };
 
-export function getPieChartData(accountData) {
+export function getPieChartData(accountData, mode, time) {
   const pieData = {
     labels: [],
     datasets: [],
   };
-  const categories = getCategories(accountData);
+  const categories = getCategories(accountData, mode, time);
 
   const labels = categories.map((category, index) => ({
     label: category,
-    data: categoryData(category, accountData),
+    data: categoryData(category, accountData, mode, time),
     backgroundColor: backgroundColor[index % borderColor.length],
     borderColor: borderColor[index % borderColor.length],
   }));
