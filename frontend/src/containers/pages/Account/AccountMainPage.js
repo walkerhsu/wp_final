@@ -13,13 +13,13 @@ import DataTable from "../../../components/DataTable";
 
 import "../../../css/AccountMainPage.css";
 
+
 const AccountMainPage = () => {
   const { accountData, setAccountData } = useAccount();
 
   const {
     loading, error, data: itemsData, subscribeToMore,
   } = useQuery(GET_ITEMS_QUERY);
-
 
   useEffect(
     () => {

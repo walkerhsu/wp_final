@@ -68,7 +68,7 @@ const ResetDataForm = ({ handleModalClose, onSubmitEdit, data }) => {
     // setAccountData(resetData);
     handleModalClose();
     navigate("/account/home")
-    // window.location.reload();
+    window.location.reload();
   };
   return (
     <Box

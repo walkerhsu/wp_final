@@ -1,5 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import React from "react";
+const LOCALSTORAGE_ME_KEY = "";
+const savedMe = localStorage.getItem(LOCALSTORAGE_ME_KEY);
+
+const LOCALSTORAGE_USERNAME_KEY = ""
+const savedUsername = localStorage.getItem(LOCALSTORAGE_USERNAME_KEY);
 
 const AccountContext = createContext({
   me: {},
@@ -9,6 +14,7 @@ const AccountContext = createContext({
   passwordMessage: {},
   email: {},
   emailMessage: {},
+  rememberMe: {},
   signin: {},
   accountData: {},
   categories: {},
@@ -17,7 +23,8 @@ const AccountContext = createContext({
   checkUsername: () => {},
   checkPassword: () => {},
   checkEmail: () => { },
-  setSignin: () => {},
+  setSignin: () => { },
+  setRememberMe: () => { },
   setAccountData: () => {},
   setCategories: () => {},
   resetSignInData: () => { },
@@ -25,9 +32,9 @@ const AccountContext = createContext({
 });
 
 const AccountProvider = (props) => {
-  const [me, setMe] = useState("");
+  const [me, setMe] = useState(savedMe || "" );
 
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(savedUsername || "");
   const [usernameMessage, setUsernameMessage] = useState("");
 
   const [password, setPassword] = useState("");
@@ -36,7 +43,9 @@ const AccountProvider = (props) => {
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
-  const [signin, setSignin] = useState(true);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const [signin, setSignin] = useState(false);
 
   const [accountData, setAccountData] = useState([]);
 
@@ -96,6 +105,20 @@ const AccountProvider = (props) => {
     setEmail("");
     setEmailMessage("");
   };
+
+  useEffect(() => {
+    localStorage.setItem(LOCALSTORAGE_USERNAME_KEY, username);
+  }, [signin, username]);
+
+  useEffect(() => {
+    if (rememberMe) {
+      if (signin) {
+        console.log(rememberMe)
+        localStorage.setItem(LOCALSTORAGE_ME_KEY, me);
+      }
+    }
+  }, [rememberMe, signin, me]);
+
   return (
     <AccountContext.Provider
       value={{
@@ -106,6 +129,7 @@ const AccountProvider = (props) => {
         passwordMessage,
         email,
         emailMessage,
+        rememberMe,
         signin,
         accountData,
         categories,
@@ -115,6 +139,7 @@ const AccountProvider = (props) => {
         checkPassword,
         checkEmail,
         setSignin,
+        setRememberMe,
         setAccountData,
         setCategories,
         resetSignInData,
