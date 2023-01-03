@@ -12,6 +12,8 @@ const AccountContext = createContext({
   usernameMessage: {},
   password: {},
   passwordMessage: {},
+  passwordConfirm: {},
+  passwordConfirmMessage: {},
   email: {},
   emailMessage: {},
   rememberMe: {},
@@ -22,6 +24,7 @@ const AccountContext = createContext({
   setMe: () => {},
   checkUsername: () => {},
   checkPassword: () => {},
+  checkPasswordConfirm: () => {},
   checkEmail: () => { },
   setSignin: () => { },
   setRememberMe: () => { },
@@ -39,6 +42,9 @@ const AccountProvider = (props) => {
 
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
+
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
@@ -84,6 +90,16 @@ const AccountProvider = (props) => {
     }
   };
 
+  const checkPasswordConfirm = (event) => {
+    const cpassword = event.target.value;
+    setPasswordConfirm(cpassword);
+    if (event.target.value !== password) {
+      setPasswordConfirmMessage("Password is inconsistent");
+    } else {
+      setPasswordConfirmMessage("");
+    }
+  };
+
   const checkEmail = (event) => {
     const email = event.target.value;
     setEmail(email);
@@ -102,6 +118,8 @@ const AccountProvider = (props) => {
     setUsernameMessage("");
     setPassword("");
     setPasswordMessage("");
+    setPasswordConfirm("");
+    setPasswordConfirmMessage("");
     setEmail("");
     setEmailMessage("");
   };
@@ -127,6 +145,8 @@ const AccountProvider = (props) => {
         usernameMessage,
         password,
         passwordMessage,
+        passwordConfirm,
+        passwordConfirmMessage,
         email,
         emailMessage,
         rememberMe,
@@ -137,6 +157,7 @@ const AccountProvider = (props) => {
         setMe,
         checkUsername,
         checkPassword,
+        checkPasswordConfirm,
         checkEmail,
         setSignin,
         setRememberMe,

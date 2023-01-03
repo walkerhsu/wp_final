@@ -12,6 +12,7 @@ import InsertChartIcon from '@mui/icons-material/InsertChart';
 import LogoutIcon from "@mui/icons-material/Logout";
 import CommentIcon from "@mui/icons-material/Comment";
 import PhoneForwardedIcon from "@mui/icons-material/PhoneForwarded";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const AccountItems = [
   {
@@ -48,6 +49,11 @@ const ConverseItems = [
   }
 ]
 const OtherItems = [
+  {
+    name: "Settings",
+    icon: <SettingsIcon />,
+    link: "settings",
+  },
   {
     name: "Logout",
     icon: <LogoutIcon />,

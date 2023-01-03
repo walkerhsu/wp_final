@@ -104,6 +104,20 @@ const Mutation = {
     console.log("User created");
     return "User created";
   },
+  updateUser: async (parent, { input }, { userModel }) => {
+    console.log(input);
+    input.password = hash(input.password, input.salt ? input.salt : "");
+    console.log(input.password);
+    let User = await userModel.findOne({ username: input.username });
+    if(User.password !== hash(input.curpassword, User.salt)) return "Password incorrect";
+    delete input.curpassword;
+    input.email = User.email;
+    if(!User) return "error";
+    await userModel.deleteOne(User)
+    const newUser = new userModel(input);
+    await newUser.save();
+    return "User password updated";
+  },
   validateUser: async (parent, { input }, { userModel }) => {
     console.log(input);
     let User = await userModel.findOne({ username: input.username });
