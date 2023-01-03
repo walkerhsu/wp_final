@@ -59,7 +59,7 @@ const dataInit = async () => {
   await itemModel.deleteMany({});
   await userModel.deleteMany({});
   await categoryModel.deleteMany({});
-  // await itemModel.insertMany(example);
+  await itemModel.insertMany(example);
   console.log("Database initialized!");
 };
 
