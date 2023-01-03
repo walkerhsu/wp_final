@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAccount } from "../../hooks/useAccount";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 
 import { GET_ITEMS_QUERY } from '../../../graphql';
 import {
@@ -15,11 +15,13 @@ import "../../../css/AccountMainPage.css";
 
 
 const AccountMainPage = () => {
-  const { accountData, setAccountData } = useAccount();
+  const { me, accountData, setAccountData } = useAccount();
 
-  const {
+  const [ renderItem ,{
     loading, error, data: itemsData, subscribeToMore,
-  } = useQuery(GET_ITEMS_QUERY);
+  }] = useLazyQuery(GET_ITEMS_QUERY, {
+    variables:{ username: me }
+  });
 
   useEffect(
     () => {
@@ -71,13 +73,14 @@ const AccountMainPage = () => {
   );
 
   useEffect(() => {
+    renderItem(me)
     if (itemsData === undefined) return;
     const { items } = itemsData;
     console.log(items)
     const sortedItems = items.slice().sort((a, b) => b.time - a.time);
     if (sortedItems !== undefined) setAccountData(sortedItems)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[itemsData])
+  },[ me, itemsData])
 
   if (loading) return <h1>Loading...</h1>;
   if (error) {

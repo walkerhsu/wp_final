@@ -1,7 +1,8 @@
 const Query = {
-    items: async (parent, args, {itemModel}) => {
-    const items = await itemModel.find().sort();
-    console.log(items)
+    items: async (parent, { username }, {itemModel}) => {
+      console.log("in")
+    const items = await itemModel.find({username: username}).sort();
+    console.log("items")
       return items;
   },
   category: async (parent, { username }, { categoryModel }) => {
