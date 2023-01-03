@@ -124,14 +124,6 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       setNewCategoryMessage("Category cannot be empty");
       return;
     }
-    for (let i = 0; i < categories.length; i++) {
-      // console.log(categories[i].cat.toLowerCase(), newCategory.toLowerCase())
-      if (categories[i].cat.toLowerCase() === newCategory.toLowerCase()) {
-        setNewCategoryMessage("Category already exists");
-        return;
-      }
-    }
-    setNewCategory(newCategory);
     setNewCategoryMessage("");
   };
 
@@ -206,7 +198,7 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       return false;
     }
     if (
-      category === "Others" &&
+      category === "Add new category or subcategory" &&
       (newCategoryMessage || !newCategory || !newSubCategory)
     ) {
       alert(
@@ -223,11 +215,11 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
     return true;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!checkItemFormat()) return;
-    if (category === "Others") {
-      addCategory({
+    if (category === "Add new category or subcategory") {
+       addCategory({
         variables: {
           input: {
             username: me,
@@ -242,15 +234,16 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       time: time,
       name: name,
       money: parseInt(money),
-      category: category === "Others" ? newCategory : category,
-      subCategory: category === "Others" ? newSubCategory : subCategory,
+      category: category === "Add new category or subcategory" ? newCategory : category,
+      subCategory: category === "Add new category or subcategory" ? newSubCategory : subCategory,
       description: description,
     };
     console.log(data);
-    onSubmitEdit(data);
+    await onSubmitEdit(data);
     handleModalClose();
     navigate("/account/home");
-    window.location.reload();
+    console.log("navigating to /account/home")
+    // window.location.reload();
   };
 
   return (
@@ -307,7 +300,7 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
               ))}
             </Select>
           </FormControl>
-          {category === "Others" ? (
+          {category === "Add new category or subcategory" ? (
             <CategoryWrapper>
               <TextField
                 inputRef={categoryPointer}

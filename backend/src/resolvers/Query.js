@@ -6,7 +6,8 @@ const Query = {
       return items;
   },
   category: async (parent, { username }, { categoryModel }) => {
-    const categories = await categoryModel.findOne({username: username});
+    const categories = await categoryModel.findOne({ username: username });
+    console.log("in query categories")
     console.log(categories)
     if (!categories) {
       console.log("no category");

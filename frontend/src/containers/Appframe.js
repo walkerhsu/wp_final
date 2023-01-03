@@ -1,6 +1,7 @@
 import * as React from "react";
+import { useEffect} from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 
 import {v4 as uuidv4} from 'uuid';
 
@@ -25,6 +26,12 @@ import UpdateAccountModal from "./UpdateAccountModal";
 
 import { useAccount } from "./hooks/useAccount";
 import { CREATE_ITEM_MUTATION, DELETE_ITEM_MUTATION } from "../graphql";
+import {
+  GET_ITEMS_QUERY,
+  ITEM_CREATED_SUBSCRIPTION,
+  ITEM_UPDATED_SUBSCRIPTION,
+  ITEM_DELETED_SUBSCRIPTION,
+} from "../graphql";
 
 const drawerWidth = 240;
 
@@ -101,7 +108,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function Appframe() {
-  const { signin, me, accountData } = useAccount();
+  const { signin, me, accountData, setAccountData } = useAccount();
   const [open, setOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [reset, setReset] = React.useState(false);
@@ -152,6 +159,79 @@ export default function Appframe() {
     })
   }
 
+  const [ renderItem ,{
+    loading, error, data: itemsData, subscribeToMore,
+  }] = useLazyQuery(GET_ITEMS_QUERY, {
+    variables:{ username: me }
+  });
+
+  useEffect(
+    () => {
+      subscribeToMore({
+        document: ITEM_CREATED_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev;
+          const item = subscriptionData.data.itemCreated;
+          return {
+            items: [item, ...prev.items],
+          };
+        },
+      });
+    },
+    [subscribeToMore],
+  );
+
+  useEffect(
+    () => {
+      subscribeToMore({
+        document: ITEM_UPDATED_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev;
+          const updatedItem = subscriptionData.data.itemUpdated;
+          console.log(updatedItem)
+          console.log(prev.items)
+          return {
+            items: prev.items.map((item) => (item.id === updatedItem.id ? updatedItem : item)),
+          };
+        },
+      });
+    },
+    [subscribeToMore],
+  );
+  
+  useEffect(
+    () => {
+      subscribeToMore({
+        document: ITEM_DELETED_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev;
+          console.log(prev.items)
+          console.log(subscriptionData.data.itemDeleted)
+          return {
+            items: prev.items.filter((item) => (item.id !== subscriptionData.data.itemDeleted))
+          };
+        },
+      });
+    },
+    [subscribeToMore],
+  );
+
+  useEffect(() => {
+    renderItem(me)
+    if (itemsData === undefined) return;
+    const { items } = itemsData;
+    const sortedItems = items.slice().sort((a, b) => b.time - a.time);
+    if (sortedItems !== undefined) setAccountData(sortedItems)
+    console.log("sortedItems:", sortedItems)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[ me, itemsData])
+
+  if (loading) return <h1 align="center">Loading...</h1>;
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    return (<h1>Error :(</h1>);
+  }
 
   const appFrame = (
     <Box sx={{ display: "flex" }}>

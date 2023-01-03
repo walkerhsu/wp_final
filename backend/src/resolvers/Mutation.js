@@ -30,7 +30,7 @@ const defaultCategories = [
   },
   { cat: "Electronics", subcat: ["Phone", "Computer", "Tablet", "Others"] },
   { cat: "Health", subcat: ["Doctor", "Medicine", "Dental", "Gym", "Others"] },
-  { cat: "Others", subcat: ["Others"] },
+  { cat: "Add new category or subcategory", subcat: ["Others"] },
 ];
 
 const Mutation = {
@@ -84,13 +84,12 @@ const Mutation = {
     return input;
   },
   createUser: async (parent, { input }, { userModel }) => {
-    console.log(input);
     input.password = hash(input.password, input.salt ? input.salt : "");
-    console.log(input.password);
     let newUser = await userModel.findOne({ username: input.username });
     if (!newUser) {
       console.log("create new user");
       newUser = new userModel(input);
+      console.log(newUser)
       await newUser.save();
     } else {
       console.log("user already exists");
@@ -101,11 +100,9 @@ const Mutation = {
       userCreated: newUser,
     });
     */
-    console.log("User created");
     return "User created";
   },
   validateUser: async (parent, { input }, { userModel }) => {
-    console.log(input);
     let User = await userModel.findOne({ username: input.username });
     if (!User) {
       console.log("user not found");
@@ -122,7 +119,6 @@ const Mutation = {
     }
   },
   createCategory: async (parent, { input }, { categoryModel, pubSub }) => {
-    console.log(input.username);
     let newCategory = await categoryModel.findOne({ username: input.username });
     if (!newCategory) {
       console.log("create new category");
@@ -132,21 +128,31 @@ const Mutation = {
       });
       await newCategory.save();
     }
+    console.log(newCategory)
     return newCategory;
   },
-  addNewCategory: async (parent, { input }, { categoryModel, pubSub }) => {
-    console.log(input);
-    
+  addNewCategory: async (parent, { input }, { categoryModel, pubSub }) => {    
     let newCategory = await categoryModel.findOne({ username: input.username })
     if (!newCategory) {
       console.log("no category");
       return;
     }
     const newCategories = newCategory.categories;
-    newCategories.splice(newCategories.length - 1, 0, {
-      cat: input.category,
-      subcat: [input.subCategory, "Others"],
-    });
+    let newCategoryFlag = true;
+    for (let i = 0; i < newCategories.length-1; i++) {
+      if (newCategories[i].cat.toLowerCase() === input.category.toLowerCase()) {
+        console.log("Category already exists");
+        newCategories[i].subcat.splice(newCategories[i].subcat.length - 1, 0, input.subCategory);
+        newCategoryFlag = false;
+      }
+    }
+    if (newCategoryFlag) {
+      console.log("Category not found");
+      newCategories.splice(newCategories.length - 1, 0, {
+        cat: input.category,
+        subcat: [input.subCategory, "Others"],
+      });
+    }
     newCategory = await categoryModel.findOneAndUpdate(
       {
         username: input.username,

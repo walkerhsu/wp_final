@@ -31,8 +31,9 @@ function Row({ item, updateItem, deleteItem }) {
     setDeleteOpen(true);
   };
 
-  const onNewItemUpdated = (data) => {
-    updateItem({
+  const onNewItemUpdated = async (data) => {
+    console.log("data updating...")
+    await updateItem({
       variables: {
         input: {
           id: item.id,
@@ -40,6 +41,7 @@ function Row({ item, updateItem, deleteItem }) {
         },
       },
     });
+    console.log("data updated")
   };
 
   return (

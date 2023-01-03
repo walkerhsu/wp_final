@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import React from "react";
+
 const LOCALSTORAGE_ME_KEY = "";
 const savedMe = localStorage.getItem(LOCALSTORAGE_ME_KEY);
 
@@ -50,7 +51,21 @@ const AccountProvider = (props) => {
   const [accountData, setAccountData] = useState([]);
 
   const [categories, setCategories] = useState([]);
-  // const categories = defaultCategories;
+
+  useEffect(() => {
+    localStorage.setItem(LOCALSTORAGE_USERNAME_KEY, username);
+  }, [username]);
+
+  useEffect(() => {
+    if (rememberMe) {
+      if (signin) {
+        console.log(rememberMe)
+        localStorage.setItem(LOCALSTORAGE_ME_KEY, me);
+      }
+    }
+  }, [rememberMe, signin, me]);
+
+  
 
   const checkUsername = (event) => {
     const username = event.target.value;
@@ -105,19 +120,6 @@ const AccountProvider = (props) => {
     setEmail("");
     setEmailMessage("");
   };
-
-  useEffect(() => {
-    localStorage.setItem(LOCALSTORAGE_USERNAME_KEY, username);
-  }, [signin, username]);
-
-  useEffect(() => {
-    if (rememberMe) {
-      if (signin) {
-        console.log(rememberMe)
-        localStorage.setItem(LOCALSTORAGE_ME_KEY, me);
-      }
-    }
-  }, [rememberMe, signin, me]);
 
   return (
     <AccountContext.Provider
