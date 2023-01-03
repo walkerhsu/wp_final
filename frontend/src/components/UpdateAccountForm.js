@@ -57,7 +57,7 @@ const BtnWrapper = styled("div")({
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
 const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, categories }) => {
-  const { me } = useAccount();
+  const { me, setAlertData } = useAccount();
   // console.log("me", me);
   // console.log("categories", categories);
   const defaultFormData = {
@@ -88,8 +88,6 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
   const subCategoryPointer = useRef(null);
   const moneyPointer = useRef(null);
   const descriptionPointer = useRef(null);
-
-  const navigate = useNavigate();
 
   const [addCategory] = useMutation(ADD_CATEGORY_MUTATION)
 
@@ -189,11 +187,13 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
 
   const checkItemFormat = () => {
     if (!time) {
-      alert("Time should be chosen");
+      setAlertData("Time should be chosen", "error");
+      // alert("Time should be chosen");
       return false;
     }
     if (!name) {
-      alert("Name should not be empty");
+      setAlertData("Name should not be empty", "error");
+      // alert("Name should not be empty");
       namePointer.current.focus();
       return false;
     }
@@ -201,14 +201,16 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       category === "Add new category or subcategory" &&
       (newCategoryMessage || !newCategory || !newSubCategory)
     ) {
-      alert(
-        "New category and new subcategory should not be empty and should be valid"
-      );
+      setAlertData("New category and new subcategory should not be empty and should be valid", "error")
+      // alert(
+      //   "New category and new subcategory should not be empty and should be valid"
+      // );
       categoryPointer.current.focus();
       return false;
     }
     if (moneyMessage || !money) {
-      alert(moneyMessage ? moneyMessage : "Money should not be empty");
+      setAlertData(moneyMessage ? moneyMessage : "Money should not be empty", "error")
+      // alert(moneyMessage ? moneyMessage : "Money should not be empty");
       moneyPointer.current.focus();
       return false;
     }
@@ -241,7 +243,7 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
     console.log(data);
     await onSubmitEdit(data);
     handleModalClose();
-    navigate("/account/home");
+    // navigate("/account/home");
     console.log("navigating to /account/home")
     // window.location.reload();
   };

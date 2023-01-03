@@ -11,13 +11,15 @@ import DataTable from "../../../components/DataTable";
 import { useAccount } from "../../hooks/useAccount";
 
 const paperStyle = {
-  width: 1500,
+  width: "97vw",
   padding: 20,
 };
 
 const ClassificationPage = () => {
   const { accountData, categories } = useAccount();
-  const [value, setValue] = useState("Income");
+  const defaultValue =
+    accountData.length !== 0 ? accountData[0].category : "Income";
+  const [value, setValue] = useState(defaultValue);
 
   const filterData = (category) => {
     return accountData.filter((data) => data.category === category);
@@ -32,7 +34,7 @@ const ClassificationPage = () => {
         <TabContext value={value}>
           <Box
             sx={{
-              maxWidth: { xs: 1500, sm: 1500 },
+              maxWidth: { xs: "95vw", sm: "95vw" },
               bgcolor: "background.paper",
               borderBottom: 1,
               borderColor: "divider",

@@ -15,6 +15,9 @@ const AccountContext = createContext({
   passwordMessage: {},
   email: {},
   emailMessage: {},
+  alertMessage: {},
+  alertSeverity: {},
+  alertOpen: {},
   rememberMe: {},
   signin: {},
   accountData: {},
@@ -29,7 +32,8 @@ const AccountContext = createContext({
   setAccountData: () => {},
   setCategories: () => {},
   resetSignInData: () => { },
-  // getCategories: () => { },
+  setAlertData: () => { },
+  handleAlertClose: () => { },
 });
 
 const AccountProvider = (props) => {
@@ -43,6 +47,10 @@ const AccountProvider = (props) => {
 
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
+
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("success");
+  const [alertOpen, setAlertOpen] = useState(false);
 
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -65,7 +73,18 @@ const AccountProvider = (props) => {
     }
   }, [rememberMe, signin, me]);
 
-  
+  const setAlertData = (message, severity) => {
+    setAlertMessage(message);
+    setAlertSeverity(severity);
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertOpen(false);
+  };
 
   const checkUsername = (event) => {
     const username = event.target.value;
@@ -102,10 +121,7 @@ const AccountProvider = (props) => {
   const checkEmail = (event) => {
     const email = event.target.value;
     setEmail(email);
-    if (email.length < 5) {
-      setEmailMessage("Email must be at least 5 characters long");
-      return 
-    } else if(email.search(/\.com/) < 0 || email.search(/@/) < 0 || email.search(/\.com/) < email.search(/@/)) {
+    if(email.length < 5  || email.search(/@/) < 0 ) {
       setEmailMessage("Email format incorrect");
     }else {
       setEmailMessage("");
@@ -131,6 +147,9 @@ const AccountProvider = (props) => {
         passwordMessage,
         email,
         emailMessage,
+        alertMessage,
+        alertSeverity,
+        alertOpen,
         rememberMe,
         signin,
         accountData,
@@ -145,7 +164,8 @@ const AccountProvider = (props) => {
         setAccountData,
         setCategories,
         resetSignInData,
-        // getCategories,
+        setAlertData,
+        handleAlertClose,
       }}
       {...props}
     />

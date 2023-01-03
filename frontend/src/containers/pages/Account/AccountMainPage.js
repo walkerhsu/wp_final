@@ -8,9 +8,6 @@ import "../../../css/AccountMainPage.css";
 
 const AccountMainPage = () => {
   const {accountData} = useAccount();
-
-  
-
   return (
     <div>
       <DataTable title={"Your Recent Data"} data={accountData} />

@@ -49,25 +49,24 @@ const BtnWrapper = styled("div")({
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
 const ResetDataForm = ({ handleModalClose, onSubmitEdit, data }) => {
-  const { accountData } = useAccount();
-  const navigate = useNavigate();
+  const { accountData, setAlertData } = useAccount();
 
   const handleResetData = () => {
     if (data.length === accountData.length) {
       //   alert("Reset all data");
       //   setAccountData([]);
       onSubmitEdit();
-
       handleModalClose();
+      setAlertData("All data have been resetted!", "success");
       return;
     }
-    alert("Reset one data");
+    // alert("Reset one data");
+    setAlertData("This data has been resetted!", "success");
     onSubmitEdit();
-
     // const resetData = accountData.filter((item) => !_.isEqual(item, data[0]));
     // setAccountData(resetData);
     handleModalClose();
-    navigate("/account/home")
+    // navigate("/account/home")
     // window.location.reload();
   };
   return (

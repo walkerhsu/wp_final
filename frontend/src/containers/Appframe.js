@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
 
-import {v4 as uuidv4} from 'uuid';
-
+import { v4 as uuidv4 } from "uuid";
 
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -23,6 +22,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import SideBarItems from "../components/SideBarItems";
 import ResetDataModal from "./ResetDataModal";
 import UpdateAccountModal from "./UpdateAccountModal";
+import AlertMessage from "../components/AlertMessage";
 
 import { useAccount } from "./hooks/useAccount";
 import { CREATE_ITEM_MUTATION, DELETE_ITEM_MUTATION } from "../graphql";
@@ -108,11 +108,21 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function Appframe() {
-  const { signin, me, accountData, setAccountData } = useAccount();
+  const {
+    signin,
+    me,
+    alertMessage,
+    alertSeverity,
+    alertOpen,
+    accountData,
+    setAccountData,
+    setAlertData,
+    handleAlertClose,
+  } = useAccount();
   const [open, setOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [reset, setReset] = React.useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [createItem] = useMutation(CREATE_ITEM_MUTATION);
   const [deleteItem] = useMutation(DELETE_ITEM_MUTATION);
@@ -141,184 +151,194 @@ export default function Appframe() {
         input: {
           id: uuidv4(),
           ...data,
-        }
+        },
       },
     });
-  }
+    setAlertData("New data created successfully!", "success");
+  };
 
   const handleResetAllData = () => {
     console.log("in handleResetAllData");
-    accountData.items.forEach(item => {
+    accountData.items.forEach((item) => {
       deleteItem({
         variables: {
           input: {
             id: item.id,
-          }
+          },
         },
       });
-    })
-  }
+    });
+  };
 
-  const [ renderItem ,{
-    loading, error, data: itemsData, subscribeToMore,
-  }] = useLazyQuery(GET_ITEMS_QUERY, {
-    variables:{ username: me }
-  });
-
-  useEffect(
-    () => {
-      subscribeToMore({
-        document: ITEM_CREATED_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
-          const item = subscriptionData.data.itemCreated;
-          return {
-            items: [item, ...prev.items],
-          };
-        },
-      });
-    },
-    [subscribeToMore],
-  );
-
-  useEffect(
-    () => {
-      subscribeToMore({
-        document: ITEM_UPDATED_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
-          const updatedItem = subscriptionData.data.itemUpdated;
-          console.log(updatedItem)
-          console.log(prev.items)
-          return {
-            items: prev.items.map((item) => (item.id === updatedItem.id ? updatedItem : item)),
-          };
-        },
-      });
-    },
-    [subscribeToMore],
-  );
-  
-  useEffect(
-    () => {
-      subscribeToMore({
-        document: ITEM_DELETED_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
-          console.log(prev.items)
-          console.log(subscriptionData.data.itemDeleted)
-          return {
-            items: prev.items.filter((item) => (item.id !== subscriptionData.data.itemDeleted))
-          };
-        },
-      });
-    },
-    [subscribeToMore],
-  );
+  const [renderItem, { loading, error, data: itemsData, subscribeToMore }] =
+    useLazyQuery(GET_ITEMS_QUERY, {
+      variables: { username: me },
+    });
 
   useEffect(() => {
-    renderItem(me)
+    subscribeToMore({
+      document: ITEM_CREATED_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const item = subscriptionData.data.itemCreated;
+        return {
+          items: [item, ...prev.items],
+        };
+      },
+    });
+  }, [subscribeToMore]);
+
+  useEffect(() => {
+    subscribeToMore({
+      document: ITEM_UPDATED_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const updatedItem = subscriptionData.data.itemUpdated;
+        console.log(updatedItem);
+        console.log(prev.items);
+        return {
+          items: prev.items.map((item) =>
+            item.id === updatedItem.id ? updatedItem : item
+          ),
+        };
+      },
+    });
+  }, [subscribeToMore]);
+
+  useEffect(() => {
+    subscribeToMore({
+      document: ITEM_DELETED_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        console.log(prev.items);
+        console.log(subscriptionData.data.itemDeleted);
+        return {
+          items: prev.items.filter(
+            (item) => item.id !== subscriptionData.data.itemDeleted
+          ),
+        };
+      },
+    });
+  }, [subscribeToMore]);
+
+  useEffect(() => {
+    renderItem(me);
     if (itemsData === undefined) return;
     const { items } = itemsData;
     const sortedItems = items.slice().sort((a, b) => b.time - a.time);
-    if (sortedItems !== undefined) setAccountData(sortedItems)
-    console.log("sortedItems:", sortedItems)
+    if (sortedItems !== undefined) setAccountData(sortedItems);
+    console.log("sortedItems:", sortedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[ me, itemsData])
+  }, [me, itemsData]);
 
   if (loading) return <h1 align="center">Loading...</h1>;
   if (error) {
     // eslint-disable-next-line no-console
     console.error(error);
-    return (<h1>Error :(</h1>);
+    return <h1>Error :(</h1>;
   }
 
   const appFrame = (
-    <Box sx={{ display: "flex" }}>
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            {me ? me + "'s" : "My"} Account
-          </Typography>
-          <BtnWrapper>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setReset(true)}
-              style={btnStyle}
+    <>
+      <AlertMessage
+        open={alertOpen}
+        message={alertMessage}
+        severity={alertSeverity}
+        handleClose={handleAlertClose}
+      />
+      <Box sx={{ display: "flex" }}>
+        <AppBar position="fixed" open={open}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: "none" }) }}
             >
-              Reset all data
-            </Button>
-            <ResetDataModal
-              open={reset}
-              handleModalClose={() => setReset(false)}
-              onSubmitEdit={handleResetAllData}
-              data={accountData}
-            />
-            <Button onClick={handleModalOpen} style={btnStyle}>
-              Create New data
-            </Button>
-            <UpdateAccountModal
-              open={modalOpen}
-              handleModalClose={handleModalClose}
-              onSubmitEdit={handleNewDataCreated}
-              data={{}}
-              title="Create New Data"
-            />
-          </BtnWrapper>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              {me ? me + "'s" : "My"} Account
+            </Typography>
+            <BtnWrapper>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setReset(true)}
+                style={btnStyle}
+              >
+                Reset all data
+              </Button>
+              <ResetDataModal
+                open={reset}
+                handleModalClose={() => setReset(false)}
+                onSubmitEdit={handleResetAllData}
+                data={accountData}
+              />
+              <Button onClick={handleModalOpen} style={btnStyle}>
+                Create New data
+              </Button>
+              <UpdateAccountModal
+                open={modalOpen}
+                handleModalClose={handleModalClose}
+                onSubmitEdit={handleNewDataCreated}
+                data={{}}
+                title="Create New Data"
+              />
+            </BtnWrapper>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          sx={{
             width: drawerWidth,
-            boxSizing: "border-box",
-            backgroundColor: "#cad8f8",
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          <SideBarItems handleDrawerClose={handleDrawerClose} />
-        </List>
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        <Outlet />
-      </Main>
-    </Box>
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+              backgroundColor: "#cad8f8",
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            <SideBarItems handleDrawerClose={handleDrawerClose} />
+          </List>
+        </Drawer>
+        <Main open={open}>
+          <DrawerHeader />
+          <Outlet />
+        </Main>
+      </Box>
+    </>
   );
 
   const loginFrame = (
     <>
-        <h1 align="center">Please sign in first! </h1>
-        <Button
+      <AlertMessage
+        open={alertOpen}
+        message={alertMessage}
+        severity={alertSeverity}
+        handleClose={handleAlertClose}
+      />
+      {/* <br /><br /> */}
+      <h1 align="center">Please sign in first! </h1>
+      <Button
         variant="contained"
         color="primary"
-        onClick={() => navigate('/signin')}
+        onClick={() => navigate("/signin")}
         style={btnStyle && transformStyle}
-        >
-          direct to sign in page
-        </Button>
+      >
+        direct to sign in page
+      </Button>
     </>
   );
 
