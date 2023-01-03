@@ -63,3 +63,27 @@ export const CREATE_CATEGORY_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT_MUTATION = gql`
+  mutation createComment($input: CreateCommentInput!) {
+    createComment(input: $input) {
+      id
+      name
+      rating
+      content
+      likeNum
+    }
+  }
+`
+
+export const UPDATE_COMMENT_MUTATION = gql`
+  mutation updateComment($input: UpdateCommentInput!) {
+    updateComment(input: $input) {
+      id
+      name
+      rating
+      content
+      likeNum
+    }
+  }
+`

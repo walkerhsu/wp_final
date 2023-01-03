@@ -14,6 +14,7 @@ import DateResolver from "./resolvers/Date.js";
 import categoryModel from './models/category.js';
 import itemModel from "./models/item.js";
 import userModel from "./models/user.js";
+import commentModel from './models/comment.js';
 
 const pubSub = createPubSub();
 
@@ -36,6 +37,7 @@ const yoga = createYoga({
     categoryModel,
     itemModel,
     userModel,
+    commentModel,
   },
   graphiql: {
     subscriptionsProtocol: 'WS'

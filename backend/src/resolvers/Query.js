@@ -22,6 +22,11 @@ const Query = {
       }
     }
     return categories;
+  },
+  comments: async (parent, args, { commentModel }) => {
+    const comments = await commentModel.find();
+    console.log(comments);
+    return comments;
   }
 };
 

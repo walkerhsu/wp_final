@@ -184,6 +184,22 @@ const Mutation = {
     });
     return newCategory;
   },
+  createComment: async (parent, { input }, { commentModel, pubSub }) => {
+    const newComment = new commentModel(input);
+    await newComment.save();
+    console.log('New comment saved')
+    return newComment;
+  },
+  updateComment: async (parent, { input }, { commentModel, pubSub }) => {
+    const updatedComment = await commentModel.findOneAndUpdate(
+      { id: input.id },
+      { likeNum: input.likeNum },
+      { new: true }
+    )
+    console.log(updatedComment)
+    console.log('Comment updated')
+    return updatedComment;
+  }
 };
 
 export default Mutation;

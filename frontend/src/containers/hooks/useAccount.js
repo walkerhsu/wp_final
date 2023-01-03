@@ -92,6 +92,9 @@ const AccountProvider = (props) => {
     setAlertOpen(false);
   };
 
+  const [comments, setComments] = useState([]);
+  const [likeList, setLikeList] = useState([]);
+
   const checkUsername = (event) => {
     const username = event.target.value;
     setUsername(username);
@@ -174,6 +177,8 @@ const AccountProvider = (props) => {
         signin,
         accountData,
         categories,
+        comments,
+        likeList,
 
         setMe,
         checkUsername,
@@ -187,6 +192,9 @@ const AccountProvider = (props) => {
         resetSignInData,
         setAlertData,
         handleAlertClose,
+        // getCategories,
+        setComments,
+        setLikeList,
       }}
       {...props}
     />
