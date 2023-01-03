@@ -122,4 +122,6 @@ type Subscription {
     itemUpdated: Item!
     itemDeleted: ID!
     categoryAdded: Category!
+    commentAdded: Comment! 
+    commentUpdated: Comment!
 }
