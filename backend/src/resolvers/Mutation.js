@@ -188,6 +188,9 @@ const Mutation = {
     const newComment = new commentModel(input);
     await newComment.save();
     console.log('New comment saved')
+    pubSub.publish("COMMENT_ADDED",{
+      commentAdded: newComment,
+    });
     return newComment;
   },
   updateComment: async (parent, { input }, { commentModel, pubSub }) => {
@@ -198,6 +201,9 @@ const Mutation = {
     )
     console.log(updatedComment)
     console.log('Comment updated')
+    pubSub.publish("COMMENT_UPDATED",{
+      commentUpdated: updatedComment,
+    });
     return updatedComment;
   }
 };

@@ -46,3 +46,27 @@ export const CATEGORY_ADDED_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const COMMENT_ADDED_SUBSCRIPTION = gql`
+  subscription CommentAdded {
+    commentAdded {
+      id
+      name
+      rating
+      content
+      likeNum
+    }
+  }
+`
+
+export const COMMENT_UPDATED_SUBSCRIPTION = gql`
+  subscription CommentUpdated {
+    commentUpdated {
+      id
+      name
+      rating
+      content
+      likeNum
+    }
+  }
+`

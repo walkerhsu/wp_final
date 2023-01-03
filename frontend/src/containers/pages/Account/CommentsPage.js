@@ -12,7 +12,7 @@ import dislike from "../../../images/dislike.png"
 import { useAccount } from "../../hooks/useAccount";
 
 import {v4 as uuidv4} from 'uuid';
-import { GET_COMMENTS_QUERY, CREATE_COMMENT_MUTATION, UPDATE_COMMENT_MUTATION } from "../../../graphql";
+import { GET_COMMENTS_QUERY, CREATE_COMMENT_MUTATION, UPDATE_COMMENT_MUTATION, COMMENT_ADDED_SUBSCRIPTION } from "../../../graphql";
 import { useMutation, useLazyQuery } from "@apollo/client";
 
 
@@ -37,8 +37,31 @@ const CommentsPage = () => {
         setComments(newComments.data.comments);
     }
 
+    const notification = () => {
+        try {
+            subscribeToMore({
+                document: COMMENT_ADDED_SUBSCRIPTION,
+                updateQuery: (prev, { subscriptionData }) => {
+                    console.log(prev)
+                    if (!subscriptionData.data) return prev;
+                    console.log(subscriptionData.data)
+                    const newComment = subscriptionData.data.commentAdded;
+                    console.log(newComment)
+                    setComments((pre) => {return [...pre, newComment]})
+                    return {
+                        comments: [prev, newComment];
+                    };
+                },
+            });
+        }
+        catch (e) {
+            console.log(e)
+        } 
+    }
+
     useEffect(() => {
         fetchComments();
+        notification();
     },[])
 
     const changeRating = (newRating) => {

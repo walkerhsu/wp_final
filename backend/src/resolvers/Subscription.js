@@ -20,6 +20,16 @@ const Subscription = {
       return pubSub.subscribe("CATEGORY_ADDED");
     },
   },
+  commentAdded: {
+    subscribe: (parent, args, { pubSub }) => {
+      return pubSub.subscribe("COMMENT_ADDED");
+    }
+  },
+  commentUpdated: {
+    subscribe: (parent, args, { pubSub }) => {
+      return pubSub.subscribe("COMMENT_UPDATED");
+    }
+  }
 };
 
 export default Subscription;
