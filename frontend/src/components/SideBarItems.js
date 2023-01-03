@@ -13,6 +13,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import CommentIcon from "@mui/icons-material/Comment";
 import PhoneForwardedIcon from "@mui/icons-material/PhoneForwarded";
 
+import { useAccount } from "../containers/hooks/useAccount";
+
 const AccountItems = [
   {
     name: "Home",
@@ -56,8 +58,14 @@ const OtherItems = [
 ]
 
 export default function SideBarItems({ handleDrawerClose }) {
+  const { setSignin, setAlertData } = useAccount();
   const location = useLocation();
   const currentPath = location.pathname;
+  const handleLogout = () => {
+    setSignin(false);
+    setAlertData("You have logged out!", "info");
+    handleDrawerClose()
+  }
   return (
     <>
       {
@@ -89,7 +97,7 @@ export default function SideBarItems({ handleDrawerClose }) {
           </ListItemButton>
         ))
       }
-      <Divider />
+      {/* <Divider /> */}
       {
         OtherItems.map((item) => (
           <ListItemButton
@@ -97,7 +105,7 @@ export default function SideBarItems({ handleDrawerClose }) {
             component={Link}
             to={item.link}
             selected={currentPath === item.to}
-            onClick={handleDrawerClose}
+            onClick={handleLogout}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.name} />

@@ -57,7 +57,7 @@ const BtnWrapper = styled("div")({
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
 const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, categories }) => {
-  const { me } = useAccount();
+  const { me, setAlertData } = useAccount();
   // console.log("me", me);
   // console.log("categories", categories);
   const defaultFormData = {
@@ -88,8 +88,6 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
   const subCategoryPointer = useRef(null);
   const moneyPointer = useRef(null);
   const descriptionPointer = useRef(null);
-
-  const navigate = useNavigate();
 
   const [addCategory] = useMutation(ADD_CATEGORY_MUTATION)
 
@@ -124,14 +122,6 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       setNewCategoryMessage("Category cannot be empty");
       return;
     }
-    for (let i = 0; i < categories.length; i++) {
-      // console.log(categories[i].cat.toLowerCase(), newCategory.toLowerCase())
-      if (categories[i].cat.toLowerCase() === newCategory.toLowerCase()) {
-        setNewCategoryMessage("Category already exists");
-        return;
-      }
-    }
-    setNewCategory(newCategory);
     setNewCategoryMessage("");
   };
 
@@ -197,37 +187,41 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
 
   const checkItemFormat = () => {
     if (!time) {
-      alert("Time should be chosen");
+      setAlertData("Time should be chosen", "error");
+      // alert("Time should be chosen");
       return false;
     }
     if (!name) {
-      alert("Name should not be empty");
+      setAlertData("Name should not be empty", "error");
+      // alert("Name should not be empty");
       namePointer.current.focus();
       return false;
     }
     if (
-      category === "Others" &&
+      category === "Add new category or subcategory" &&
       (newCategoryMessage || !newCategory || !newSubCategory)
     ) {
-      alert(
-        "New category and new subcategory should not be empty and should be valid"
-      );
+      setAlertData("New category and new subcategory should not be empty and should be valid", "error")
+      // alert(
+      //   "New category and new subcategory should not be empty and should be valid"
+      // );
       categoryPointer.current.focus();
       return false;
     }
     if (moneyMessage || !money) {
-      alert(moneyMessage ? moneyMessage : "Money should not be empty");
+      setAlertData(moneyMessage ? moneyMessage : "Money should not be empty", "error")
+      // alert(moneyMessage ? moneyMessage : "Money should not be empty");
       moneyPointer.current.focus();
       return false;
     }
     return true;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!checkItemFormat()) return;
-    if (category === "Others") {
-      addCategory({
+    if (category === "Add new category or subcategory") {
+       addCategory({
         variables: {
           input: {
             username: me,
@@ -242,15 +236,16 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       time: time,
       name: name,
       money: parseInt(money),
-      category: category === "Others" ? newCategory : category,
-      subCategory: category === "Others" ? newSubCategory : subCategory,
+      category: category === "Add new category or subcategory" ? newCategory : category,
+      subCategory: category === "Add new category or subcategory" ? newSubCategory : subCategory,
       description: description,
     };
     console.log(data);
-    onSubmitEdit(data);
+    await onSubmitEdit(data);
     handleModalClose();
-    navigate("/account/home");
-    window.location.reload();
+    // navigate("/account/home");
+    console.log("navigating to /account/home")
+    // window.location.reload();
   };
 
   return (
@@ -307,7 +302,7 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
               ))}
             </Select>
           </FormControl>
-          {category === "Others" ? (
+          {category === "Add new category or subcategory" ? (
             <CategoryWrapper>
               <TextField
                 inputRef={categoryPointer}

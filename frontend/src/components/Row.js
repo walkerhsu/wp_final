@@ -13,8 +13,10 @@ import UpdateAccountModal from "../containers/UpdateAccountModal";
 import ResetDataModal from "../containers/ResetDataModal";
 import dayjs from "../utils/day.js";
 
+import { useAccount } from "../containers/hooks/useAccount";
   
 function Row({ item, updateItem, deleteItem }) {
+  const { setAlertData} = useAccount()
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -31,8 +33,9 @@ function Row({ item, updateItem, deleteItem }) {
     setDeleteOpen(true);
   };
 
-  const onNewItemUpdated = (data) => {
-    updateItem({
+  const onNewItemUpdated = async (data) => {
+    console.log("data updating...")
+    await updateItem({
       variables: {
         input: {
           id: item.id,
@@ -40,6 +43,8 @@ function Row({ item, updateItem, deleteItem }) {
         },
       },
     });
+    setAlertData("Data updated!", "success")
+    console.log("data updated")
   };
 
   return (

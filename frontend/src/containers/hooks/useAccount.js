@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import React from "react";
+
 const LOCALSTORAGE_ME_KEY = "";
 const savedMe = localStorage.getItem(LOCALSTORAGE_ME_KEY);
 
@@ -14,6 +15,9 @@ const AccountContext = createContext({
   passwordMessage: {},
   email: {},
   emailMessage: {},
+  alertMessage: {},
+  alertSeverity: {},
+  alertOpen: {},
   rememberMe: {},
   signin: {},
   accountData: {},
@@ -28,7 +32,8 @@ const AccountContext = createContext({
   setAccountData: () => {},
   setCategories: () => {},
   resetSignInData: () => { },
-  // getCategories: () => { },
+  setAlertData: () => { },
+  handleAlertClose: () => { },
 });
 
 const AccountProvider = (props) => {
@@ -43,6 +48,10 @@ const AccountProvider = (props) => {
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
 
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("success");
+  const [alertOpen, setAlertOpen] = useState(false);
+
   const [rememberMe, setRememberMe] = useState(false);
 
   const [signin, setSignin] = useState(false);
@@ -50,7 +59,32 @@ const AccountProvider = (props) => {
   const [accountData, setAccountData] = useState([]);
 
   const [categories, setCategories] = useState([]);
-  // const categories = defaultCategories;
+
+  useEffect(() => {
+    localStorage.setItem(LOCALSTORAGE_USERNAME_KEY, username);
+  }, [username]);
+
+  useEffect(() => {
+    if (rememberMe) {
+      if (signin) {
+        console.log(rememberMe)
+        localStorage.setItem(LOCALSTORAGE_ME_KEY, me);
+      }
+    }
+  }, [rememberMe, signin, me]);
+
+  const setAlertData = (message, severity) => {
+    setAlertMessage(message);
+    setAlertSeverity(severity);
+    setAlertOpen(true);
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertOpen(false);
+  };
 
   const checkUsername = (event) => {
     const username = event.target.value;
@@ -87,10 +121,7 @@ const AccountProvider = (props) => {
   const checkEmail = (event) => {
     const email = event.target.value;
     setEmail(email);
-    if (email.length < 5) {
-      setEmailMessage("Email must be at least 5 characters long");
-      return 
-    } else if(email.search(/\.com/) < 0 || email.search(/@/) < 0 || email.search(/\.com/) < email.search(/@/)) {
+    if(email.length < 5  || email.search(/@/) < 0 ) {
       setEmailMessage("Email format incorrect");
     }else {
       setEmailMessage("");
@@ -106,19 +137,6 @@ const AccountProvider = (props) => {
     setEmailMessage("");
   };
 
-  useEffect(() => {
-    localStorage.setItem(LOCALSTORAGE_USERNAME_KEY, username);
-  }, [signin, username]);
-
-  useEffect(() => {
-    if (rememberMe) {
-      if (signin) {
-        console.log(rememberMe)
-        localStorage.setItem(LOCALSTORAGE_ME_KEY, me);
-      }
-    }
-  }, [rememberMe, signin, me]);
-
   return (
     <AccountContext.Provider
       value={{
@@ -129,6 +147,9 @@ const AccountProvider = (props) => {
         passwordMessage,
         email,
         emailMessage,
+        alertMessage,
+        alertSeverity,
+        alertOpen,
         rememberMe,
         signin,
         accountData,
@@ -143,7 +164,8 @@ const AccountProvider = (props) => {
         setAccountData,
         setCategories,
         resetSignInData,
-        // getCategories,
+        setAlertData,
+        handleAlertClose,
       }}
       {...props}
     />
