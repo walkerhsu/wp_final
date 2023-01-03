@@ -16,6 +16,7 @@ import InspirationPage from "./containers/pages/AboutUs/InspirationPage";
 import InstructionsPage from "./containers/pages/AboutUs/InstrctionsPage";
 import CommentsPage from "./containers/pages/Account/CommentsPage";
 import ContactPage from "./containers/pages/Account/ContactPage";
+import SettingsPage from "./containers/pages/Account/SettingsPage";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="analysis" element={<AnalysisPage />} />
             <Route path="comments" element={<CommentsPage />} />
             <Route path="contact" element={<ContactPage />} />
+            <Route path="settings" element={<SettingsPage />} />
             <Route path="*" element={<h1>Sorry! Page not found</h1>} />
           </Route>
           

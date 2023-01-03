@@ -70,6 +70,14 @@ input CreateUserInput {
     email: String!
 }
 
+input UpdateUserInput {
+    username: String!
+    salt: String!
+    curpassword: String!
+    password: String!
+    email: String!
+}
+
 input ValidateUserInput {
     username: String!
     password: String!
@@ -80,6 +88,7 @@ type Mutation {
     updateItem(input: UpdateItemInput!): Item
     deleteItem(input: ID!): ID!
     createUser(input: CreateUserInput!): String!
+    updateUser(input: UpdateUserInput!): String!
     validateUser(input: ValidateUserInput!): String!
     createCategory(input: CreateCategoryInput!): Category
     addNewCategory(input: AddNewCategoryInput!): Category
