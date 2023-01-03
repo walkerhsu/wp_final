@@ -25,3 +25,15 @@ export const GET_CATEGORY_QUERY = gql`
     }
   }
 `;
+
+export const GET_COMMENTS_QUERY = gql`
+  query getAllComments {
+    comments {
+      id
+      name
+      rating
+      content
+      likeNum
+    }
+  }
+`

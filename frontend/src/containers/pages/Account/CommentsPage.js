@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import Stars from '../../../components/Stars';
@@ -9,29 +9,69 @@ import dislike from "../../../images/dislike.png"
 // import homeLink from "../../../images/home.png"
 // import { useNavigate } from "react-router-dom";
 
+import { useAccount } from "../../hooks/useAccount";
+
+import {v4 as uuidv4} from 'uuid';
+import { GET_COMMENTS_QUERY, CREATE_COMMENT_MUTATION, UPDATE_COMMENT_MUTATION } from "../../../graphql";
+import { useMutation, useLazyQuery } from "@apollo/client";
+
+
 const CommentsPage = () => {
     // const navigate = useNavigate();
     const [rating, setRating] = useState(0)
-    const [name, setName] = useState('')
     const [content, setContent] = useState('')
-    const [comments, setComments] = useState([]);
+    // const [comments, setComments] = useState([]);
+    
+    // each comment --> name, rating, content, likeNum
+    // each user --> likeList 
+    const { me, comments, likeList, setComments, setLikeList } = useAccount();
+
+    const [reQuery, { data, loading, subscribeToMore }] = useLazyQuery(GET_COMMENTS_QUERY);
+
+    const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
+    const [updateComment] = useMutation(UPDATE_COMMENT_MUTATION);
+
+    const fetchComments = async () => {
+        const newComments = await reQuery();
+        console.log(newComments.data.comments);
+        setComments(newComments.data.comments);
+    }
+
+    useEffect(() => {
+        fetchComments();
+    },[])
 
     const changeRating = (newRating) => {
         setRating(newRating)
     };
 
     const handleSubmit = () => {
-        if((name !== '') && (content !== '') && (rating !== 0)){
+        if((content !== '') && (rating !== 0)){
             storeComment();
-
             setRating(0);
             setContent('');
         }
     }
 
-    const storeComment = () => {
-        const newComment = {name: name, rating: rating, content: content, like: false, likeNum: 0}
-        setComments((prev) => [...prev, newComment])
+    const storeComment = async () => {
+        const newComment = {name: me, rating: rating, content: content, likeNum: 0};
+        await createComment({
+            variables: {
+                input: {
+                    id: uuidv4(),
+                    ...newComment,
+                }
+            },
+        });
+        fetchComments();
+    }
+
+    const handleDislike = () => {
+
+    }
+
+    const handleLike = () => {
+
     }
 
     // const backToHomePage = () => {
@@ -43,7 +83,9 @@ const CommentsPage = () => {
             <div className='inputContainer'>
                 <div className='inputField'>
                     <div className='title'>
-                        <input className='name' placeholder='Name' onChange={e => setName(e.target.value)} value={name} />
+                        <div className='nameTag' style={{color: "black" ,fontSize: 25+'px'}}>
+                            { me ? me : 'Username' }
+                        </div>
                         <ReactStars
                             key={`stars_${rating}`}
                             count={5}
@@ -69,7 +111,6 @@ const CommentsPage = () => {
                     {
                         comments.map((comment, i) => {
                             return (
-                                <>
                                 <div className='comment' key={i.toString()+comment.name}>
                                     <div className='commentName'>
                                         <div className='info'>
@@ -81,16 +122,16 @@ const CommentsPage = () => {
                                     <div className='likeContainer'>
                                         {
                                             comment.like? 
-                                            <img className='like-icon' src={like} style={{width:45 + '%'}} /> : 
-                                            <img className='dislike-icon' src={dislike} style={{width:45 + '%'}} />
+                                            <img className='like-icon' src={like} style={{width:45 + '%'}} 
+                                            onClick={handleDislike}/> 
+                                            : 
+                                            <img className='dislike-icon' src={dislike} style={{width:45 + '%'}} 
+                                            onClick={handleLike}/>
                                         }
                                         <div className='likeNum'>{comment.likeNum}</div>
                                     </div>
-                                    
                                 </div>
                                 
-                                <br></br>
-                                </>
                             )
                         })
                     }

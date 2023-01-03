@@ -25,11 +25,19 @@ type Categories {
     subcat: [String!]!
 }
 
+type Comment {
+    id: ID!
+    name: String!
+    rating: Float!
+    content: String!
+    likeNum: Int!
+}
+
 type Query {
     items(username: String!): [Item!]
     category(username: String!): Category!
+    comments: [Comment!]!
 }
-
 
 input CreateItemInput {
     id: ID!
@@ -83,6 +91,19 @@ input ValidateUserInput {
     password: String!
 }
 
+input CreateCommentInput {
+    id: ID!
+    name: String!
+    rating: Float!
+    content: String!
+    likeNum: Int!
+}
+
+input UpdateCommentInput {
+    id: ID!
+    likeNum: Int!
+}
+
 type Mutation {
     createItem(input: CreateItemInput!): Item
     updateItem(input: UpdateItemInput!): Item
@@ -92,6 +113,8 @@ type Mutation {
     validateUser(input: ValidateUserInput!): String!
     createCategory(input: CreateCategoryInput!): Category
     addNewCategory(input: AddNewCategoryInput!): Category
+    createComment(input: CreateCommentInput!): Comment!
+    updateComment(input: UpdateCommentInput!): Comment!
 }
 
 type Subscription {
