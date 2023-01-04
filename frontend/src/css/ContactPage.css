@@ -29,9 +29,9 @@
 
 .messageWrapper {
     position: absolute;
-    top: 23%;
-    left: 49%;
-    width: 30%;
+    top: 21%;
+    left: 50%;
+    width: 25%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

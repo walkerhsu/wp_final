@@ -13,7 +13,7 @@ const ContactPage = () => {
     return <div className="Wrapper">
         <div className="dialogBox" />
         <div className="messageWrapper">
-            <div className="textBox">Your comments and suggestions are welcome ! ! !</div>
+            <div className="textBox">Your comments and suggestions are welcome !</div>
             <FormDialog />
         </div>
         {/* <img className="homeLink" src={homeLink} style={{width: 50+'px'}} onClick={backToHomePage}/> */}

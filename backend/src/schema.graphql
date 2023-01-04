@@ -34,6 +34,11 @@ type Comment {
     likeList: [String!]!
 }
 
+type Response {
+    username: String!
+    content: String!
+}
+
 type Query {
     items(username: String!): [Item!]
     category(username: String!): Category!
@@ -117,6 +122,11 @@ input UpdateLikeListInput {
     id: ID!
 }
 
+input SendResponseInput {
+    username: String!
+    content: String!
+}
+
 type Mutation {
     createItem(input: CreateItemInput!): Item
     updateItem(input: UpdateItemInput!): Item
@@ -130,6 +140,7 @@ type Mutation {
     createComment(input: CreateCommentInput!): Comment!
     updateComment(input: UpdateCommentInput!): Comment!
     updateLikeList(input: UpdateLikeListInput!): Comment!
+    sendResponse(input: SendResponseInput!): Response!
 }
 
 type Subscription {

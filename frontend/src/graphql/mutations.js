@@ -108,3 +108,12 @@ export const UPDATE_LIKELIST_MUTATION = gql`
     }
   }
 `
+
+export const SEND_REPONSE_MUTATION = gql`
+  mutation sendResponse($input: SendResponseInput!) {
+    sendResponse(input: $input) {
+      username
+      content
+    }
+  }
+`
