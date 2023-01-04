@@ -1,225 +1,104 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useState } from "react";
 
-import { styled } from "@mui/system";
-import { useMutation } from "@apollo/client";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { TextField, Box, Paper, Grid, Avatar, Button } from "@material-ui/core";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+
+import PersonalAccount from "../../../components/PersonalAccount";
+import ChangeName from "../../../components/ChangeName";
+import ChangePassword from "../../../components/ChangePassword";
+import ChangeHint from "../../../components/ChangeHint";
+import ChangeEmail from "../../../components/ChangeEmail";
+
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Typography } from "@material-ui/core";
+const paperStyle = {
+  borderRadius: "50px",
+  // backgroundColor: "#fafada",
+  padding: 20,
+  height: "80vh",
+  width: "90vw",
+  margin: "20px auto",
+};
 
-import { useAccount } from "../../hooks/useAccount";
-import { UPDATE_USER_MUTATION } from "../../../graphql";
-import generateSalt from "../../../utils/generateSalt";
+const outerStyle = {
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-around",
+};
 
-
-const TextFieldWrapper = styled("div")({
-  margin: "8px 0",
+const leftGrid = {
+  borderRadius: "40px",
+  width: "40%",
+  height: "100%",
+  padding: "20px",
+  // backgroundColor: "#fafada",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
-  height: "50%",
-});
-
-const paperStyle = {
-  padding: 20,
-  height: 510,
-  width: 360,
-  margin: "20px auto",
 };
-const avatarStyle = { backgroundColor: "#1bbd7e" };
-const btnstyle = { margin: "8px 0" };
+
+const leftUpStyle = {
+  width: "100%",
+  height: "30%",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-around",
+};
+
+const leftUpRightStyle = {
+  width: "60%",
+  height: "100%",
+  position: "absolute",
+  right: "0%",
+  transform: "translate(-20%, 5%)",
+};
+
+const leftDownStyle = {
+  width: "100%",
+  height: "60%",
+};
+
+const rightGrid = {
+  borderRadius: "40px",
+  width: "40%",
+  height: "100%",
+  padding: "20px",
+  // backgroundColor: "#fafada",
+};
 
 const SettingsPage = () => {
-  const {
-    me,
-    password,
-    passwordMessage,
-    passwordConfirm,
-    passwordConfirmMessage,
-    hint,
-    email,
-    resetSignInData,
-    checkPassword,
-    checkPasswordConfirm,
-    checkHint,
-    setAlertData
-  } = useAccount();
-
-  const [curpassword, setCurPassword] = useState('')
-
-  const curpasswordPointer = useRef(null);
-  const newpasswordPointer = useRef(null);
-  const passwordConfirmPointer = useRef(null);
-  const hintPointer = useRef(null)
-
-  const [updateUser, { data: updateMessage }] =
-    useMutation(UPDATE_USER_MUTATION);
-
-  const navigate = useNavigate();
-
-  const onKeyPress = (field) => (event) => {
-    if (event.key === "Enter") {
-      if (field === "curpassword") {
-        newpasswordPointer.current.focus();
-      } else if (field === "newpassword") {
-        passwordConfirmPointer.current.focus();
-      } else if (field === "passwordconfirm") {
-        hintPointer.current.focus();
-      } else if (field === "hint") {
-        handleSubmit(event);
-      }
-    }
+  const [Page, setPage] = useState("");
+  const handleOnClick = (page) => {
+    console.log(page);
+    setPage(page);
   };
-
-  const checkCurPassword = (event) => {
-    setCurPassword(event.target.value)
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (
-      passwordMessage ||
-      passwordConfirmMessage ||
-      !password ||
-      !passwordConfirm ||
-      !hint
-    ) {
-      if (!password || passwordMessage) {
-        setAlertData("Please enter your password correctly", "error");
-        // alert("Please enter your password correctly");
-        newpasswordPointer.current.focus();
-      } else if (!passwordConfirm || passwordConfirmMessage) {
-        setAlertData("Please enter your password correctly", "error");
-        // alert("Please enter same password");
-        passwordConfirmPointer.current.focus();
-      } else if (!hint) {
-        alert("Please enter a new hint");
-        hintPointer.current.focus();
-      }
-      return;
-    }
-    console.log("Updating a new user...")
-    console.log(me, password, hint, email)
-    // 1. Create a new user in the database
-    updateUser({
-      variables: {
-        input: {
-          salt: generateSalt(4),
-          username: me,
-          curpassword: curpassword,
-          password: password,
-          hint: hint,
-          email: email,
-        },
-      },
-    });
-    // 2. If the backend returns a success message, then navigate to the signin page
-    //    If the backend returns a failure message, then display an alert
-    
-  };
-  useEffect(() => {
-    if(!updateMessage) return;
-    // alert(updateMessage.updateUser);
-    if (updateMessage.updateUser === "User password updated") {
-      setAlertData("User password updated", "success");
-      navigate("/signin");
-      resetSignInData();
-    } else{
-      curpasswordPointer.current.focus();
-    } 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateMessage]);
   return (
-    <Box
-      component="form"
-      sx={{
-        "& .MuiTextField-root": { m: 1, width: "30ch" },
-      }}
-      noValidate
-      // autoComplete="off"
-    >
-      <Paper elevation={10} style={paperStyle}>
-        <Grid align="center">
-          <Avatar style={avatarStyle}>
-            <AccountCircleIcon />
-          </Avatar>
-          <br />
-          <h2>Settings</h2>
+    <Paper style={paperStyle}>
+      <Grid style={outerStyle}>
+        <Grid style={leftGrid}>
+          <Grid style={leftUpStyle}>
+            <AccountCircleIcon sx={{ fontSize: "150px" }} />
+            <Grid >
+              <Grid style={leftUpRightStyle}>
+                <Typography variant="h4" >Your Account</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid style={leftDownStyle}>
+            <PersonalAccount handleOnClick={handleOnClick} />
+          </Grid>
         </Grid>
-        <br />
-        <TextFieldWrapper>
-          <TextField
-            inputRef={curpasswordPointer}
-            required
-            id="outlined-required-current-password"
-            label="current password"
-            variant="outlined"
-            value={curpassword}
-            type="password"
-            fullWidth
-            placeholder="current password"
-            onChange={checkCurPassword}
-            onKeyPress={onKeyPress("curpassword")}
-          />
-
-          <TextField
-            inputRef={newpasswordPointer}
-            required
-            id="outlined-required-password"
-            label="new password"
-            variant="outlined"
-            value={password}
-            type="password"
-            error={passwordMessage !== ""}
-            helperText={passwordMessage}
-            fullWidth
-            placeholder="new password"
-            onChange={checkPassword}
-            onKeyPress={onKeyPress("newpassword")}
-          />
-
-          <TextField
-            inputRef={passwordConfirmPointer}
-            required
-            id="outlined-required-password-confirm"
-            label="password-confirm"
-            variant="outlined"
-            value={passwordConfirm}
-            type="password"
-            error={passwordConfirmMessage !== ""}
-            helperText={passwordConfirmMessage}
-            fullWidth
-            placeholder="password-confirm"
-            onChange={checkPasswordConfirm}
-            onKeyPress={onKeyPress("passwordconfirm")}
-          />
-
-          <TextField
-            inputRef={hintPointer}
-            required
-            id="outlined-required-hint"
-            label="hint"
-            variant="outlined"
-            value={hint}
-            type="text"
-            fullWidth
-            placeholder="hint"
-            onChange={checkHint}
-            onKeyPress={onKeyPress("hint")}
-          />
-
-        </TextFieldWrapper>
-        <Button
-          color="primary"
-          variant="contained"
-          style={btnstyle}
-          onClick={handleSubmit}
-          fullWidth
-        >
-          Confirm
-        </Button>
-      </Paper>
-    </Box>
+        <Grid style={rightGrid}>
+          {Page === "ChangeName" ? <ChangeName /> : null}
+          {Page === "ChangePassword" ? <ChangePassword /> : null}
+          {Page === "ChangeHint" ? <ChangeHint /> : null}
+          {Page === "ChangeEmail" ? <ChangeEmail /> : null}
+        </Grid>
+      </Grid>
+    </Paper>
   );
 };
 export default SettingsPage;

@@ -1,10 +1,14 @@
 const Subscription = {
+  userUpdated: {
+    subscribe: (parent, args, { pubSub }) => {
+      return pubSub.subscribe("USER_UPDATED");
+    }
+  },
   itemCreated: {
     subscribe: (parent, args, { pubSub }) => {
       return pubSub.subscribe("ITEM_CREATED");
     },
   },
-
   itemUpdated: {
     subscribe: (parent, args, { pubSub }) => {
       return pubSub.subscribe("ITEM_UPDATED");

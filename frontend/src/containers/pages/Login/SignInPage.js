@@ -119,10 +119,10 @@ const SigninPage = () => {
           },
         },
       });
+      resetSignInData();
       navigate("/account/home");
       setMe(username);
       setSignin(true);
-      resetSignInData();
     } else if (validateMessage.validateUser === "User not found") {
       setAlertData("User not found", "error");
       usernamePointer.current.focus();

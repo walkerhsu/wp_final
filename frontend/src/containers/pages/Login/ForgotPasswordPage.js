@@ -167,10 +167,12 @@ const ForgotPasswordPage = () => {
           >
             Forgot Password
           </Button>
-          <Typography>
+          <Typography variant="h4">
             {" "}
-            {showHint ? "Your hint is " + hint : ""}
-            {showHint ? <Link href="../SignIn"> Sign In </Link> : ""}
+            <strong>{showHint ? "Your hint is " + hint : ""}</strong>
+          </Typography>
+          <Typography>
+            Back to sign in page ?<Link href="../SignIn"> Sign In</Link>
           </Typography>
         </Paper>
       </Box>

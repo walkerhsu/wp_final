@@ -18,6 +18,8 @@ import { useAccount } from "../containers/hooks/useAccount";
 
 import { ADD_CATEGORY_MUTATION } from "../graphql";
 
+const MAXNUMBER = 2147483647;
+
 const paperStyle = {
   padding: 20,
   height: 700,
@@ -132,7 +134,7 @@ const UpdateAccountForm = ({
         if (
           categories[i].subcat[j].toLowerCase() === newCategory.toLowerCase()
         ) {
-          console.log("in")
+          console.log("in");
           setNewCategoryMessage(
             `This category is in the subcategory of ${categories[i].cat}`
           );
@@ -156,19 +158,21 @@ const UpdateAccountForm = ({
   const handleMoneyChange = (event) => {
     const newMoney = event.target.value;
     setMoney(newMoney);
-    if (
-      newMoney > 0 &&
-      newMoney.search(/[1-9]/) >= 0 &&
-      newMoney.search(/[.]/) < 0
-    ) {
-      setMoney(newMoney);
-      setMoneyMessage("");
-    } else if (newMoney.length === 0) {
+    console.log(parseInt(newMoney) > MAXNUMBER);
+    if (newMoney.length === 0) {
       setMoneyMessage("Money cannot be empty");
     } else if (newMoney <= 0) {
       setMoneyMessage("Money must be positive");
     } else if (newMoney.search(/[.]/) >= 0) {
       setMoneyMessage("Money should be an integer");
+    } else if (parseInt(newMoney) > MAXNUMBER) {
+      setMoneyMessage("Money is too big");
+    } else if (
+      newMoney > 0 &&
+      newMoney.search(/[1-9]/) >= 0 &&
+      newMoney.search(/[.]/) < 0
+    ) {
+      setMoneyMessage("");
     } else {
       setMoneyMessage("Money must be a number");
     }
@@ -322,6 +326,7 @@ const UpdateAccountForm = ({
               value={category}
               label="Category"
               onChange={handleCategoryChange}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 420 } } }}
             >
               {categories.map((category) => (
                 <MenuItem value={category.cat} key={category.cat}>
@@ -366,6 +371,7 @@ const UpdateAccountForm = ({
                 value={subCategory}
                 label="SubCategory"
                 onChange={handleSubCategoryChange}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
               >
                 {subCategories?.map((sub_category) => (
                   <MenuItem value={sub_category} key={sub_category}>
