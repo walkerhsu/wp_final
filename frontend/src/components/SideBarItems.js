@@ -48,14 +48,14 @@ const ConverseItems = [
     name: 'Contact Us',
     icon: <PhoneForwardedIcon />,
     link: "contact",
-  }
-]
-const OtherItems = [
+  },
   {
     name: "Settings",
     icon: <SettingsIcon />,
     link: "settings",
   },
+]
+const OtherItems = [
   {
     name: "Logout",
     icon: <LogoutIcon />,

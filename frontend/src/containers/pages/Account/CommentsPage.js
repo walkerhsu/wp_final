@@ -49,7 +49,7 @@ const CommentsPage = () => {
                     console.log(newComment)
                     setComments((pre) => {return [...pre, newComment]})
                     return {
-                        comments: [prev, newComment];
+                        comments: [prev, newComment]
                     };
                 },
             });
