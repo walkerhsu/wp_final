@@ -1,22 +1,90 @@
 # wp_final
-# David
-git fetch upstream
 
-git stash
+## Description
 
-git rebase upstream/main
+This is a final project for the Web Programming course at NTU.
 
-git stash pop
+The project is a simple app to track your spending, which allows users to login, add new expenses or incomes , and view their spending history.
 
-## Some ideas
+## Deploy Link
 
-1. week calendar / month calendar
+https://wp-final-2020.herokuapp.com/
 
-2. add a booklist for several categories (e.g. breakfast, lunch etc.)
+## Installation
 
-3. add a user setting style
+1. Clone the repository
+    
+    ```bash
+    git clone https://github.com/walkerhsu/wp_final.git
+    ```
 
-4. add color for different category
+2. Install all the dependencies
 
-5. add more analytics
+    ```bash
+    yarn install:all
+    ```
+
+3. Start the server
+
+    ```bash
+    yarn backend
+    ```
+
+4. Start the client
+
+    ```bash
+    yarn frontend
+    ```
+
+## Usage
+
+* Register a new account
+
+* Login
+
+* Add / remove new expenses or incomes
+
+* View your spending history
+
+    - View all expenses or incomes sorted by date
+
+    - View expenses or incomes by category
+
+    - View expenses or incomes by different calendar
+
+* View your spending statistics
+
+    - View your spending statistics by pie chart
+
+    - View your spending statistics by bar chart
+
+    - View your spending statistics by line chart
+
+* View your profile
+
+    - Change your password
+
+* Comment on this app
+
+    - View all comments
+
+    - Add new comment
+
+    - like / dislike comment
+
+    - [x] Edit comment
+
+    - [x] Delete comment
+
+* Logout
+
+* several alert messages
+
+
+
+
+
+
+
+
 
