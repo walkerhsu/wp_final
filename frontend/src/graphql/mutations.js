@@ -18,6 +18,12 @@ export const VALIDATE_USER_MUTATION = gql`
   }
 `;
 
+export const VALIDATE_HINT_MUTATION = gql`
+  mutation validateHint($input: ValidateHintInput!) {
+    validateHint(input: $input) 
+  }
+`;
+
 export const CREATE_ITEM_MUTATION = gql`
   mutation createItem($input: CreateItemInput!) {
     createItem(input: $input) {

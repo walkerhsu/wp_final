@@ -36,10 +36,12 @@ const SettingsPage = () => {
     passwordMessage,
     passwordConfirm,
     passwordConfirmMessage,
+    hint,
     email,
     resetSignInData,
     checkPassword,
-    checkPasswordConfirm
+    checkPasswordConfirm,
+    checkHint
   } = useAccount();
 
   const [curpassword, setCurPassword] = useState('')
@@ -47,6 +49,7 @@ const SettingsPage = () => {
   const curpasswordPointer = useRef(null);
   const newpasswordPointer = useRef(null);
   const passwordConfirmPointer = useRef(null);
+  const hintPointer = useRef(null)
 
   const [updateUser, { data: updateMessage }] =
     useMutation(UPDATE_USER_MUTATION);
@@ -60,6 +63,8 @@ const SettingsPage = () => {
       } else if (field === "newpassword") {
         passwordConfirmPointer.current.focus();
       } else if (field === "passwordconfirm") {
+        hintPointer.current.focus();
+      } else if (field === "hint") {
         handleSubmit(event);
       }
     }
@@ -75,7 +80,8 @@ const SettingsPage = () => {
       passwordMessage ||
       passwordConfirmMessage ||
       !password ||
-      !passwordConfirm
+      !passwordConfirm ||
+      !hint
     ) {
       if (!password || passwordMessage) {
         alert("Please enter your password correctly");
@@ -83,11 +89,14 @@ const SettingsPage = () => {
       } else if (!passwordConfirm || passwordConfirmMessage) {
         alert("Please enter same password");
         passwordConfirmPointer.current.focus();
+      } else if (!hint) {
+        alert("Please enter a new hint");
+        hintPointer.current.focus();
       }
       return;
     }
     console.log("Updating a new user...")
-    console.log(me, password, email)
+    console.log(me, password, hint, email)
     // 1. Create a new user in the database
     updateUser({
       variables: {
@@ -96,6 +105,7 @@ const SettingsPage = () => {
           username: me,
           curpassword: curpassword,
           password: password,
+          hint: hint,
           email: email,
         },
       },
@@ -179,6 +189,21 @@ const SettingsPage = () => {
             onChange={checkPasswordConfirm}
             onKeyPress={onKeyPress("passwordconfirm")}
           />
+
+          <TextField
+            inputRef={hintPointer}
+            required
+            id="outlined-required-hint"
+            label="hint"
+            variant="outlined"
+            value={hint}
+            type="text"
+            fullWidth
+            placeholder="hint"
+            onChange={checkHint}
+            onKeyPress={onKeyPress("hint")}
+          />
+
         </TextFieldWrapper>
         <Button
           color="primary"

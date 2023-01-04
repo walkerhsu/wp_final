@@ -132,6 +132,22 @@ const Mutation = {
       }
     }
   },
+  validateHint: async (parent, { input }, { userModel }) => {
+    let User = await userModel.findOne({ username: input.username });
+    if (!User) {
+      console.log("user not found");
+      return "User not found";
+    } else {
+      console.log("user found");
+      if (User.email === input.email) {
+        console.log("email correct");
+        return User.hint;
+      } else {
+        console.log("email incorrect");
+        return "Email incorrect";
+      }
+    }
+  },
   createCategory: async (parent, { input }, { categoryModel, pubSub }) => {
     let newCategory = await categoryModel.findOne({ username: input.username });
     if (!newCategory) {

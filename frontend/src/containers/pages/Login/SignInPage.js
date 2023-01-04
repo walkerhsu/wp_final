@@ -209,6 +209,10 @@ const SigninPage = () => {
           <br />
           <Typography>
             {" "}
+            Forgot Your Password ?<Link href="../Forgot"> Click here</Link>
+          </Typography>
+          <Typography>
+            {" "}
             Do you have an account ?<Link href="../SignUp"> Sign Up</Link>
           </Typography>
         </Paper>

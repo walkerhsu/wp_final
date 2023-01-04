@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -19,6 +19,12 @@ const BigCalendar = ( props ) => {
         month: true
     }
   }), [])
+
+  useEffect(() => {
+    setDate(null)
+    setShowDateDetail(false)
+    setShowEventDetail(false)
+  },[accountData])
 
   const myEventsList = accountData.map((item) => {
     const date = new Date(item.time);
