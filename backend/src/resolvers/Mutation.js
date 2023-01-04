@@ -245,6 +245,12 @@ const Mutation = {
       likeListUpdated: newComment,
     })
     return newComment;
+  },
+  sendResponse: async (parent, { input }, { responseModel, pubSub }) => {
+    const newResponse = new responseModel(input)
+    await newResponse.save();
+    console.log('response send')
+    return newResponse;
   }
 };
 
