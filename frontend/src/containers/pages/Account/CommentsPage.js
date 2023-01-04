@@ -148,6 +148,7 @@ const CommentsPage = () => {
     const handleLike = async (id, likeNum) => {
         console.log("Like!")
         const newLikeNum = likeNum + 1;
+        console.log()
         await updateComment({
             variables: {
                 input: {
@@ -214,10 +215,10 @@ const CommentsPage = () => {
                                         {
                                             comment.likeList.includes(me)? 
                                             <img className='like-icon' alt='like' src={like} style={{width:45 + '%'}} 
-                                            onClick={() => handleDislike(comment.id, me)}/> 
+                                            onClick={() => handleDislike(comment.id, comment.likeNum)}/> 
                                             : 
                                             <img className='like-icon' alt='dislike' src={dislike} style={{width:45 + '%'}} 
-                                            onClick={() => handleLike(comment.id, me)}/>
+                                            onClick={() => handleLike(comment.id, comment.likeNum)}/>
                                         }
                                         <div className='likeNum'>{comment.likeNum}</div>
                                     </div>
