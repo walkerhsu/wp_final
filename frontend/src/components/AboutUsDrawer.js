@@ -43,15 +43,15 @@ const AboutUsDrawer = () => {
   const navigateToAuthors = () => {
     navigate("/authors");
   };
-  const navigateInspiration = () => {
-    navigate("/inspiration");
-  };
+  // const navigateInspiration = () => {
+  //   navigate("/inspiration");
+  // };
   const navigateToInstructions = () => {
     navigate("/instructions");
   };
   const textList1 = [
     {text: 'Authors', nav: navigateToAuthors},
-    {text: 'Inspiration', nav: navigateInspiration},
+    // {text: 'Inspiration', nav: navigateInspiration},
     {text: 'App Instructions', nav: navigateToInstructions}
   ]
   // const textList2 = [
