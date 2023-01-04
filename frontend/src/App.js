@@ -17,6 +17,7 @@ import InstructionsPage from "./containers/pages/AboutUs/InstrctionsPage";
 import CommentsPage from "./containers/pages/Account/CommentsPage";
 import ContactPage from "./containers/pages/Account/ContactPage";
 import SettingsPage from "./containers/pages/Account/SettingsPage";
+import ForgotPasswordPage from "./containers/pages/Login/ForgotPasswordPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="signin" element={<SignInPage />} />
+            <Route path="forgot" element={<ForgotPasswordPage />} />
           <Route path="signup" element={<SignUpPage />} />
           <Route path="authors" element={<AuthorsPage />} />
           <Route path="inspiration" element={<InspirationPage />} />

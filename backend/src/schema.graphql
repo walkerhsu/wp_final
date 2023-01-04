@@ -75,6 +75,7 @@ input CreateUserInput {
     username: String!
     salt: String!
     password: String!
+    hint: String!
     email: String!
 }
 
@@ -83,12 +84,18 @@ input UpdateUserInput {
     salt: String!
     curpassword: String!
     password: String!
+    hint: String!
     email: String!
 }
 
 input ValidateUserInput {
     username: String!
     password: String!
+}
+
+input ValidateHintInput {
+    username: String!
+    email: String!
 }
 
 input CreateCommentInput {
@@ -111,6 +118,7 @@ type Mutation {
     createUser(input: CreateUserInput!): String!
     updateUser(input: UpdateUserInput!): String!
     validateUser(input: ValidateUserInput!): String!
+    validateHint(input: ValidateHintInput!): String!
     createCategory(input: CreateCategoryInput!): Category
     addNewCategory(input: AddNewCategoryInput!): Category
     createComment(input: CreateCommentInput!): Comment!

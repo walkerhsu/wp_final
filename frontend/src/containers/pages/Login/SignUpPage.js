@@ -34,6 +34,7 @@ const btnstyle = { margin: "8px 0" };
 
 const SignUpPage = () => {
   const {
+    hint,
     username,
     usernameMessage,
     password,
@@ -45,6 +46,7 @@ const SignUpPage = () => {
     alertOpen,
 
     resetSignInData,
+    checkHint,
     checkUsername,
     checkPassword,
     checkEmail,
@@ -58,6 +60,7 @@ const SignUpPage = () => {
   const usernamePointer = useRef(null);
   const passwordPointer = useRef(null);
   const confirmPasswordPointer = useRef(null);
+  const hintPointer = useRef(null);
   const emailPointer = useRef(null);
 
   const [createUser, { data: createMessage }] =
@@ -72,6 +75,8 @@ const SignUpPage = () => {
       } else if (field === "password") {
         confirmPasswordPointer.current.focus();
       } else if (field === "confirm_password") {
+        hintPointer.current.focus();
+      } else if (field === "hint") {
         emailPointer.current.focus();
       } else if (field === "email") {
         handleSubmit(event);
@@ -105,14 +110,18 @@ const SignUpPage = () => {
       setAlertData("Please enter your confirm password correctly", "error");
       confirmPasswordPointer.current.focus();
       return;
-    } else if (!email || emailMessage) {
+    } else if (!hint) {
+      setAlertData("Please enter your password hint", "error");
+      hintPointer.current.focus();
+      return;
+    }  else if (!email || emailMessage) {
       // alert("Please enter your email correctly");
       setAlertData("Please enter your email correctly", "error");
       emailPointer.current.focus();
       return;
     }
     console.log("Creating a new user...");
-    console.log(username, password, email);
+    console.log(username, password, hint, email);
     // 1. Create a new user in the database
     createUser({
       variables: {
@@ -120,6 +129,7 @@ const SignUpPage = () => {
           salt: generateSalt(4),
           username: username,
           password: password,
+          hint: hint,
           email: email,
         },
       },
@@ -214,6 +224,22 @@ const SignUpPage = () => {
               autoComplete="current-password"
               onChange={checkConfirmPassword}
               onKeyPress={onKeyPress("confirm_password")}
+            />
+
+            <TextField
+              inputRef={hintPointer}
+              required
+              id="outlined-required-hint"
+              label="hint"
+              variant="outlined"
+              value={hint}
+              type="text"
+              error={email && !hint}
+              helperText={email && !hint && "hint required"}
+              fullWidth
+              placeholder="hint"
+              onChange={checkHint}
+              onKeyPress={onKeyPress("hint")}
             />
 
             <TextField

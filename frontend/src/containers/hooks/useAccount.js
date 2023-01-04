@@ -9,6 +9,7 @@ const savedUsername = localStorage.getItem(LOCALSTORAGE_USERNAME_KEY);
 
 const AccountContext = createContext({
   me: {},
+  hint: {},
   username: {},
   usernameMessage: {},
   password: {},
@@ -26,6 +27,7 @@ const AccountContext = createContext({
   categories: {},
 
   setMe: () => {},
+  checkHint: () => {},
   checkUsername: () => {},
   checkPassword: () => {},
   checkPasswordConfirm: () => {},
@@ -41,6 +43,8 @@ const AccountContext = createContext({
 
 const AccountProvider = (props) => {
   const [me, setMe] = useState(savedMe || "" );
+
+  const [hint, setHint] = useState("");
 
   const [username, setUsername] = useState(savedUsername || "");
   const [usernameMessage, setUsernameMessage] = useState("");
@@ -95,6 +99,10 @@ const AccountProvider = (props) => {
   const [comments, setComments] = useState([]);
   const [likeList, setLikeList] = useState([]);
 
+  const checkHint = (event) => {
+    setHint(event.target.value)
+  }
+
   const checkUsername = (event) => {
     const username = event.target.value;
     setUsername(username);
@@ -148,6 +156,7 @@ const AccountProvider = (props) => {
   };
 
   const resetSignInData = () => {
+    setHint("");
     setUsername("");
     setUsernameMessage("");
     setPassword("");
@@ -162,6 +171,7 @@ const AccountProvider = (props) => {
     <AccountContext.Provider
       value={{
         me,
+        hint,
         username,
         usernameMessage,
         password,
@@ -181,6 +191,7 @@ const AccountProvider = (props) => {
         likeList,
 
         setMe,
+        checkHint,
         checkUsername,
         checkPassword,
         checkPasswordConfirm,
