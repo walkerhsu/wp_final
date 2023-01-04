@@ -55,6 +55,7 @@ export const COMMENT_ADDED_SUBSCRIPTION = gql`
       rating
       content
       likeNum
+      likeList
     }
   }
 `
@@ -67,6 +68,20 @@ export const COMMENT_UPDATED_SUBSCRIPTION = gql`
       rating
       content
       likeNum
+      likeList
+    }
+  }
+`
+
+export const LIKELIST_UPDATED_SUBSCRIPTION = gql`
+  subscription LikeListUpdated {
+    likeListUpdated {
+      id
+      name
+      rating
+      content
+      likeNum
+      likeList
     }
   }
 `

@@ -201,7 +201,7 @@ const Mutation = {
     return newCategory;
   },
   createComment: async (parent, { input }, { commentModel, pubSub }) => {
-    const newComment = new commentModel(input);
+    const newComment = new commentModel({...input, likeList: []});
     await newComment.save();
     console.log('New comment saved')
     pubSub.publish("COMMENT_ADDED",{
@@ -215,12 +215,36 @@ const Mutation = {
       { likeNum: input.likeNum },
       { new: true }
     )
-    console.log(updatedComment)
     console.log('Comment updated')
     pubSub.publish("COMMENT_UPDATED",{
       commentUpdated: updatedComment,
     });
     return updatedComment;
+  },
+  updateLikeList: async (parent, { input }, { commentModel, pubSub }) => {
+    const Comment = await commentModel.findOne({ id: input.id })
+    // console.log(likeList.likeList)
+    let newLikeList = Comment.likeList;
+    console.log(newLikeList);
+    // like --> dislike
+    if(Comment.likeList.includes(input.username)) {
+      newLikeList = newLikeList.filter(username => username !== input.username);
+    }
+    // dislike --> like
+    else {
+      newLikeList.push(input.username);
+    }
+
+    const newComment = await commentModel.findOneAndUpdate(
+      { id: input.id },
+      { likeList: newLikeList },
+      { new: true }
+    )
+    console.log("likeList updated")
+    pubSub.publish("LIKELIST_UPDATED",{
+      likeListUpdated: newComment,
+    })
+    return newComment;
   }
 };
 

@@ -78,6 +78,7 @@ export const CREATE_COMMENT_MUTATION = gql`
       rating
       content
       likeNum
+      likeList
     }
   }
 `
@@ -90,6 +91,20 @@ export const UPDATE_COMMENT_MUTATION = gql`
       rating
       content
       likeNum
+      likeList
+    }
+  }
+`
+
+export const UPDATE_LIKELIST_MUTATION = gql`
+  mutation updateLikeList($input: UpdateLikeListInput!) {
+    updateLikeList(input: $input) {
+      id
+      name
+      rating
+      content
+      likeNum
+      likeList
     }
   }
 `

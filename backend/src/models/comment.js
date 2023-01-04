@@ -7,6 +7,7 @@ const commentSchema = new mongoose.Schema(
     rating: { type: Number, required: true },
     content: { type: String, required: true },
     likeNum: { type: Number, required: true },
+    likeList: { type: Array, required: true },
   },
   {
     collection: "comment",

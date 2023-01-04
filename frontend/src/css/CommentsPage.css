@@ -21,11 +21,14 @@
     top: 12%;
     left: 70%;
     transform: translate(-50%, 0);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .logo {
     position: absolute;
-    top: 58%;
+    top: 62%;
     left: 62%;
     transform: translate(-50%, 0);
     opacity: 0.8;
@@ -90,6 +93,16 @@
 .likeNum {
     
     font-size: 18px;
+}
+
+.like-icon {
+    cursor: pointer;
+}
+
+.submit {
+    width: 35%;
+    height: 6%;
+    cursor: pointer;
 }
 
 /* .homeLink {
