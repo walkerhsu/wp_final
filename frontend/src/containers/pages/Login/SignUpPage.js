@@ -230,7 +230,7 @@ const SignUpPage = () => {
               inputRef={hintPointer}
               required
               id="outlined-required-hint"
-              label="hint"
+              label="hint for passward"
               variant="outlined"
               value={hint}
               type="text"
