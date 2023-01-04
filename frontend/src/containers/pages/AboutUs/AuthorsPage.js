@@ -22,10 +22,8 @@ const AuthorsPage = () => {
                 <img src={person1} alt="Ryan" style={{width:60 + '%'}} />
                     <div className="container">
                         <h1>Ryan Chu</h1>
-                        <h2 className="title">Backend Developer</h2>
-                        <h3>Some text.</h3>
-                        <h3>ryan@example.com</h3>
-                        <br></br>
+                        <h2 className="title" style={{fontSize: 22+'px'}}>Backend Developer</h2>
+                        <h3 style={{fontSize: 22+'px'}}>NTUEE sophomore</h3>
                         {/* <p><button className="button">Contact</button></p> */}
                         <br></br>
                     </div>
@@ -37,10 +35,8 @@ const AuthorsPage = () => {
                 <img src={person2} alt="Walker" style={{width:60 + '%'}} />
                     <div className="container">
                         <h1>Walker Hsu</h1>
-                        <h2 className="title">Frontend Developer</h2>
-                        <h3>Some text.</h3>
-                        <h3>walker@example.com</h3>
-                        <br></br>
+                        <h2 className="title" style={{fontSize: 22+'px'}}>Frontend Developer</h2>
+                        <h3 style={{fontSize: 22+'px'}}>NTUEE sophomore</h3>
                         {/* <p><button className="button">Contact</button></p> */}
                         <br></br>
                     </div>
@@ -52,10 +48,8 @@ const AuthorsPage = () => {
                 <img src={person3} alt="David" style={{width:60 + '%'}} />
                     <div className="container">
                         <h1>David Liu</h1>
-                        <h2 className="title">HomePage Designer</h2>
-                        <h3>Some text.</h3>
-                        <h3>david@example.com</h3>
-                        <br></br>
+                        <h2 className="title" style={{fontSize: 22+'px'}}>HomePage Designer</h2>
+                        <h3 style={{fontSize: 22+'px'}}>NTUEE sophomore</h3>
                         {/* <p><button className="button">Contact</button></p> */}
                         <br></br>
                     </div>
