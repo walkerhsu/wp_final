@@ -12,12 +12,22 @@ import reportWebVitals from './reportWebVitals';
 import { AccountProvider } from './containers/hooks/useAccount';
 import App from './App';
 
+const HTTP_URI = 
+  process.env.NODE_ENV === "production"
+    ? `/graphql`
+    : 'http://localhost:4000/graphql'
+
+const WS_URL = 
+  process.env.NODE_ENV === "production"
+    ? window.location.origin.replace(/^http/, "ws")
+    : 'ws://localhost:4000/graphql'
+
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: HTTP_URI
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:4000/graphql',
+  url: WS_URL,
 }));
 
 const splitLink = split(
