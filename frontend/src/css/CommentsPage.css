@@ -16,7 +16,7 @@
 
 .inputField {
     width: 70%;
-    height: 60%;
+    height: 50%;
     position: absolute;
     top: 12%;
     left: 70%;
@@ -28,7 +28,7 @@
 
 .logo {
     position: absolute;
-    top: 62%;
+    top: 57%;
     left: 62%;
     transform: translate(-50%, 0);
     opacity: 0.8;
@@ -36,7 +36,6 @@
 
 .nameTag {
     width: 70%;
-    border: 1px rgba(93, 0, 255, 0.5) solid;
     padding-left: 5px;
 }
 
@@ -99,10 +98,63 @@
     cursor: pointer;
 }
 
-.submit {
+/* .submit {
     width: 35%;
     height: 6%;
     cursor: pointer;
+} */
+
+.submit {
+    width: 70%;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 2px;
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.submit:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.submit {
+    border: 2px solid #0e83cd;
+    color: #0e83cd;
+}
+
+.submit:after {
+    width: 0%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #0e83cd;
+}
+
+.submit:hover,
+.submit:active {
+    color: #fff;
+}
+
+.submit:hover:after,
+.submit:active:after {
+    width: 100%;
 }
 
 /* .homeLink {
