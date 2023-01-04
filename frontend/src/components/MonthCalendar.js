@@ -14,7 +14,7 @@ const BigCalendar = ( props ) => {
   const [ showDateDetail, setShowDateDetail ] = useState(false);
   const [ showEventDetail, setShowEventDetail ] = useState(false);
   const [ eventdata, setEventData ] = useState([])
-  const { views, ...otherProps } = useMemo(() => ({
+  const { views } = useMemo(() => ({
     views: {
         month: true
     }

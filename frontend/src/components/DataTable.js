@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
+import { v4 as uuidv4 } from "uuid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -10,14 +11,27 @@ import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 
-import { UPDATE_ITEM_MUTATION, DELETE_ITEM_MUTATION } from '../graphql';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
+import {
+  CREATE_ITEM_MUTATION,
+  UPDATE_ITEM_MUTATION,
+  DELETE_ITEM_MUTATION,
+} from "../graphql";
 
 import Row from "./Row";
+import { useAccount } from "../containers/hooks/useAccount";
+import UpdateAccountModal from "../containers/UpdateAccountModal";
+import { Button } from "@material-ui/core";
+
 
 function DataTable({ title, data }) {
+  const { setAlertData } = useAccount();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [modalOpen, setModalOpen] = useState(false);
 
+  const [createItem] = useMutation(CREATE_ITEM_MUTATION);
   const [updateItem] = useMutation(UPDATE_ITEM_MUTATION);
   const [deleteItem] = useMutation(DELETE_ITEM_MUTATION);
 
@@ -32,9 +46,37 @@ function DataTable({ title, data }) {
     setPage(0);
   };
 
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    console.log("in handleModalClose");
+    setModalOpen(false);
+  };
+
+  const handleNewDataCreated = (data) => {
+    console.log("in handleNewDataCreated");
+    createItem({
+      variables: {
+        input: {
+          id: uuidv4(),
+          ...data,
+        },
+      },
+    });
+    setAlertData("New data created successfully!", "success");
+  };
+
   return (
     <Paper className="p-4">
-      <Typography align="center" component="h2" variant="h5" color="primary" gutterBottom>
+      <Typography
+        align="center"
+        component="h2"
+        variant="h5"
+        color="primary"
+        gutterBottom
+      >
         {title}
       </Typography>
       <Table size="small">
@@ -63,6 +105,18 @@ function DataTable({ title, data }) {
         </TableBody>
         <TableFooter>
           <TableRow>
+            <TableCell colSpan={1}>
+              <Button onClick={handleModalOpen}>
+                <AddCircleOutlineIcon onClick={handleModalOpen} />
+              </Button>
+              <UpdateAccountModal
+                open={modalOpen}
+                handleModalClose={handleModalClose}
+                onSubmitEdit={handleNewDataCreated}
+                data={{}}
+                title="Create New Data"
+              />
+            </TableCell>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               count={data.length}

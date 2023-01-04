@@ -12,7 +12,7 @@ import dislike from "../../../images/dislike.png"
 import { useAccount } from "../../hooks/useAccount";
 
 import {v4 as uuidv4} from 'uuid';
-import { GET_COMMENTS_QUERY, CREATE_COMMENT_MUTATION, UPDATE_COMMENT_MUTATION, COMMENT_ADDED_SUBSCRIPTION } from "../../../graphql";
+import { GET_COMMENTS_QUERY, CREATE_COMMENT_MUTATION, COMMENT_ADDED_SUBSCRIPTION } from "../../../graphql";
 import { useMutation, useLazyQuery } from "@apollo/client";
 
 
@@ -24,12 +24,11 @@ const CommentsPage = () => {
     
     // each comment --> name, rating, content, likeNum
     // each user --> likeList 
-    const { me, comments, likeList, setComments, setLikeList } = useAccount();
+    const { me, comments, setComments } = useAccount();
 
-    const [reQuery, { data, loading, subscribeToMore }] = useLazyQuery(GET_COMMENTS_QUERY);
+    const [reQuery, { subscribeToMore }] = useLazyQuery(GET_COMMENTS_QUERY);
 
     const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
-    const [updateComment] = useMutation(UPDATE_COMMENT_MUTATION);
 
     const fetchComments = async () => {
         const newComments = await reQuery();
@@ -62,6 +61,7 @@ const CommentsPage = () => {
     useEffect(() => {
         fetchComments();
         notification();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const changeRating = (newRating) => {
@@ -145,10 +145,10 @@ const CommentsPage = () => {
                                     <div className='likeContainer'>
                                         {
                                             comment.like? 
-                                            <img className='like-icon' src={like} style={{width:45 + '%'}} 
+                                                <img className='like-icon' alt="" src={like} style={{width:45 + '%'}} 
                                             onClick={handleDislike}/> 
                                             : 
-                                            <img className='dislike-icon' src={dislike} style={{width:45 + '%'}} 
+                                            <img className='dislike-icon' alt="" src={dislike} style={{width:45 + '%'}} 
                                             onClick={handleLike}/>
                                         }
                                         <div className='likeNum'>{comment.likeNum}</div>

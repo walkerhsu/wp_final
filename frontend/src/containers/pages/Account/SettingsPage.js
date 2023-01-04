@@ -41,7 +41,8 @@ const SettingsPage = () => {
     resetSignInData,
     checkPassword,
     checkPasswordConfirm,
-    checkHint
+    checkHint,
+    setAlertData
   } = useAccount();
 
   const [curpassword, setCurPassword] = useState('')
@@ -84,10 +85,12 @@ const SettingsPage = () => {
       !hint
     ) {
       if (!password || passwordMessage) {
-        alert("Please enter your password correctly");
+        setAlertData("Please enter your password correctly", "error");
+        // alert("Please enter your password correctly");
         newpasswordPointer.current.focus();
       } else if (!passwordConfirm || passwordConfirmMessage) {
-        alert("Please enter same password");
+        setAlertData("Please enter your password correctly", "error");
+        // alert("Please enter same password");
         passwordConfirmPointer.current.focus();
       } else if (!hint) {
         alert("Please enter a new hint");
@@ -116,8 +119,9 @@ const SettingsPage = () => {
   };
   useEffect(() => {
     if(!updateMessage) return;
-    alert(updateMessage.updateUser);
+    // alert(updateMessage.updateUser);
     if (updateMessage.updateUser === "User password updated") {
+      setAlertData("User password updated", "success");
       navigate("/signin");
       resetSignInData();
     } else{
