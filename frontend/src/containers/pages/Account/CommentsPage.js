@@ -72,7 +72,9 @@ const CommentsPage = () => {
                     console.log(subscriptionData.data)
                     const newComment = subscriptionData.data.likeListUpdated;
                     console.log(newComment)
-                    setComments((pre) => {return [...pre, newComment]})
+                    setComments((pre) => {return pre.map((comment) => 
+                        comment.id === newComment.id ? newComment : comment
+                    )})
                     return {
                         comments: prev.comments.map((comment) => 
                             comment.id === newComment.id ? newComment : comment
