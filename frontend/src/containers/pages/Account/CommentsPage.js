@@ -104,6 +104,7 @@ const CommentsPage = () => {
             storeComment();
             setRating(0);
             setContent('');
+            setAlertData('Thanks for your comment!', "success")
         }
         else if (content === '') {
             setAlertData("Please enter your comment!", "error")
