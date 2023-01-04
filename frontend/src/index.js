@@ -14,7 +14,7 @@ import App from './App';
 
 const HTTP_URI = 
   process.env.NODE_ENV === "production"
-    ? `${process.env.PORT}/graphql`
+    ? `/graphql`
     : 'http://localhost:4000/graphql'
 
 const WS_URL = 
