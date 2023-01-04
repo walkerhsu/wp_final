@@ -31,6 +31,7 @@ type Comment {
     rating: Float!
     content: String!
     likeNum: Int!
+    likeList: [String!]!
 }
 
 type Query {
@@ -111,6 +112,11 @@ input UpdateCommentInput {
     likeNum: Int!
 }
 
+input UpdateLikeListInput {
+    username: String!
+    id: ID!
+}
+
 type Mutation {
     createItem(input: CreateItemInput!): Item
     updateItem(input: UpdateItemInput!): Item
@@ -123,6 +129,7 @@ type Mutation {
     addNewCategory(input: AddNewCategoryInput!): Category
     createComment(input: CreateCommentInput!): Comment!
     updateComment(input: UpdateCommentInput!): Comment!
+    updateLikeList(input: UpdateLikeListInput!): Comment!
 }
 
 type Subscription {
@@ -132,4 +139,5 @@ type Subscription {
     categoryAdded: Category!
     commentAdded: Comment! 
     commentUpdated: Comment!
+    likeListUpdated: Comment!
 }

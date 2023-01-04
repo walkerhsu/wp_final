@@ -29,7 +29,12 @@ const Subscription = {
     subscribe: (parent, args, { pubSub }) => {
       return pubSub.subscribe("COMMENT_UPDATED");
     }
-  }
+  },
+  likeListUpdated: {
+    subscribe: (parent, args, { pubSub }) => {
+      return pubSub.subscribe("LIKELIST_UPDATED");
+    }
+  },
 };
 
 export default Subscription;

@@ -1,6 +1,6 @@
 const Query = {
-    items: async (parent, { username }, {itemModel}) => {
-      console.log("in")
+  items: async (parent, { username }, {itemModel}) => {
+    console.log("in")
     const items = await itemModel.find({username: username}).sort();
     console.log("items")
       return items;

@@ -12,7 +12,8 @@ import dislike from "../../../images/dislike.png"
 import { useAccount } from "../../hooks/useAccount";
 
 import {v4 as uuidv4} from 'uuid';
-import { GET_COMMENTS_QUERY, CREATE_COMMENT_MUTATION, COMMENT_ADDED_SUBSCRIPTION } from "../../../graphql";
+import { GET_COMMENTS_QUERY, CREATE_COMMENT_MUTATION, UPDATE_COMMENT_MUTATION, COMMENT_ADDED_SUBSCRIPTION
+        , UPDATE_LIKELIST_MUTATION, LIKELIST_UPDATED_SUBSCRIPTION } from "../../../graphql";
 import { useMutation, useLazyQuery } from "@apollo/client";
 
 
@@ -29,6 +30,9 @@ const CommentsPage = () => {
     const [reQuery, { subscribeToMore }] = useLazyQuery(GET_COMMENTS_QUERY);
 
     const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
+    const [updateComment] = useMutation(UPDATE_COMMENT_MUTATION);
+
+    const [updateLikeList] = useMutation(UPDATE_LIKELIST_MUTATION);
 
     const fetchComments = async () => {
         const newComments = await reQuery();
@@ -36,7 +40,7 @@ const CommentsPage = () => {
         setComments(newComments.data.comments);
     }
 
-    const notification = () => {
+    const comment_added_notification = () => {
         try {
             subscribeToMore({
                 document: COMMENT_ADDED_SUBSCRIPTION,
@@ -48,7 +52,31 @@ const CommentsPage = () => {
                     console.log(newComment)
                     setComments((pre) => {return [...pre, newComment]})
                     return {
-                        comments: [prev, newComment]
+                        comments: prev
+                    };
+                },
+            });
+        }
+        catch (e) {
+            console.log(e)
+        } 
+    }
+
+    const likeList_updated_notification = () => {
+        try {
+            subscribeToMore({
+                document: LIKELIST_UPDATED_SUBSCRIPTION,
+                updateQuery: (prev, { subscriptionData }) => {
+                    console.log(prev)
+                    if (!subscriptionData.data) return prev;
+                    console.log(subscriptionData.data)
+                    const newComment = subscriptionData.data.likeListUpdated;
+                    console.log(newComment)
+                    setComments((pre) => {return [...pre, newComment]})
+                    return {
+                        comments: prev.comments.map((comment) => 
+                            comment.id === newComment.id ? newComment : comment
+                        )
                     };
                 },
             });
@@ -60,8 +88,8 @@ const CommentsPage = () => {
 
     useEffect(() => {
         fetchComments();
-        notification();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        comment_added_notification();
+        likeList_updated_notification();
     },[])
 
     const changeRating = (newRating) => {
@@ -73,6 +101,12 @@ const CommentsPage = () => {
             storeComment();
             setRating(0);
             setContent('');
+        }
+        else if(content === ''){
+            alert('Please enter your comment!');
+        }
+        else {
+            alert('Please enter your rating!');
         }
     }
 
@@ -89,12 +123,48 @@ const CommentsPage = () => {
         fetchComments();
     }
 
-    const handleDislike = () => {
-
+    const handleDislike = async (id, likeNum) => {
+        console.log("DisLike!")
+        const newLikeNum = likeNum - 1;
+        await updateComment({
+            variables: {
+                input: {
+                    id: id,
+                    likeNum: newLikeNum,
+                }
+            },
+        });
+        await updateLikeList({
+            variables: {
+                input: {
+                    username: me,
+                    id: id,
+                }
+            }
+        });
+        fetchComments();
     }
 
-    const handleLike = () => {
-
+    const handleLike = async (id, likeNum) => {
+        console.log("Like!")
+        const newLikeNum = likeNum + 1;
+        await updateComment({
+            variables: {
+                input: {
+                    id: id,
+                    likeNum: newLikeNum,
+                }
+            },
+        });
+        await updateLikeList({
+            variables: {
+                input: {
+                    username: me,
+                    id: id,
+                }
+            }
+        });
+        fetchComments();
     }
 
     // const backToHomePage = () => {
@@ -122,9 +192,7 @@ const CommentsPage = () => {
                         />
                     </div>
                     <textarea className='content' placeholder='Type your comment' onChange={e => setContent(e.target.value)} value={content} />
-                    <div className='submit'>
-                        <button onClick={handleSubmit}>Submit</button>
-                    </div>
+                    <button className='submit' onClick={handleSubmit}>Submit</button>
                 </div>
                 <img className='logo' alt='LOGO' src={logo} style={{width:50 + '%'}} />
             </div>
@@ -144,12 +212,12 @@ const CommentsPage = () => {
                                     <p className='content'> {comment.content}</p>
                                     <div className='likeContainer'>
                                         {
-                                            comment.like? 
-                                                <img className='like-icon' alt="" src={like} style={{width:45 + '%'}} 
-                                            onClick={handleDislike}/> 
+                                            comment.likeList.includes(me)? 
+                                            <img className='like-icon' alt='like' src={like} style={{width:45 + '%'}} 
+                                            onClick={() => handleDislike(comment.id, me)}/> 
                                             : 
-                                            <img className='dislike-icon' alt="" src={dislike} style={{width:45 + '%'}} 
-                                            onClick={handleLike}/>
+                                            <img className='like-icon' alt='dislike' src={dislike} style={{width:45 + '%'}} 
+                                            onClick={() => handleLike(comment.id, me)}/>
                                         }
                                         <div className='likeNum'>{comment.likeNum}</div>
                                     </div>

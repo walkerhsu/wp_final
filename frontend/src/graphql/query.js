@@ -34,6 +34,7 @@ export const GET_COMMENTS_QUERY = gql`
       rating
       content
       likeNum
+      likeList
     }
   }
 `
