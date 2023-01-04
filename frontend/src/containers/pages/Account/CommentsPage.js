@@ -25,7 +25,7 @@ const CommentsPage = () => {
     
     // each comment --> name, rating, content, likeNum
     // each user --> likeList 
-    const { me, comments, setComments } = useAccount();
+    const { me, comments, setComments, setAlertData } = useAccount();
 
     const [reQuery, { subscribeToMore }] = useLazyQuery(GET_COMMENTS_QUERY);
 
@@ -92,6 +92,7 @@ const CommentsPage = () => {
         fetchComments();
         comment_added_notification();
         likeList_updated_notification();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const changeRating = (newRating) => {
@@ -104,11 +105,13 @@ const CommentsPage = () => {
             setRating(0);
             setContent('');
         }
-        else if(content === ''){
-            alert('Please enter your comment!');
+        else if (content === '') {
+            setAlertData("Please enter your comment!", "error")
+            // alert('Please enter your comment!');
         }
         else {
-            alert('Please enter your rating!');
+            setAlertData("Please enter your rating!", "error")
+            // alert('Please enter your rating!');
         }
     }
 
