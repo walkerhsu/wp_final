@@ -57,6 +57,7 @@ function PieChart() {
         }
       }
       setTimes(ts)
+      // eslint-disable-next-line 
       console.log(ts.map((i) => {
         console.log(i.year, i.month)
       }))

@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 import { styled } from "@mui/system";
@@ -56,7 +55,13 @@ const BtnWrapper = styled("div")({
 
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 
-const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, categories }) => {
+const UpdateAccountForm = ({
+  handleModalClose,
+  onSubmitEdit,
+  data,
+  title,
+  categories,
+}) => {
   const { me, setAlertData } = useAccount();
   // console.log("me", me);
   // console.log("categories", categories);
@@ -89,7 +94,7 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
   const moneyPointer = useRef(null);
   const descriptionPointer = useRef(null);
 
-  const [addCategory] = useMutation(ADD_CATEGORY_MUTATION)
+  const [addCategory] = useMutation(ADD_CATEGORY_MUTATION);
 
   const handleTimeChange = (Time) => {
     setTime(Time.$d);
@@ -121,6 +126,19 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
     if (newCategory.length === 0) {
       setNewCategoryMessage("Category cannot be empty");
       return;
+    }
+    for (let i = 0; i < categories.length; i++) {
+      for (let j = 0; j < categories[i].subcat.length; j++) {
+        if (
+          categories[i].subcat[j].toLowerCase() === newCategory.toLowerCase()
+        ) {
+          console.log("in")
+          setNewCategoryMessage(
+            `This category is in the subcategory of ${categories[i].cat}`
+          );
+          return;
+        }
+      }
     }
     setNewCategoryMessage("");
   };
@@ -201,7 +219,10 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       category === "Add new category or subcategory" &&
       (newCategoryMessage || !newCategory || !newSubCategory)
     ) {
-      setAlertData("New category and new subcategory should not be empty and should be valid", "error")
+      setAlertData(
+        "New category and new subcategory should not be empty and should be valid",
+        "error"
+      );
       // alert(
       //   "New category and new subcategory should not be empty and should be valid"
       // );
@@ -209,7 +230,10 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       return false;
     }
     if (moneyMessage || !money) {
-      setAlertData(moneyMessage ? moneyMessage : "Money should not be empty", "error")
+      setAlertData(
+        moneyMessage ? moneyMessage : "Money should not be empty",
+        "error"
+      );
       // alert(moneyMessage ? moneyMessage : "Money should not be empty");
       moneyPointer.current.focus();
       return false;
@@ -221,13 +245,13 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
     event.preventDefault();
     if (!checkItemFormat()) return;
     if (category === "Add new category or subcategory") {
-       addCategory({
+      addCategory({
         variables: {
           input: {
             username: me,
             category: newCategory,
             subCategory: newSubCategory,
-          }
+          },
         },
       });
     }
@@ -236,15 +260,19 @@ const UpdateAccountForm = ({ handleModalClose, onSubmitEdit, data, title, catego
       time: time,
       name: name,
       money: parseInt(money),
-      category: category === "Add new category or subcategory" ? newCategory : category,
-      subCategory: category === "Add new category or subcategory" ? newSubCategory : subCategory,
+      category:
+        category === "Add new category or subcategory" ? newCategory : category,
+      subCategory:
+        category === "Add new category or subcategory"
+          ? newSubCategory
+          : subCategory,
       description: description,
     };
     console.log(data);
     await onSubmitEdit(data);
     handleModalClose();
     // navigate("/account/home");
-    console.log("navigating to /account/home")
+    console.log("navigating to /account/home");
     // window.location.reload();
   };
 

@@ -1,12 +1,13 @@
 import React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import Slide from "@mui/material/Slide";
 const TransitionDown = (props) => {
   return <Slide {...props} direction="down" />;
 };
 const AlertMessage = ({ open, message, severity, handleClose }) => {
-  const duration = 2000;
+  const duration = 5000;
   const vertical = "top";
   const horizontal = "center";
 
@@ -22,6 +23,7 @@ const AlertMessage = ({ open, message, severity, handleClose }) => {
         // sx={{ width: "100%" }}
       >
         <Alert severity={severity} onClose={handleClose}>
+          <AlertTitle>{severity}</AlertTitle>
           {message}
         </Alert>
       </Snackbar>

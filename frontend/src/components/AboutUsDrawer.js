@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -12,8 +11,6 @@ import ListItemText from "@mui/material/ListItemText";
 import PeopleIcon from "@mui/icons-material/People";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import HelpIcon from "@mui/icons-material/Help";
-import CommentIcon from "@mui/icons-material/Comment";
-import PhoneForwardedIcon from "@mui/icons-material/PhoneForwarded";
 import styled from "styled-components";
 // import { fontSize } from '@mui/system';
 import { useNavigate } from "react-router-dom";
@@ -51,12 +48,6 @@ const AboutUsDrawer = () => {
   };
   const navigateToInstructions = () => {
     navigate("/instructions");
-  };
-  const navigateToComments = () => {
-    navigate("/comments");
-  };
-  const navigateToContact = () => {
-    navigate("/contact");
   };
   const textList1 = [
     {text: 'Authors', nav: navigateToAuthors},

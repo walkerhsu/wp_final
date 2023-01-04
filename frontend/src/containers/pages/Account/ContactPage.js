@@ -3,7 +3,6 @@ import FormDialog from "../../../components/FormDialog";
 // import homeLink from "../../../images/home.png"
 // import { useNavigate } from "react-router-dom";
 
-import { useAccount } from "../../hooks/useAccount";
 
 const ContactPage = () => {
     // const navigate = useNavigate();
