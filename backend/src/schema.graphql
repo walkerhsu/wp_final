@@ -39,7 +39,14 @@ type Response {
     content: String!
 }
 
+type User{
+    username: String!
+    hint: String!
+    email: String!
+}
+
 type Query {
+    account(username: String!): User
     items(username: String!): [Item!]
     category(username: String!): Category!
     comments: [Comment!]!
@@ -78,20 +85,21 @@ input AddNewCategoryInput {
 }
 
 input CreateUserInput {
-    username: String!
-    salt: String!
-    password: String!
-    hint: String!
-    email: String!
+    username: String
+    salt: String
+    password: String
+    hint: String
+    email: String
 }
 
 input UpdateUserInput {
+    type: String!
     username: String!
-    salt: String!
-    curpassword: String!
-    password: String!
-    hint: String!
-    email: String!
+    salt: String
+    curpassword: String
+    password: String
+    hint: String
+    email: String
 }
 
 input ValidateUserInput {
@@ -144,6 +152,7 @@ type Mutation {
 }
 
 type Subscription {
+    userUpdated: User!
     itemCreated: Item!
     itemUpdated: Item!
     itemDeleted: ID!

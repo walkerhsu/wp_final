@@ -70,6 +70,9 @@ const AccountProvider = (props) => {
 
   const [categories, setCategories] = useState([]);
 
+  const [comments, setComments] = useState([]);
+  const [likeList, setLikeList] = useState([]);
+
   useEffect(() => {
     localStorage.setItem(LOCALSTORAGE_USERNAME_KEY, username);
   }, [username]);
@@ -96,8 +99,6 @@ const AccountProvider = (props) => {
     setAlertOpen(false);
   };
 
-  const [comments, setComments] = useState([]);
-  const [likeList, setLikeList] = useState([]);
 
   const checkHint = (event) => {
     setHint(event.target.value)

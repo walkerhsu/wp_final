@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { 
+import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
@@ -23,43 +23,44 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 );
 
 function BarChart() {
   const { accountData } = useAccount();
   const date = new Date();
-  const [year, setYear] = useState(date.getFullYear())
+  const [year, setYear] = useState(date.getFullYear());
   const barData = getBarChartData(accountData, year);
-  const years = []
+  const years = [];
 
-  for (let i = 2000; i < 2100; i++){
+  for (let i = 2000; i < 2100; i++) {
     years.push(i);
   }
 
   const handleYearChange = (event) => {
-    setYear(event.target.value)
-  }
+    setYear(event.target.value);
+  };
 
   return (
     <div className="chart-container">
       <h2 style={{ textAlign: "center" }}>Monthly Bar Chart Analysis</h2>
-        <FormControl fullWidth>
-            <InputLabel id="analysis-year">Year</InputLabel>
-            <Select
-              labelId="year"
-              id="year"
-              value={year}
-              label="Year"
-              onChange={handleYearChange}
-            >
-              {years.map((yr) => (
-                <MenuItem value={yr} key={yr}>
-                  {yr}
-                </MenuItem>
-              ))}
-            </Select>
-        </FormControl>
+      <FormControl fullWidth>
+        <InputLabel id="analysis-year">Year</InputLabel>
+        <Select
+          labelId="year"
+          id="year"
+          value={year}
+          label="Year"
+          onChange={handleYearChange}
+          MenuProps={{ PaperProps: { sx: { maxHeight: 400 } } }}
+        >
+          {years.map((yr) => (
+            <MenuItem value={yr} key={yr}>
+              {yr}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <div>
         <Bar
           data={barData}
@@ -68,12 +69,12 @@ function BarChart() {
           options={{
             maintainAspectRatio: false,
             scales: {
-              y:{
-                  ticks: {
-                    // The y-axis value will start from zero
-                    beginAtZero: true,
-                  },
+              y: {
+                ticks: {
+                  // The y-axis value will start from zero
+                  beginAtZero: true,
                 },
+              },
             },
             legend: {
               labels: {

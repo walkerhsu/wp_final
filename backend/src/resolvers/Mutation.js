@@ -89,7 +89,7 @@ const Mutation = {
     if (!newUser) {
       console.log("create new user");
       newUser = new userModel(input);
-      console.log(newUser)
+      console.log(newUser);
       await newUser.save();
     } else {
       console.log("user already exists");
@@ -102,19 +102,68 @@ const Mutation = {
     */
     return "User created";
   },
-  updateUser: async (parent, { input }, { userModel }) => {
+  updateUser: async (parent, { input }, { userModel, pubSub }) => {
     console.log(input);
-    input.password = hash(input.password, input.salt ? input.salt : "");
-    console.log(input.password);
-    let User = await userModel.findOne({ username: input.username });
-    if(User.password !== hash(input.curpassword, User.salt)) return "Password incorrect";
-    delete input.curpassword;
-    input.email = User.email;
-    if(!User) return "error";
-    await userModel.deleteOne(User)
-    const newUser = new userModel(input);
-    await newUser.save();
-    return "User password updated";
+    if (input.type === "password") {
+      input.password = hash(input.password, input.salt ? input.salt : "");
+      console.log(input.password);
+      let User = await userModel.findOne({ username: input.username });
+      if (User.password !== hash(input.curpassword, User.salt))
+        return "Password incorrect";
+      User = await userModel.findOneAndUpdate(
+        { username: input.username },
+        {
+          $set: {
+            password: input.password,
+            salt: input.salt,
+          }
+        }
+      );
+      const newUser = {
+        username:  input.username ?? User.username,
+        hint: input.hint ?? User.hint,
+        email: input.email ?? User.email,
+      }
+      pubSub.publish("USER_UPDATED", {
+        userUpdated: newUser,
+      });
+      return "User password updated";
+    } else if (input.type === "hint") {
+      let User = await userModel.findOne({ username: input.username });
+      if (User.password !== hash(input.curpassword, User.salt)) {
+        return "Password incorrect";
+      }
+      User = await userModel.findOneAndUpdate(
+        { username: input.username },
+        { $set: { hint: input.hint } }
+      );
+      const newUser = {
+        username:  input.username ?? User.username,
+        hint: input.hint ?? User.hint,
+        email: input.email ?? User.email,
+      }
+      // console.log("User hint updated");
+      pubSub.publish("USER_UPDATED", {
+        userUpdated: newUser,
+      });
+      return "User hint updated";
+    } else if (input.type === "email") {
+      let User = await userModel.findOne({ username: input.username });
+      if (User.password !== hash(input.curpassword, User.salt)) {
+        return "Password incorrect";
+      }
+      User = await userModel.findOneAndUpdate({ username: input.username }, { $set: { email: input.email } });
+      // console.log("User email updated");
+      const newUser = {
+        username:  input.username ?? User.username,
+        hint: input.hint ?? User.hint,
+        email: input.email ?? User.email,
+      }
+      pubSub.publish("USER_UPDATED", {
+        userUpdated: newUser,
+      });
+      return "User email updated";
+    } 
   },
   validateUser: async (parent, { input }, { userModel }) => {
     let User = await userModel.findOne({ username: input.username });
@@ -158,21 +207,25 @@ const Mutation = {
       });
       await newCategory.save();
     }
-    console.log(newCategory)
+    console.log(newCategory);
     return newCategory;
   },
-  addNewCategory: async (parent, { input }, { categoryModel, pubSub }) => {    
-    let newCategory = await categoryModel.findOne({ username: input.username })
+  addNewCategory: async (parent, { input }, { categoryModel, pubSub }) => {
+    let newCategory = await categoryModel.findOne({ username: input.username });
     if (!newCategory) {
       console.log("no category");
       return;
     }
     const newCategories = newCategory.categories;
     let newCategoryFlag = true;
-    for (let i = 0; i < newCategories.length-1; i++) {
+    for (let i = 0; i < newCategories.length - 1; i++) {
       if (newCategories[i].cat.toLowerCase() === input.category.toLowerCase()) {
         console.log("Category already exists");
-        newCategories[i].subcat.splice(newCategories[i].subcat.length - 1, 0, input.subCategory);
+        newCategories[i].subcat.splice(
+          newCategories[i].subcat.length - 1,
+          0,
+          input.subCategory
+        );
         newCategoryFlag = false;
       }
     }
@@ -201,10 +254,10 @@ const Mutation = {
     return newCategory;
   },
   createComment: async (parent, { input }, { commentModel, pubSub }) => {
-    const newComment = new commentModel({...input, likeList: []});
+    const newComment = new commentModel({ ...input, likeList: [] });
     await newComment.save();
-    console.log('New comment saved')
-    pubSub.publish("COMMENT_ADDED",{
+    console.log("New comment saved");
+    pubSub.publish("COMMENT_ADDED", {
       commentAdded: newComment,
     });
     return newComment;
@@ -214,21 +267,23 @@ const Mutation = {
       { id: input.id },
       { likeNum: input.likeNum },
       { new: true }
-    )
-    console.log('Comment updated')
-    pubSub.publish("COMMENT_UPDATED",{
+    );
+    console.log("Comment updated");
+    pubSub.publish("COMMENT_UPDATED", {
       commentUpdated: updatedComment,
     });
     return updatedComment;
   },
   updateLikeList: async (parent, { input }, { commentModel, pubSub }) => {
-    const Comment = await commentModel.findOne({ id: input.id })
+    const Comment = await commentModel.findOne({ id: input.id });
     // console.log(likeList.likeList)
     let newLikeList = Comment.likeList;
     console.log(newLikeList);
     // like --> dislike
-    if(Comment.likeList.includes(input.username)) {
-      newLikeList = newLikeList.filter(username => username !== input.username);
+    if (Comment.likeList.includes(input.username)) {
+      newLikeList = newLikeList.filter(
+        (username) => username !== input.username
+      );
     }
     // dislike --> like
     else {
@@ -239,11 +294,11 @@ const Mutation = {
       { id: input.id },
       { likeList: newLikeList },
       { new: true }
-    )
-    console.log("likeList updated")
-    pubSub.publish("LIKELIST_UPDATED",{
+    );
+    console.log("likeList updated");
+    pubSub.publish("LIKELIST_UPDATED", {
       likeListUpdated: newComment,
-    })
+    });
     return newComment;
   },
   sendResponse: async (parent, { input }, { responseModel, pubSub }) => {

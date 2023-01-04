@@ -5,6 +5,8 @@ import { useMutation } from "@apollo/client";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Box, Paper, Grid, Avatar, Button } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { useAccount } from "../../hooks/useAccount";
@@ -18,7 +20,7 @@ const TextFieldWrapper = styled("div")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
-  height: "50%",
+  height: "60%",
 });
 
 const paperStyle = {
@@ -142,8 +144,8 @@ const SignUpPage = () => {
     // alert(createMessage.createUser);
     if (createMessage.createUser === "User created") {
       setAlertData("User created", "success");
-      navigate("/signin");
       resetSignInData();
+      navigate("/signin");
     } else if (createMessage.createUser === "User already exists") {
       setAlertData("User already exists", "warning");
       navigate("/signin");
@@ -266,6 +268,10 @@ const SignUpPage = () => {
           >
             Sign Up
           </Button>
+          <Typography>
+            {" "}
+            Already have an account ?<Link href="../SignIn"> Sign In</Link>
+          </Typography>
         </Paper>
       </Box>
     </>

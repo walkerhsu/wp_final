@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { 
+import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useAccount } from "../containers/hooks/useAccount";
-import { getLineChartData } from "../utils/getLineChartData"
+import { getLineChartData } from "../utils/getLineChartData";
 
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -25,40 +25,41 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 );
 
 function LineChart() {
   const { accountData } = useAccount();
   const date = new Date();
-  const [year, setYear] = useState(date.getFullYear())
+  const [year, setYear] = useState(date.getFullYear());
   const lineData = getLineChartData(accountData, year);
-  const years = []
+  const years = [];
 
-  for (let i = 2000; i < 2100; i++){
+  for (let i = 2000; i < 2100; i++) {
     years.push(i);
   }
 
   const handleYearChange = (event) => {
-    setYear(event.target.value)
-  }
+    setYear(event.target.value);
+  };
   return (
     <div className="chart-container">
       <h2 style={{ textAlign: "center" }}>Monthly Line Chart Analysis</h2>
       <FormControl fullWidth>
         <InputLabel id="analysis-year">Year</InputLabel>
         <Select
-            labelId="year"
-            id="year"
-            value={year}
-            label="Year"
-            onChange={handleYearChange}
+          labelId="year"
+          id="year"
+          value={year}
+          label="Year"
+          onChange={handleYearChange}
+          MenuProps={{ PaperProps: { sx: { maxHeight: 400 } } }}
         >
-            {years.map((yr) => (
-                <MenuItem value={yr} key={yr}>
-                  {yr}
-                </MenuItem>
-            ))}
+          {years.map((yr) => (
+            <MenuItem value={yr} key={yr}>
+              {yr}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <div>
@@ -70,11 +71,11 @@ function LineChart() {
             maintainAspectRatio: false,
             scales: {
               y: {
-                  ticks: {
-                    // The y-axis value will start from zero
-                    beginAtZero: true,
-                  },
+                ticks: {
+                  // The y-axis value will start from zero
+                  beginAtZero: true,
                 },
+              },
             },
             legend: {
               labels: {
