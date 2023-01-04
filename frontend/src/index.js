@@ -14,12 +14,12 @@ import App from './App';
 
 const HTTP_URI = 
   process.env.NODE_ENV === "production"
-    ? `http://localhost:${process.env.PORT}/graphql`
+    ? `/graphql`
     : 'http://localhost:4000/graphql'
 
 const WS_URL = 
   process.env.NODE_ENV === "production"
-    ? `ws://localhost:${process.env.PORT}/graphql`
+    ? window.location.origin.replace(/^http/, "ws")
     : 'ws://localhost:4000/graphql'
 
 const httpLink = new HttpLink({
