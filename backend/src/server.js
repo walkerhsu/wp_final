@@ -3,6 +3,7 @@ import { createServer } from 'node:http';
 import { WebSocketServer } from 'ws'
 import { createSchema, createYoga, createPubSub } from 'graphql-yoga';
 import { useServer } from 'graphql-ws/lib/use/ws'
+import express from "express";
 
 // resolvers
 import Query from "./resolvers/Query.js";
@@ -22,7 +23,7 @@ const pubSub = createPubSub();
 const yoga = createYoga({
   schema: createSchema({
     typeDefs: fs.readFileSync(
-      process.env.NODE_ENV === "production" ? './path/to/build/index.html' : './src/schema.graphql',
+      './src/schema.graphql',
       'utf-8'
     ),
     resolvers: {
@@ -43,13 +44,16 @@ const yoga = createYoga({
   },
   graphiql: {
     subscriptionsProtocol: 'WS'
-  }
+  },
+  graphqlEndpoint: '/graphql'
 })
 
-const httpServer = createServer(yoga)
+const server = express();
+server.use('/graphql',yoga);
+//const httpServer = createServer(yoga)
 
 const wsServer = new WebSocketServer({
-  server: httpServer,
+  server: server, //httpServer
   path: yoga.graphqlEndpoint,
 })
 
@@ -86,4 +90,4 @@ useServer(
   wsServer,
 )
 
-export default httpServer;
+export default server;
