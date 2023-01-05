@@ -2,7 +2,8 @@ import fs from 'fs'
 import { createServer } from 'node:http';
 import { WebSocketServer } from 'ws'
 import { createSchema, createYoga, createPubSub } from 'graphql-yoga';
-import { useServer } from 'graphql-ws/lib/use/ws'
+import { useServer } from 'graphql-ws/lib/use/ws';
+import path from "path";
 import express from "express";
 
 // resolvers
@@ -65,7 +66,7 @@ const wsServer = new WebSocketServer({
   path: yoga.graphqlEndpoint,
 })
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV !== "production") {
 useServer(
   {
     execute: (args) => args.rootValue.execute(args),
