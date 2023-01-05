@@ -45,7 +45,7 @@ const yoga = createYoga({
   graphiql: {
     subscriptionsProtocol: 'WS'
   },
-  graphqlEndpoint: '/graphql'
+  // graphqlEndpoint: '/graphql'
 })
 
 const server = express();

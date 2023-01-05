@@ -12,7 +12,7 @@ const port = process.env.PORT | 4000;
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
-  console.log(path.join(__dirname, "../frontend", "build"))
+  console.log(path.join(__dirname, "../frontend", "build" , "index.html"))
   server.use(express.static(path.join(__dirname, "../frontend", "build")));
   server.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
