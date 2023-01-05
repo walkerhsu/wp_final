@@ -49,7 +49,6 @@ const yoga = createYoga({
 
 const app = express();
 app.use('/graphql',yoga);
-const httpServer = createServer(app)
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
@@ -60,11 +59,13 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+const httpServer = createServer(app)
 const wsServer = new WebSocketServer({
   server: httpServer, //httpServer
   path: yoga.graphqlEndpoint,
 })
 
+if (process.env.NODE_ENV === "production") {
 useServer(
   {
     execute: (args) => args.rootValue.execute(args),
@@ -97,5 +98,6 @@ useServer(
   },
   wsServer,
 )
+}
 
-export default httpServer;
+export default app;
