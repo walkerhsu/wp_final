@@ -22,7 +22,7 @@ const pubSub = createPubSub();
 const yoga = createYoga({
   schema: createSchema({
     typeDefs: fs.readFileSync(
-      './src/schema.graphql',
+      process.env.NODE_ENV === "production" ? './path/to/build/index.html' : './src/schema.graphql',
       'utf-8'
     ),
     resolvers: {
