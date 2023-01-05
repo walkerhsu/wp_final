@@ -1,7 +1,7 @@
 import path from "path";
 import mongo from "./mongo.js";
-import {yoga} from "./server.js";
-import { WebSocketServer } from 'ws'
+import { yoga } from "./server.js";
+import { WebSocketServer } from "ws";
 
 import { useServer } from "graphql-ws/lib/use/ws";
 
@@ -10,7 +10,7 @@ import "dotenv-defaults/config.js";
 import express from "express";
 
 mongo.connect();
-const PORT = process.env.PORT | 4000;
+const PORT = process.env.PORT || 4000;
 
 const app = express();
 
@@ -31,7 +31,7 @@ const server = app.listen(PORT, () => {
 const wsServer = new WebSocketServer({
   server: server,
   path: yoga.graphqlEndpoint,
-})
+});
 
 useServer(
   {
@@ -43,8 +43,8 @@ useServer(
           ...ctx,
           req: ctx.extra.request,
           socket: ctx.extra.socket,
-          params: msg.payload
-        })
+          params: msg.payload,
+        });
 
       const args = {
         schema,
@@ -54,14 +54,14 @@ useServer(
         contextValue: await contextFactory(),
         rootValue: {
           execute,
-          subscribe
-        }
-      }
+          subscribe,
+        },
+      };
 
-      const errors = validate(args.schema, args.document)
-      if (errors.length) return errors
-      return args
+      const errors = validate(args.schema, args.document);
+      if (errors.length) return errors;
+      return args;
     },
   },
-  wsServer,
-)
+  wsServer
+);
