@@ -1,0 +1,111 @@
+.Wrapper {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.instructionWrapper {
+    padding-left: 3%;
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    font-size: 12px;
+}
+
+.homeLink {
+    position: absolute;
+    left: 90%;
+    top: 92%;
+    cursor: pointer;
+}
+
+.switch {
+    margin-left: 40%;
+    width: 20%;
+    border: none;
+    font-family: inherit;
+    font-size: 22px;
+    text-align: center;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    display: inline-block;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    /* padding: 25px 80px; */
+    /* margin-left: 50px; */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.switch:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.switch {
+    border: 2px solid #0e83cd;
+    color: #0e83cd;
+}
+
+.switch {
+    overflow: hidden;
+}
+
+.switch:after {
+    width: 100%;
+    height: 0;
+    top: 50%;
+    left: 50%;
+    background: #0e83cd;
+    opacity: 0;
+    -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    -moz-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.switch:hover,
+.switch:active {
+    color: #fff
+}
+
+.switch:hover:after {
+    height: 260%;
+    opacity: 1;
+}
+
+.switch:active:after {
+    height: 400%;
+    opacity: 1;
+}
+
+.illustration {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.app-inst {
+    margin: 8px;
+}
+
+.numTag {
+    width: 7%;
+    font-size: 40px;
+    text-align: center;
+}

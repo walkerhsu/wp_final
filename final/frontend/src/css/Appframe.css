@@ -1,0 +1,43 @@
+/* background picture */
+* {
+    font-family: 'Work Sans' , sans-serif, 'Montserrat';
+    font-weight: 900;
+}
+body{
+    font-family: 'Work Sans' , sans-serif, 'Montserrat';
+    /* font-size: 70px; */
+    width: 100%;
+    height: 100%;
+}
+.notLoginContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+    
+
+.notLoginTitle{
+    font-family: 'Work Sans' , 'Montserrat', sans-serif;
+    font-size: 70px;
+}
+.appFrameBG {
+    /* background-image: url("../images/account_book.jpeg"); */
+    /* background-repeat: space; */
+    /* 讓圖片可以跑到最下面 */
+  
+    position: absolute;
+    /* background: rgba(0, 0, 0, 0.5); */
+    background: linear-gradient(90deg, rgba(255,170,111,0.40242034313725494) 0%, rgba(238,249,119,0.3772102591036415) 55%, rgba(0,255,100,0.2259497549019608) 100%);
+    width: 100vw;
+    height: 100vh;
+    /* background-size: 100%; */
+}
+
+.MainContainer{
+    padding: 0
+}

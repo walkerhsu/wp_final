@@ -1,0 +1,53 @@
+* {
+    box-sizing: border-box;
+}
+.Wrapper {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.row {
+    display: flex;
+    height: 60%;
+}
+
+.column {
+    height: 100%;
+    /* float: left; */
+    width: 33%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+}
+
+.about-section {
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    background-color: #af6f1c;
+    color: white;
+    font-family: "Bradley Hand";
+}
+
+.container {
+    padding: 0 16px;
+    z-index: 0;
+}
+
+.title {
+    color: grey;
+}
+
+.homeLink {
+    position: absolute;
+    left: 90%;
+    top: 92%;
+    cursor: pointer;
+}

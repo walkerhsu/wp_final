@@ -1,0 +1,170 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.MainPageWrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.LogoWrapper {
+  height: 100%;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.LogoWrapper .Logo {
+  height: 32%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.LogoWrapper h1 {
+  font-size: 60px;
+  font-family: "Bradley Hand", cursive;
+  z-index: 1;
+}
+/* waveforms */
+.wave {
+  background: #ffd231;
+  width: 480px;
+  height: 480px;
+  border-radius: 40%;
+  opacity: 0.4;
+  position: absolute;
+  transform-origin: center;
+  animation: drift 7s infinite linear;
+  z-index: 0;
+}
+.wave.two {
+  animation: drift 9s infinite linear;
+}
+.wave.three {
+  animation: drift 11s infinite linear;
+  opacity: 0.1;
+}
+@keyframes drift {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* end of waveforms */
+
+.text {
+  height: 85%;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.logoname {
+  font-family: Comic Sans MS;
+  padding: 10px;
+  font-size: 55px;
+}
+
+.description {
+  font-family: Bradley Hand;
+  font-size: 21px;
+  width: 68%;
+  color: rgb(95, 95, 95);
+}
+
+.ButtonWrapper {
+  height: 100%;
+  width: 40%;
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-right: 5%;
+}
+
+/* General button style (reset) */
+.mainPage-button {
+  border: none;
+  font-family: inherit;
+  font-size: 20px;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  padding: 20px 50px;
+  display: inline-block;
+  margin: 15px 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.mainPage-button:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+/* Button 2 */
+.mainPage-button {
+  background: #4e54cb;
+  color: #fff;
+  box-shadow: 0 6px #3c45ab;
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none;
+}
+
+.mainPage-button {
+  border-radius: 20px;
+}
+
+.mainPage-button:hover {
+  box-shadow: 0 4px #3c45ab;
+  top: 2px;
+}
+
+.mainPage-button:active {
+  box-shadow: 0 0 #3c45ab;
+  top: 6px;
+}
+
+/* background picture */
+.bg-image {
+  background-image: url("../images/dinosaur.png");
+  background-repeat: space;
+
+  position: absolute;
+
+  background-size: 200px;
+  width: 100%;
+  height: 100%;
+
+  /* 讓圖片可以跑到最下面 */
+
+  /* position: absolute; */
+
+  opacity: 8%;
+}

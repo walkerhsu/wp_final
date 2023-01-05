@@ -1,0 +1,9 @@
+.settings-image {
+    /* 讓圖片可以跑到最下面 */
+    position: absolute;
+    /* top: 10; */
+    /* left: 10; */
+    width: 90%;
+    height: 100%;
+    opacity: 0.2;
+}

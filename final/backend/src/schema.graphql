@@ -1,0 +1,163 @@
+scalar Date
+
+type Message{
+    message: String!
+}
+
+type Item {
+    id: ID!
+    username: String!
+    name: String!
+    money: Int!
+    category: String!
+    subCategory: String!
+    time: Date!
+    description: String
+}
+
+type Category {
+    username: String!
+    categories: [Categories!]!
+}
+
+type Categories {
+    cat: String!
+    subcat: [String!]!
+}
+
+type Comment {
+    id: ID!
+    name: String!
+    rating: Float!
+    content: String!
+    likeNum: Int!
+    likeList: [String!]!
+}
+
+type Response {
+    username: String!
+    content: String!
+}
+
+type User{
+    username: String!
+    hint: String!
+    email: String!
+}
+
+type Query {
+    account(username: String!): User
+    items(username: String!): [Item!]
+    category(username: String!): Category!
+    comments: [Comment!]!
+}
+
+input CreateItemInput {
+    id: ID!
+    username: String!
+    name: String!
+    money: Int!
+    category: String!
+    subCategory: String!
+    time: Date!
+    description: String
+}
+
+input UpdateItemInput {
+    id: ID!
+    username: String!
+    name: String!
+    money: Int!
+    category: String!
+    subCategory: String!
+    time: Date!
+    description: String
+}
+
+input CreateCategoryInput {
+    username: String!
+}
+
+input AddNewCategoryInput {
+    username: String!
+    category: String!
+    subCategory: String!
+}
+
+input CreateUserInput {
+    username: String
+    salt: String
+    password: String
+    hint: String
+    email: String
+}
+
+input UpdateUserInput {
+    type: String!
+    username: String!
+    salt: String
+    curpassword: String
+    password: String
+    hint: String
+    email: String
+}
+
+input ValidateUserInput {
+    username: String!
+    password: String!
+}
+
+input ValidateHintInput {
+    username: String!
+    email: String!
+}
+
+input CreateCommentInput {
+    id: ID!
+    name: String!
+    rating: Float!
+    content: String!
+    likeNum: Int!
+}
+
+input UpdateCommentInput {
+    id: ID!
+    likeNum: Int!
+}
+
+input UpdateLikeListInput {
+    username: String!
+    id: ID!
+}
+
+input SendResponseInput {
+    username: String!
+    content: String!
+}
+
+type Mutation {
+    createItem(input: CreateItemInput!): Item
+    updateItem(input: UpdateItemInput!): Item
+    deleteItem(input: ID!): ID!
+    createUser(input: CreateUserInput!): String!
+    updateUser(input: UpdateUserInput!): String!
+    validateUser(input: ValidateUserInput!): String!
+    validateHint(input: ValidateHintInput!): String!
+    createCategory(input: CreateCategoryInput!): Category
+    addNewCategory(input: AddNewCategoryInput!): Category
+    createComment(input: CreateCommentInput!): Comment!
+    updateComment(input: UpdateCommentInput!): Comment!
+    updateLikeList(input: UpdateLikeListInput!): Comment!
+    sendResponse(input: SendResponseInput!): Response!
+}
+
+type Subscription {
+    userUpdated: User!
+    itemCreated: Item!
+    itemUpdated: Item!
+    itemDeleted: ID!
+    categoryAdded: Category!
+    commentAdded: Comment! 
+    commentUpdated: Comment!
+    likeListUpdated: Comment!
+}

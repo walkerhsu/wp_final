@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+  /* font-family: sans-serif; */
+}
+.WeekCalendar {
+  text-align: center;
+  min-height: 50vh;
+  /* background-color: rgb(238, 255, 236); */
+  /* width: 100vw; */
+  margin: 0;
+  padding: 20px;
+}
+.CalendarTitle {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+/* FONT IMPORTS */
+
+.icon {
+  font-family: "Material Icons", serif;
+  font-style: normal;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+#LogoutBtn {
+  position: absolute;
+  right: 0;
+  transform: translate(-50%, 0%);
+  background-color: rgb(218, 243, 215);
+  color: white;
+}
