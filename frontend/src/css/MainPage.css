@@ -70,6 +70,61 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-right: 5%;
+}
+
+/* General button style (reset) */
+.mainPage-button {
+  border: none;
+  font-family: inherit;
+  font-size: 20px;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  padding: 20px 50px;
+  display: inline-block;
+  margin: 15px 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.mainPage-button:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+/* Button 2 */
+.mainPage-button {
+  background: #4e54cb;
+  color: #fff;
+  box-shadow: 0 6px #3c45ab;
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none;
+}
+
+.mainPage-button {
+  border-radius: 20px;
+}
+
+.mainPage-button:hover {
+  box-shadow: 0 4px #3c45ab;
+  top: 2px;
+}
+
+.mainPage-button:active {
+  box-shadow: 0 0 #3c45ab;
+  top: 6px;
 }
 
 /* background picture */

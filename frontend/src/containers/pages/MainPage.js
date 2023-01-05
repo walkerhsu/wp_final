@@ -37,24 +37,18 @@ const MainPage = () => {
           </div>
         </div>
         <div className="ButtonWrapper">
-          <h1>Login to Your Account</h1>
+          <h1 style={{fontSize: 32 + 'px' }}>Login to Your Account</h1>
           <br />
-          <Button
-            variant="contained"
-            color="primary"
+          <div className="mainPage-button"
             onClick={navigateToSignUp}
           >
             Signup
-          </Button>
-          <br />
-          <br />
-          <Button
-            variant="contained"
-            color="primary"
+          </div>
+          <div className="mainPage-button"
             onClick={navigateToSignIn}
           >
             Signin
-          </Button>
+          </div>
         </div>
       </div>
     </>
