@@ -11,7 +11,7 @@ import DataTable from "../../../components/DataTable";
 import { useAccount } from "../../hooks/useAccount";
 
 const paperStyle = {
-  width: "100vw",
+  width: "97vw",
   padding: 20,
 };
 
@@ -29,7 +29,7 @@ const ClassificationPage = () => {
     setValue(newValue);
   };
   return (
-    <Box sx={{ width: "100%", typography: "body1" }}>
+    <Box sx={{ width: "97%", typography: "body1" }}>
       <Paper style={paperStyle}>
         <TabContext value={value}>
           <Box

@@ -41,26 +41,25 @@ const CalendarPage = () => {
       </Box>
       {value === 0 ? (
         <div className="WeekCalendar">
-            <h2>Day Calendar</h2>
-            <DayCalendar />
+          <div className="CalendarTitle">Day Calendar</div>
+          <DayCalendar />
         </div>
       ) : value === 1 ? (
         <div className="WeekCalendar">
+          <div className="CalendarTitle">Week Calendar</div>
           <Paper>
-            <h2>Week Calendar</h2>
             <WeekCalendar showDetailsHandle={showDetailsHandle} />
             <br />
             <div>{date}</div>
             <br />
-            </Paper>
-            <br />
+          </Paper>
+          <br />
           {showDateDetail ? <DateDetail currentDate={date} /> : null}
         </div>
       ) : (
         <div className="WeekCalendar">
-          
-            <h2>Month Calendar</h2>
-            <MonthCalendar />
+          <div className="CalendarTitle">Month Calendar</div>
+          <MonthCalendar />
         </div>
       )}
     </div>

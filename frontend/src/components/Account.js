@@ -15,7 +15,8 @@ const itemStyle = {
   transform: "translate(0%, -50%)",
 };
 const listPaperStyle = {
-  borderRadius: "40px",
+    borderRadius: "10px",
+    border: "1px solid #535353",
 };
 const Account = ({ personalData }) => {
   console.log(personalData);
@@ -29,7 +30,7 @@ const Account = ({ personalData }) => {
               <ListItem
                 key={obj.title}
                 disableGutters
-                style={{ height: 100 }}
+                style={{ height: 95 }}
                 secondaryAction={
                   <IconButton aria-label="change" onClick={obj.handleCLick}>
                     <ArrowForwardIosIcon sx={{ fontSize: "40px" }} />

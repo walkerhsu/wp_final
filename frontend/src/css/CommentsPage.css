@@ -40,6 +40,7 @@
 }
 
 .content {
+    border-radius: 10px;
     width: 70%;
     height: 50%;
     font-size: 15px;
@@ -54,6 +55,7 @@
 }
 
 .commentsField {
+    border-radius: 30px;
     height: 80%;
     width: 75%;
     display: flex;
@@ -67,6 +69,7 @@
 
 .comment {
     border: 2px solid rgba(165, 42, 42, 0.35);
+    border-radius: 10px;
     padding: 2%;
     width: 95%;
     position: relative;

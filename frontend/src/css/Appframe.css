@@ -1,6 +1,10 @@
 /* background picture */
+* {
+    font-family: 'Work Sans' , sans-serif, 'Montserrat';
+    font-weight: 900;
+}
 body{
-    font-family: 'Work Sans' , 'Montserrat', sans-serif;
+    font-family: 'Work Sans' , sans-serif, 'Montserrat';
     /* font-size: 70px; */
     width: 100%;
     height: 100%;
