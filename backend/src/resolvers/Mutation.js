@@ -278,7 +278,7 @@ const Mutation = {
     const Comment = await commentModel.findOne({ id: input.id });
     // console.log(likeList.likeList)
     let newLikeList = Comment.likeList;
-    console.log(newLikeList);
+    // console.log(newLikeList);
     // like --> dislike
     if (Comment.likeList.includes(input.username)) {
       newLikeList = newLikeList.filter(

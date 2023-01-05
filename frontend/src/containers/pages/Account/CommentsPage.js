@@ -154,7 +154,6 @@ const CommentsPage = () => {
     const handleLike = async (id, likeNum) => {
         console.log("Like!")
         const newLikeNum = likeNum + 1;
-        console.log()
         await updateComment({
             variables: {
                 input: {
