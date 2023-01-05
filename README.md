@@ -60,21 +60,25 @@ https://wp-final-2020.herokuapp.com/
 
     - View your spending statistics by line chart
 
-* View your profile
-
-    - Change your password
-
 * Comment on this app
 
     - View all comments
 
     - Add new comment
 
-    - like / dislike comment
+    - like / dislike comments
 
-    - [x] Edit comment
+* Contact us
 
-    - [x] Delete comment
+    - send comment to us , we will reply you as soon as possible
+
+* Settings 
+
+    - Change your email
+
+    - Change your password
+
+    - Delete your account
 
 * Logout
 

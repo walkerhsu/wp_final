@@ -55,9 +55,9 @@ const leftUpStyle = {
 const leftUpRightStyle = {
   width: "60%",
   height: "100%",
-  position: "absolute",
-  right: "0%",
-  transform: "translate(-20%, 5%)",
+  position: "relative",
+  // right: "0%",
+  // transform: "translate(-20%, 5%)",
 };
 
 const leftDownStyle = {
