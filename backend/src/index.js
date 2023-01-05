@@ -2,7 +2,7 @@ import mongo from "./mongo.js";
 import server from "./server.js";
 //import path from "path";
 //import express from "express";
-import serve from "serve"
+import serve from "serve";
 
 import "dotenv-defaults/config.js";
 
