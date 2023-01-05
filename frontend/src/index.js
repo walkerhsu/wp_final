@@ -31,7 +31,6 @@ const wsLink = new GraphQLWsLink(createClient({
   url: WS_URL,
 }));
 
-
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
