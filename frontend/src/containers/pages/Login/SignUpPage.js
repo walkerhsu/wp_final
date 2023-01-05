@@ -15,6 +15,8 @@ import generateSalt from "../../../utils/generateSalt";
 
 import AlertMessage from "../../../components/AlertMessage";
 
+import "../../../css/loginPage.css";
+
 const TextFieldWrapper = styled("div")({
   margin: "8px 0",
   display: "flex",
@@ -160,14 +162,7 @@ const SignUpPage = () => {
         severity={alertSeverity}
         handleClose={handleAlertClose}
       />
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "30ch" },
-        }}
-        noValidate
-        // autoComplete="off"
-      >
+      <Grid className="loginBackground">
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
             <Avatar style={avatarStyle}>
@@ -273,7 +268,7 @@ const SignUpPage = () => {
             Already have an account ?<Link href="../SignIn"> Sign In</Link>
           </Typography>
         </Paper>
-      </Box>
+      </Grid>
     </>
   );
 };

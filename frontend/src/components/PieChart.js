@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Title, Tooltip, Legend } from "chart.js";
-import { makeStyles } from "@material-ui/core/styles";
 import { Pie } from "react-chartjs-2";
 import { useAccount } from "../containers/hooks/useAccount";
 import { getPieChartData } from "../utils/getPieChartData";

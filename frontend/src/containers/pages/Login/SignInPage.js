@@ -22,7 +22,7 @@ import {
   CREATE_CATEGORY_MUTATION,
 } from "../../../graphql";
 import AlertMessage from "../../../components/AlertMessage";
-
+import "../../../css/loginPage.css";
 const TextFieldWrapper = styled("div")({
   margin: "8px 0",
   display: "flex",
@@ -38,6 +38,7 @@ const paperStyle = {
   height: 560,
   width: 460,
   margin: "20px auto",
+  zIndex: 0,
 };
 const avatarStyle = { backgroundColor: "#1bbd7e" };
 const btnstyle = { margin: "8px 0" };
@@ -141,7 +142,8 @@ const SigninPage = () => {
         message={alertMessage}
         handleClose={handleAlertClose}
       />
-      <Grid>
+      <Grid className="loginBackground">
+        {/* <img src={require("../../../images/loginBackground.jpg")} alt="" className="loginBG"/> */}
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
             <Avatar style={avatarStyle}>

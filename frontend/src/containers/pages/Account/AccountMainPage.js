@@ -21,11 +21,11 @@ const theme = createTheme({
       contrastText: '#fff',
     },
     neutral1: {
-      main: '#ff9800',
+      main: '#fbbc5d',
       contrastText: '#fff',
     },
     neutral2: {
-      main: '#03a9f4',
+      main: '#c981d4',
       contrastText: '#fff',
     },
   },
@@ -82,6 +82,7 @@ const AccountMainPage = () => {
                 display:"flex",
                 justifyContent: "center",
                 alignItems: "center",
+                fontFamily: 'Work Sans',
                 fontSize: "50px",
                 color: "blue"
               }}
@@ -114,6 +115,8 @@ const AccountMainPage = () => {
                 display:"flex",
                 justifyContent: "center",
                 alignItems: "center",
+                fontFamily: 'Work Sans',
+                // colot: "red",
                 fontSize: "50px",
               }}
               >
@@ -142,6 +145,7 @@ const AccountMainPage = () => {
               position="static"
               color="neutral2"
               style={{
+                fontFamily: 'Work Sans',
                 display:"flex",
                 justifyContent: "center",
                 alignItems: "center",

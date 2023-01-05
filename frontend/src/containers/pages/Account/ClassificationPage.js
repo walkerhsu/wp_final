@@ -11,7 +11,7 @@ import DataTable from "../../../components/DataTable";
 import { useAccount } from "../../hooks/useAccount";
 
 const paperStyle = {
-  width: "97vw",
+  width: "100vw",
   padding: 20,
 };
 
@@ -34,7 +34,7 @@ const ClassificationPage = () => {
         <TabContext value={value}>
           <Box
             sx={{
-              maxWidth: { xs: "95vw", sm: "95vw" },
+              maxWidth: { xs: "100vw", sm: "100vw" },
               bgcolor: "background.paper",
               borderBottom: 1,
               borderColor: "divider",

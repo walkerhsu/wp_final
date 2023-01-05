@@ -12,9 +12,13 @@ import ChangeEmail from "../../../components/ChangeEmail";
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Typography } from "@material-ui/core";
+
+import "../../../css/Settings.css"
+
 const paperStyle = {
   borderRadius: "50px",
-  // backgroundColor: "#fafada",
+  backgroundColor: "#fff9e2",
+  // backgroundImage: "url(../../../images/settings.jpeg)",
   padding: 20,
   height: "80vh",
   width: "90vw",
