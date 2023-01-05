@@ -63,7 +63,7 @@
 /* end of waveforms */
 
 .text {
-  height: 80%;
+  height: 85%;
   width: 500px;
   display: flex;
   flex-direction: column;
@@ -77,7 +77,6 @@
   font-family: Comic Sans MS;
   padding: 10px;
   font-size: 55px;
-  
 }
 
 .description {
