@@ -294,7 +294,7 @@ const UpdateAccountForm = ({
           <Avatar style={avatarStyle}>
             <AttachMoneyIcon />
           </Avatar>
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </Grid>
         <InputWrapper>
           <LocalizationProvider dateAdapter={AdapterDayjs}>

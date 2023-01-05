@@ -13,11 +13,11 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#0971f1',
+      main: '#065dc6',
       darker: '#053e85',
     },
     neutral: {
-      main: "rgba(54, 162, 235, 0.2)",
+      main: "rgba(62, 198, 157, 1)",
       contrastText: '#fff',
     },
     neutral1: {
@@ -84,7 +84,6 @@ const AccountMainPage = () => {
                 alignItems: "center",
                 fontFamily: 'Work Sans',
                 fontSize: "50px",
-                color: "blue"
               }}
               >
               Revenue
