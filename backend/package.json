@@ -19,6 +19,7 @@
     "jssha": "^3.3.0",
     "mongoose": "^6.8.0",
     "path": "^0.12.7",
+    "serve": "^14.1.2",
     "ws": "^8.11.0"
   },
   "devDependencies": {

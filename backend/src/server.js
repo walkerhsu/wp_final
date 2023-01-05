@@ -45,15 +45,15 @@ const yoga = createYoga({
   graphiql: {
     subscriptionsProtocol: 'WS'
   },
-  // graphqlEndpoint: '/graphql'
+  graphqlEndpoint: '/graphql'
 })
 
-const server = express();
-server.use('/graphql',yoga);
-//const httpServer = createServer(yoga)
+//const server = express();
+//server.use('/graphql',yoga);
+const httpServer = createServer(yoga)
 
 const wsServer = new WebSocketServer({
-  server: server, //httpServer
+  server: httpServer, //httpServer
   path: yoga.graphqlEndpoint,
 })
 
@@ -90,4 +90,4 @@ useServer(
   wsServer,
 )
 
-export default server;
+export default httpServer;
