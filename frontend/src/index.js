@@ -15,12 +15,12 @@ import './index.css';
 
 const HTTP_URI = 
   process.env.NODE_ENV === "production"
-    ? `/graphql`
+    ? '/graphql'
     : 'http://localhost:4000/graphql'
 
 const WS_URL = 
   process.env.NODE_ENV === "production"
-    ? window.location.origin.replace(/^http/, "ws")
+    ? window.location.origin.replace(/^http/, "wss")
     : 'ws://localhost:4000/graphql'
 
 const httpLink = new HttpLink({

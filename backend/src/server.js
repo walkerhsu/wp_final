@@ -44,13 +44,21 @@ const yoga = createYoga({
   },
   graphiql: {
     subscriptionsProtocol: 'WS'
-  },
-  graphqlEndpoint: '/graphql'
+  }
 })
 
-//const server = express();
-//server.use('/graphql',yoga);
-const httpServer = createServer(yoga)
+const app = express();
+app.use('/graphql',yoga);
+const httpServer = createServer(app)
+
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.resolve();
+  console.log(path.join(__dirname, "../frontend", "build" , "index.html"))
+  app.use(express.static(path.join(__dirname, "../frontend", "build")));
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
+  });
+}
 
 const wsServer = new WebSocketServer({
   server: httpServer, //httpServer
