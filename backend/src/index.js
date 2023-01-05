@@ -1,5 +1,6 @@
 import mongo from "./mongo.js";
 import server from "./server.js";
+import path from "path";
 
 import "dotenv-defaults/config.js";
 
