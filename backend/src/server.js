@@ -48,9 +48,14 @@ const yoga = createYoga({
     subscriptionsProtocol: 'WS'
   }
 })
+let app;
 
-const app = express();
-app.use('/graphql',yoga);
+if (process.env.NODE_ENV === "production"){
+  app = express();
+  app.use('/graphql',yoga);
+}else{
+  app = createServer(yoga)
+}
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
@@ -61,9 +66,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-
 const wsServer = new WebSocketServer({
-  server: http.createServer(app), //httpServer
+  server: process.env.NODE_ENV === "production" ? http.createServer(app) : app, //httpServer
   path: yoga.graphqlEndpoint,
 })
 

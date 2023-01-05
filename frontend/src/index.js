@@ -20,7 +20,7 @@ const HTTP_URI =
 
 const WS_URL = 
   process.env.NODE_ENV === "production"
-    ? window.location.origin.replace(/^http/, "wss")
+    ? window.location.origin.replace(/^http/, "ws")
     : 'ws://localhost:4000/graphql'
 
 const httpLink = new HttpLink({
