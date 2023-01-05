@@ -24,6 +24,8 @@ import ResetDataModal from "./ResetDataModal";
 import UpdateAccountModal from "./UpdateAccountModal";
 import AlertMessage from "../components/AlertMessage";
 
+import "../css/Appframe.css";
+
 import { useAccount } from "./hooks/useAccount";
 import { CREATE_ITEM_MUTATION, DELETE_ITEM_MUTATION } from "../graphql";
 import {
@@ -56,10 +58,10 @@ const btnStyle = {
 
 const transformStyle = {
   borderRadius: "8px",
-  position: "absolute",
-  left: "50%",
-  top: "10%",
-  transform: "translate(-50%,-50%)",
+  // position: "relative",
+  // left: "50%",
+  // top: "10%",
+  // transform: "translate(-50%,-50%)",
 };
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -159,12 +161,11 @@ export default function Appframe() {
 
   const handleResetAllData = () => {
     console.log("in handleResetAllData");
-    accountData.items.forEach((item) => {
+    accountData.forEach((item) => {
+      console.log(item.id);
       deleteItem({
         variables: {
-          input: {
-            id: item.id,
-          },
+          id: item.id,
         },
       });
     });
@@ -239,7 +240,7 @@ export default function Appframe() {
   }
 
   const appFrame = (
-    <>
+    <div className="bg">
       <AlertMessage
         open={alertOpen}
         message={alertMessage}
@@ -313,16 +314,16 @@ export default function Appframe() {
             <SideBarItems handleDrawerClose={handleDrawerClose} />
           </List>
         </Drawer>
-        <Main open={open}>
+        <Main open={open} className="MainContainer">
           <DrawerHeader />
           <Outlet />
         </Main>
       </Box>
-    </>
+    </div>
   );
 
   const loginFrame = (
-    <>
+    <div className="notLoginContainer">
       <AlertMessage
         open={alertOpen}
         message={alertMessage}
@@ -330,16 +331,20 @@ export default function Appframe() {
         handleClose={handleAlertClose}
       />
       {/* <br /><br /> */}
-      <h1 align="center">Please sign in first! </h1>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => navigate("/signin")}
-        style={btnStyle && transformStyle}
-      >
-        direct to sign in page
-      </Button>
-    </>
+      <div align="center" className="notLoginTitle">
+        Please sign in first!{" "}
+      </div>
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/signin")}
+          style={btnStyle && transformStyle}
+        >
+          direct to sign in page
+        </Button>
+      </div>
+    </div>
   );
 
   return signin ? appFrame : loginFrame;

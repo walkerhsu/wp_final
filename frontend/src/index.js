@@ -11,6 +11,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { AccountProvider } from './containers/hooks/useAccount';
 import App from './App';
+import './index.css';
 
 const HTTP_URI = 
   process.env.NODE_ENV === "production"

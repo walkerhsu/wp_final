@@ -1,14 +1,14 @@
 * {
   box-sizing: border-box;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
 }
 .WeekCalendar {
   text-align: center;
   min-height: 50vh;
-  background-color: rgb(218, 243, 215);
+  /* background-color: rgb(238, 255, 236); */
+  /* width: 100vw; */
   margin: 0;
   padding: 20px;
-  width: 100%;
 }
 /* FONT IMPORTS */
 

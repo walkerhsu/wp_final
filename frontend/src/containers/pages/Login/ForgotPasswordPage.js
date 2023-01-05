@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
 import { useMutation } from "@apollo/client";
 import { useRef } from "react";
-import { TextField, Box, Paper, Grid, Avatar, Button, Typography, Link } from "@material-ui/core";
+import { TextField, Paper, Grid, Avatar, Button, Typography, Link } from "@material-ui/core";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { useAccount } from "../../hooks/useAccount";
 import { VALIDATE_HINT_MUTATION } from "../../../graphql";
 
 import AlertMessage from "../../../components/AlertMessage";
+
+import "../../../css/loginPage.css";
 
 const TextFieldWrapper = styled("div")({
   margin: "8px 0",
@@ -109,13 +111,7 @@ const ForgotPasswordPage = () => {
         severity={alertSeverity}
         handleClose={handleAlertClose}
       />
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "30ch" },
-        }}
-        noValidate
-        // autoComplete="off"
+      <Grid className="loginBackground"
       >
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
@@ -175,7 +171,7 @@ const ForgotPasswordPage = () => {
             Back to sign in page ?<Link href="../SignIn"> Sign In</Link>
           </Typography>
         </Paper>
-      </Box>
+      </Grid>
     </>
   );
 };

@@ -10,6 +10,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
+import "../../../css/Calendar.css";
+
 const CalendarPage = () => {
   const [date, setDate] = useState(null);
   const [showDateDetail, setShowDateDetail] = useState(false);
@@ -26,10 +28,10 @@ const CalendarPage = () => {
   }
 
   return (
-    <div>
+    <div className="CalendarTabView">
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={tabHandleChange}>
+          <Tabs value={value} onChange={tabHandleChange} className="TabColor"> 
             <Tab label="Day"/>
             <Tab label="Week"/>
             <Tab label="Month"/>
