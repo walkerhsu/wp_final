@@ -1,5 +1,6 @@
 import mongo from "./mongo.js";
 import httpServer from "./server.js";
+import fs from "fs";
 
 import "dotenv-defaults/config.js";
 
