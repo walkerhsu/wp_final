@@ -12,6 +12,7 @@ import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import "../css/DataTable.css"
 
 import {
   CREATE_ITEM_MUTATION,
@@ -69,8 +70,10 @@ function DataTable({ title, data }) {
   };
 
   return (
-    <Paper className="p-4">
-      <Typography
+    <Paper className="p-4" sx={{
+      bgcolor:"rgb(225, 253, 253)"
+    }} >
+      {title?<Typography
         align="center"
         component="h2"
         variant="h5"
@@ -78,8 +81,9 @@ function DataTable({ title, data }) {
         gutterBottom
       >
         {title}
-      </Typography>
-      <Table size="small">
+      </Typography>:null}
+      
+      <Table size="small" >
         <TableHead>
           <TableRow>
             <TableCell variant="head">Date</TableCell>

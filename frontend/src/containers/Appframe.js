@@ -34,6 +34,7 @@ import {
   ITEM_UPDATED_SUBSCRIPTION,
   ITEM_DELETED_SUBSCRIPTION,
 } from "../graphql";
+import { registerables } from "chart.js";
 
 const drawerWidth = 240;
 
@@ -93,6 +94,7 @@ const AppBar = styled(MuiAppBar, {
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
+    // color: "white",
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -240,7 +242,7 @@ export default function Appframe() {
   }
 
   const appFrame = (
-    <div className="bg">
+    <div className="appFrameBG">
       <AlertMessage
         open={alertOpen}
         message={alertMessage}
@@ -248,7 +250,7 @@ export default function Appframe() {
         handleClose={handleAlertClose}
       />
       <Box sx={{ display: "flex" }}>
-        <AppBar position="fixed" open={open}>
+        <AppBar position="fixed" open={open} >
           <Toolbar>
             <IconButton
               color="inherit"

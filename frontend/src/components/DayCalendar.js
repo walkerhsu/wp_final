@@ -1,10 +1,7 @@
 import { useState } from "react";
-import {
-  format,
-  subDays,
-  addDays,
-} from "date-fns";
+import { format, subDays, addDays } from "date-fns";
 import DateDetail from "../containers/DateDetail";
+import Paper from "@material-ui/core/Paper";
 
 const DayCalendar = ({ showDetailsHandle }) => {
   const [day, setDay] = useState(new Date());
@@ -36,13 +33,14 @@ const DayCalendar = ({ showDetailsHandle }) => {
     );
   };
   const renderDay = () => {
-    return(
-      <DateDetail currentDate={format(day, "yyyy / MM / dd ( ccc )")} />
-    )
+    return <DateDetail currentDate={format(day, "yyyy / MM / dd ( ccc )")} />;
   };
   return (
-    <div className="calendar">
-      {renderHeader()}
+    <div>
+      <div className="calendar">
+        <Paper>{renderHeader()}</Paper>
+      </div>
+      <br></br>
       {renderDay()}
     </div>
   );
