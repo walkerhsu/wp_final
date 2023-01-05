@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@material-ui/core";
 
 import AboutUsDrawer from "../../components/AboutUsDrawer";
 import AlertMessage from "../../components/AlertMessage";
@@ -29,7 +28,12 @@ const MainPage = () => {
         <div className="bg-image" />
         <div className="LogoWrapper">
           <div className="Logo">
-            <h1>Main Page</h1>
+            <div className="text">
+              <div className="logoname">DINO accounting</div>
+              <div className="description">
+                an user-friendly accounting app you will definitely fall in love with
+              </div>
+            </div>
             <div className="wave one"></div>
             <div className="wave two"></div>
             <div className="wave three"></div>

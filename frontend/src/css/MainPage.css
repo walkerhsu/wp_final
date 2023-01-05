@@ -20,7 +20,7 @@
   justify-content: center;
 }
 .LogoWrapper .Logo {
-  height: 12%;
+  height: 32%;
   position: relative;
   display: flex;
   align-items: center;
@@ -35,8 +35,8 @@
 /* waveforms */
 .wave {
   background: #ffd231;
-  width: 380px;
-  height: 380px;
+  width: 480px;
+  height: 480px;
   border-radius: 40%;
   opacity: 0.4;
   position: absolute;
@@ -61,6 +61,31 @@
   }
 }
 /* end of waveforms */
+
+.text {
+  height: 80%;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.logoname {
+  font-family: Comic Sans MS;
+  padding: 10px;
+  font-size: 55px;
+  
+}
+
+.description {
+  font-family: Bradley Hand;
+  font-size: 21px;
+  width: 68%;
+  color: rgb(95, 95, 95);
+}
 
 .ButtonWrapper {
   height: 100%;
