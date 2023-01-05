@@ -2,7 +2,9 @@ import fs from 'fs'
 import { createServer } from 'node:http';
 import { WebSocketServer } from 'ws'
 import { createSchema, createYoga, createPubSub } from 'graphql-yoga';
-import { useServer } from 'graphql-ws/lib/use/ws'
+import { useServer } from 'graphql-ws/lib/use/ws';
+import path from "path";
+import express from "express";
 
 // resolvers
 import Query from "./resolvers/Query.js";
@@ -46,13 +48,25 @@ const yoga = createYoga({
   }
 })
 
-const httpServer = createServer(yoga)
+const app = express();
+app.use('/graphql',yoga);
 
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.resolve();
+  console.log(path.join(__dirname, "../frontend", "build" , "index.html"))
+  app.use(express.static(path.join(__dirname, "../frontend", "build")));
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
+  });
+}
+
+const httpServer = createServer(app)
 const wsServer = new WebSocketServer({
-  server: httpServer,
+  server: httpServer, //httpServer
   path: yoga.graphqlEndpoint,
 })
 
+if (process.env.NODE_ENV !== "production") {
 useServer(
   {
     execute: (args) => args.rootValue.execute(args),
@@ -85,5 +99,6 @@ useServer(
   },
   wsServer,
 )
+}
 
-export default httpServer;
+export default app;
