@@ -1,14 +1,12 @@
-# wp_final
+# Dino Account
+
+[![Final Project Youtube Demo Video](https://img.youtube.com/vi/sXe3zj1Qva0/0.jpg)](https://www.youtube.com/watch?v=sXe3zj1Qva0)
 
 ## Description
 
 This is a final project for the Web Programming course at NTU.
 
 The project is a simple app to track your spending, which allows users to login, add new expenses or incomes , and view their spending history.
-
-## Deploy Link
-
-https://wp-final-2020.herokuapp.com/
 
 ## Installation
 
@@ -23,14 +21,15 @@ https://wp-final-2020.herokuapp.com/
     ```bash
     yarn install:all
     ```
+3. Setup the .env file by setting the MONGU_URL
 
-3. Start the server
+4. Start the server
 
     ```bash
     yarn backend
     ```
 
-4. Start the client
+5. Start the client
 
     ```bash
     yarn frontend
